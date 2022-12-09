@@ -38,15 +38,20 @@ export default function TrackingScreen() {
 
     return (
         <View style={styles.container}>
-            <Button title='Start Activity' onPress={() => setActivityStarted(true)} />
-            <Button title='Stop Activity' onPress={() => setActivityStarted(false)} />
             <Button
+                style={styles.buttons}
+                color='#32a852'
+                title='Start Activity'
+                onPress={() => setActivityStarted(true)} />
+            <Button
+                style={styles.buttons}
+                color='#a83232'
+                title='Stop Activity'
+                onPress={() => setActivityStarted(false)} />
+            <Button
+                style={styles.buttons}
                 title="View activity"
-                onPress={() => {
-                    // setActivityStarted(false);
-                    navigation.navigate('Activity', { data: coordinatesArray });
-                }}
-            />
+                onPress={() => navigation.navigate('Activity', { data: coordinatesArray })} />
         </View>
     )
 }
@@ -57,4 +62,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    buttons: {
+        width: 200,
+    }
 })

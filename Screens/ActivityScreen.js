@@ -3,7 +3,7 @@ import React from 'react';
 import MapView, { Polyline } from 'react-native-maps';
 
 const ActivityScreen = (item) => {
-    console.log(`Activity screen data: ${item.route.params.data}`);
+    console.log(`${Object.keys(item.route.params.data).length} coordinates passed in`);
     return (
         <View style={styles.container}>
             <MapView style={styles.map}>
