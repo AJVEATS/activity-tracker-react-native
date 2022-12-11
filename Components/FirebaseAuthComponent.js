@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { initializeApp } from 'firebase/app';
 import React from 'react';
 
@@ -17,9 +18,9 @@ const app = initializeApp(firebaseConfig);
 
 const FirebaseAuthComponent = () => {
     return (
-        <View>
+        <SafeAreaView>
             <Text>FirebaseAuthComponent</Text>
-        </View>
+        </SafeAreaView>
     )
 }
 

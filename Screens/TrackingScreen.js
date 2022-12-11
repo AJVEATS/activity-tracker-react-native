@@ -1,4 +1,5 @@
-import { Platform, Text, SafeAreaView, StyleSheet, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Button, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
@@ -40,11 +41,10 @@ export default function TrackingScreen() {
     }, [activityStarted]);
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <TextInput
                 onChangeText={onChangeActivityName}
-                value={activityName}
-            />
+                value={activityName} />
             <Button
                 style={styles.buttons}
                 color='#32a852'
@@ -57,16 +57,10 @@ export default function TrackingScreen() {
                 disabled={showStopActivity}
                 onPress={() => {
                     setActivityStarted(false);
-                    navigation.navigate('Activity', { data: coordinatesArray, activityInfo: activityName });
-                }}
-            />
-            {/* <Button
-                style={styles.buttons}
-                title="View activity"
-                onPress={() => navigation.navigate('Activity', { data: coordinatesArray })}
-            /> */}
-        </View>
-    )
+                    navigation.push('ActivityScreen', { data: coordinatesArray, activityInfo: activityName });
+                }} />
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
