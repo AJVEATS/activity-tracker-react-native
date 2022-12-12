@@ -14,13 +14,16 @@ export default function TrackingScreen() {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [coordinatesArray, setCoordinatesArray] = useState([]);
+    const [altitudeArray, setAltitudeArray] = useState([]);
     const [activityStarted, setActivityStarted] = useState(false);
+    const [showStartActivity, setShowStartActivity] = useState(false);
     const [showStopActivity, setShowStopActivity] = useState(true);
     const [activityName, onChangeActivityName] = useState('');
     const [selectedActivityType, setSelectedActivityType] = useState('Walking');
 
     useEffect(() => {
         if (activityStarted) {
+            setShowStartActivity(true);
             setShowStopActivity(false);
             console.log('activity tracking started');
             const interval = setInterval(() => {
@@ -35,7 +38,9 @@ export default function TrackingScreen() {
                     let location = await Location.getCurrentPositionAsync({});
                     setLocation(location);
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
+                    altitudeArray.push({ altitude: location['coords']['altitude'] });
                     console.log(coordinatesArray);
+                    console.log(altitudeArray);
                 })();
             }, 1500);
             return () => clearInterval(interval);
@@ -49,6 +54,7 @@ export default function TrackingScreen() {
         date: moment().format('YYYY-MM-DD hh:mm:ss'),
         type: selectedActivityType,
         route: coordinatesArray,
+        altitude: altitudeArray,
     };
 
     return (
@@ -72,6 +78,7 @@ export default function TrackingScreen() {
                 style={styles.buttons}
                 color='#32a852'
                 title='Start Activity'
+                disabled={showStartActivity}
                 onPress={() => setActivityStarted(true)} />
             <Button
                 style={styles.buttons}

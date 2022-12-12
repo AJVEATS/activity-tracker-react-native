@@ -4,13 +4,13 @@ import colors from "../colors";
 import TrackActivityNavigator from "./TrackActivityNavigator";
 import ExploreActivityNavigator from "./ExploreActivityNavigator";
 import ProfileScreen from "../Screens/ProfileScreen";
-import ExploreScreen from "../Screens/ExploreScreen";
 
 const MainBottomTabNavigator = () => {
     const Tab = createBottomTabNavigator();
 
     return (
         <Tab.Navigator
+            initialRouteName="Track Activity"
             screenOptions={({ route }) => ({
                 headerShown: false,
                 tabBarIcon: ({ focused, color, size }) => {
