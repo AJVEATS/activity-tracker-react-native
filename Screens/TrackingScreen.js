@@ -1,8 +1,11 @@
-import { StyleSheet, Button, TextInput } from 'react-native';
+import { StyleSheet, Button, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
+import { Picker } from '@react-native-picker/picker';
+import React, { useState, useEffect, useRef } from 'react';
 import * as Location from 'expo-location';
+import MapView from 'react-native-maps';
+import moment from 'moment/moment';
 
 export default function TrackingScreen() {
 
@@ -13,7 +16,8 @@ export default function TrackingScreen() {
     const [coordinatesArray, setCoordinatesArray] = useState([]);
     const [activityStarted, setActivityStarted] = useState(false);
     const [showStopActivity, setShowStopActivity] = useState(true);
-    const [activityName, onChangeActivityName] = useState('Activity Name');
+    const [activityName, onChangeActivityName] = useState('');
+    const [selectedActivityType, setSelectedActivityType] = useState('Walking');
 
     useEffect(() => {
         if (activityStarted) {
@@ -40,11 +44,30 @@ export default function TrackingScreen() {
         }
     }, [activityStarted]);
 
+    let activityData = {
+        name: activityName,
+        date: moment().format('YYYY-MM-DD hh:mm:ss'),
+        type: selectedActivityType,
+        route: coordinatesArray,
+    };
+
     return (
         <SafeAreaView style={styles.container}>
-            <TextInput
-                onChangeText={onChangeActivityName}
-                value={activityName} />
+            <View style={styles.activityInfoContainer}>
+                <TextInput
+                    onChangeText={onChangeActivityName}
+                    placeholder={'Activity Name'}
+                    value={activityName} />
+                <Picker
+                    selectedValue={selectedActivityType}
+                    onValueChange={(itemValue, itemIndex) =>
+                        setSelectedActivityType(itemValue)
+                    }>
+                    <Picker.Item label="Walk" value="walk" />
+                    <Picker.Item label="Run" value="run" />
+                    <Picker.Item label="Cycle" value="cycle" />
+                </Picker>
+            </View>
             <Button
                 style={styles.buttons}
                 color='#32a852'
@@ -57,8 +80,10 @@ export default function TrackingScreen() {
                 disabled={showStopActivity}
                 onPress={() => {
                     setActivityStarted(false);
-                    navigation.push('ActivityScreen', { data: coordinatesArray, activityInfo: activityName });
+                    navigation.push('ActivityScreen', { activityData: activityData });
                 }} />
+            <MapView
+                style={styles.map} />
         </SafeAreaView>
     );
 }
@@ -68,6 +93,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    activityInfoContainer: {
+        width: '100%',
     },
     buttons: {
         width: 200,

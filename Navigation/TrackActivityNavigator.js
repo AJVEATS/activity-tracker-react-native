@@ -6,7 +6,7 @@ const TrackActivityNavigator = () => {
     const appStack = createStackNavigator();
     return (
         <appStack.Navigator>
-            <appStack.Screen name="TrackingScreen" component={TrackingScreen} />
+            <appStack.Screen name="Tracking Activity" component={TrackingScreen} />
             <appStack.Screen name="ActivityScreen" component={ActivityScreen} />
         </appStack.Navigator>
     )

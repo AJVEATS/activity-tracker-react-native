@@ -1,11 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from "../colors";
-import LoginScreen from "../Screens/LoginScreen";
-import ActivityScreen from "../Screens/ActivityScreen";
-import TrackingScreen from "../Screens/TrackingScreen";
 import TrackActivityNavigator from "./TrackActivityNavigator";
+import ExploreActivityNavigator from "./ExploreActivityNavigator";
 import ProfileScreen from "../Screens/ProfileScreen";
+import ExploreScreen from "../Screens/ExploreScreen";
 
 const MainBottomTabNavigator = () => {
     const Tab = createBottomTabNavigator();
@@ -24,12 +23,17 @@ const MainBottomTabNavigator = () => {
                         iconName = focused
                             ? 'person'
                             : 'person-outline';
+                    } else if (route.name === 'Explore Routes') {
+                        iconName = focused
+                            ? 'globe'
+                            : 'globe-outline';
                     }
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: 'black',
                 tabBarInactiveTintColor: 'gray',
             })}>
+            <Tab.Screen name="Explore Routes" component={ExploreActivityNavigator} />
             <Tab.Screen name="Track Activity" component={TrackActivityNavigator} />
             <Tab.Screen name="Settings" component={ProfileScreen} />
         </Tab.Navigator>

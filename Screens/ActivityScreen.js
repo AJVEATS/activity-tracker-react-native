@@ -3,38 +3,34 @@ import React from 'react';
 import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
 
 const ActivityScreen = (item) => {
-    // console.log(`${Object.keys(item.route.params.data).length} coordinates passed in`);
+    // console.log(`${Object.keys(item.route.params.activityData.route).length} coordinates passed in`);
+    console.log(item.route.params.activityData);
 
     const activityRegion = {
-        latitude: item.route.params.data[0]['latitude'],
-        longitude: item.route.params.data[0]['longitude'],
+        latitude: item.route.params.activityData.route[0]['latitude'],
+        longitude: item.route.params.activityData.route[0]['longitude'],
         latitudeDelta: 0.09,
         longitudeDelta: 0.09,
     }
-
-    console.log(item.route.params.data[0]['latitude']);
 
     return (
         <View style={styles.container}>
             <MapView
                 style={styles.map}
-                initialRegion={activityRegion}
-            >
+                initialRegion={activityRegion}>
                 <Marker
                     key={'start'}
-                    coordinate={item.route.params.data[0]}
-                >
+                    coordinate={item.route.params.activityData.route[0]}>
                     <Callout
                         style={styles.mapCallout}
-                        tooltip={true}
-                    >
+                        tooltip={true}>
                         <View style={styles.markerView}>
-                            <Text style={styles.markerTitle}>{item.route.params.activityInfo}</Text>
+                            <Text style={styles.markerTitle}>{item.route.params.activityData.name}</Text>
                         </View>
                     </Callout>
                 </Marker>
                 <Polyline
-                    coordinates={item.route.params.data}
+                    coordinates={item.route.params.activityData.route}
                     strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
                     strokeColors={[
                         '#7F0000',
@@ -44,8 +40,7 @@ const ActivityScreen = (item) => {
                         '#238C23',
                         '#7F0000'
                     ]}
-                    strokeWidth={3}
-                />
+                    strokeWidth={3} />
             </MapView>
         </View>
     );
