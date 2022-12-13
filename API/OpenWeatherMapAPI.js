@@ -2,8 +2,8 @@
  * @fileoverview This file is for weather api that gets the current weather for the selected place.
  * It then displays its current temperature and a icon for its current weather 
  */
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../colors';
 

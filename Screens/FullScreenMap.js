@@ -52,4 +52,22 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height,
         zIndex: 1,
     },
+    mapCallout: {
+        backgroundColor: 'transparent',
+        width: 200,
+    },
+    markerView: {
+        backgroundColor: 'white',
+        alignItems: 'center',
+        borderColor: 'black',
+        borderRadius: 5,
+        borderStyle: 'solid',
+        padding: 10,
+        flex: 1,
+    },
+    markerTitle: {
+        fontSize: 18,
+        textAlign: 'center',
+        paddingBottom: 10
+    },
 })

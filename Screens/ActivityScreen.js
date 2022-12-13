@@ -1,13 +1,17 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
 import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
 import { getDistance, getPreciseDistance } from 'geolib';
 import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import colors from '../colors';
+import BackButtonComponent from '../Components/BackButtonComponent';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ActivityScreen = (item) => {
     // console.log(`${Object.keys(item.route.params.activityData.route).length} coordinates passed in`);
-    // console.log(item.route.params.activityData);
+    console.log(item.route.params.activityData.route);
 
     const navigation = useNavigation();
 
@@ -28,10 +32,8 @@ const ActivityScreen = (item) => {
     // console.log(dis);
 
     return (
-        <View style={styles.container}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>{activity.name}</Text>
-            </View>
+        <SafeAreaView style={styles.container}>
+            <BackButtonComponent />
             <TouchableOpacity style={styles.mapViewContainer}
                 onPress={() => { navigation.push('FullScreenMap', { activityData: activity, activityRegion: activityRegion }); }}>
                 <MapView
@@ -52,25 +54,20 @@ const ActivityScreen = (item) => {
                     </Marker>
                     <Polyline
                         coordinates={activity.route}
-                        strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-                        strokeColors={[
-                            '#7F0000',
-                            '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-                            '#B24112',
-                            '#E5845C',
-                            '#238C23',
-                            '#7F0000'
-                        ]}
+                        strokeColor={colors.white} // fallback for when `strokeColors` is not supported by the map-provider
                         strokeWidth={3} />
                 </MapView>
             </TouchableOpacity>
-            <View style={styles.activityInfoContainer}>
-                <Text style={styles.activityInfoText}>{activity.name}</Text>
-                <Text style={styles.activityInfoText}>{activity.type}</Text>
-                <Text style={styles.activityInfoText}>{activity.date}</Text>
-                {/* <OpenWeatherMapAPI lat={activity.route[0]['latitude']} lon={activity.route[0]['longitude']} /> */}
+            <View style={styles.activityContainer}>
+                <View style={styles.activityInfo}>
+                    <Text style={styles.activityName}>{activity.name}</Text>
+                    <Text>{activity.type}</Text>
+                    <Text>{activity.date}</Text>
+                    <Text>{activity.start}</Text>
+                    <Text>{activity.endTime}</Text>
+                </View>
             </View>
-        </View >
+        </SafeAreaView>
     );
 }
 
@@ -78,14 +75,7 @@ export default ActivityScreen
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    titleContainer: {
-        marginVertical: '5%',
-    },
-    title: {
-        fontSize: 22,
+        width: '100%',
     },
     mapViewContainer: {
         overflow: 'hidden',
@@ -94,7 +84,7 @@ const styles = StyleSheet.create({
         borderColor: 'transparent',
     },
     map: {
-        width: '90%',
+        width: '100%',
         aspectRatio: 16 / 9,
     },
     mapCallout: {
@@ -115,8 +105,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingBottom: 10
     },
-    activityInfoContainer: {
-        height: 80,
+    activityContainer: {
+        width: '100%',
+        display: 'flex',
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    activityInfoText: {},
+    activityInfo: {
+        width: '100%',
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        backgroundColor: colors.white,
+    },
+    activityName: {
+        fontSize: 22,
+        marginBottom: 10,
+    },
 });

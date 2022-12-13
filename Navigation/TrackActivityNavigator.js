@@ -8,7 +8,7 @@ const TrackActivityNavigator = () => {
     return (
         <appStack.Navigator>
             <appStack.Screen options={{ headerShown: false }} name="Tracking Activity" component={TrackingScreen} />
-            <appStack.Screen name="ActivityScreen" component={ActivityScreen} />
+            <appStack.Screen options={{ headerShown: false }} name="ActivityScreen" component={ActivityScreen} />
             <appStack.Screen options={{ headerShown: false }} name="FullScreenMap" component={FullScreenMap} />
         </appStack.Navigator>
     )

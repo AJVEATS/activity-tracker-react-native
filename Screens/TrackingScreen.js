@@ -18,13 +18,13 @@ export default function TrackingScreen({ navigation }) {
     const [showStopActivity, setShowStopActivity] = useState(true);
     const [activityName, onChangeActivityName] = useState('');
     const [selectedActivityType, setSelectedActivityType] = useState('walk');
+    const [activityStartTime, setActivityStartTime] = useState('');
 
     useEffect(() => {
-        // setCoordinatesArray = [];
         if (activityStarted) {
             setShowStartActivity(true);
             setShowStopActivity(false);
-            console.log('activity tracking started');
+            // console.log('activity tracking has started');
             const interval = setInterval(() => {
                 (async () => {
 
@@ -38,29 +38,27 @@ export default function TrackingScreen({ navigation }) {
                     setLocation(location);
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
                     altitudeArray.push({ altitude: location['coords']['altitude'] });
-                    console.log(coordinatesArray);
+                    // console.log(coordinatesArray);
                     // console.log(altitudeArray);
                 })();
             }, 1500);
             return () => clearInterval(interval);
         } else if (!activityStarted) {
-            console.log('activity tracking is paused');
+            // console.log('activity tracking has stopped');
         }
     }, [activityStarted]);
 
     const formatName = (name, activity) => {
-        console.log(activity);
-        console.log(name);
 
         if (name === '') {
             if (activity === 'walk') {
-                return `walk - ${moment().format('YYYY-MM-DD hh:mm')}`;
+                return `walk - ${moment().format('DD.MM.YYYY')}`;
             } else if (activity === 'hike') {
-                return `hike - ${moment().format('YYYY-MM-DD hh:mm')}`;
+                return `hike - ${moment().format('DD.MM.YYYY')}`;
             } else if (activity === 'cycle') {
-                return `cycle - ${moment().format('YYYY-MM-DD hh:mm')}`;
+                return `cycle - ${moment().format('DD.MM.YYYY')}`;
             } else if (activity === 'run') {
-                return `run - ${moment().format('YYYY-MM-DD hh:mm')}`;
+                return `run - ${moment().format('DD.MM.YYYY')}`;
             }
         }
 
@@ -69,17 +67,20 @@ export default function TrackingScreen({ navigation }) {
 
     const endActivity = () => {
 
+        setActivityStarted(false);
+        setShowStartActivity(false);
+        setShowStopActivity(true);
+
         let activityData = {
             name: formatName(activityName, selectedActivityType),
             date: moment().format('YYYY-MM-DD hh:mm:ss'),
             type: selectedActivityType,
             route: coordinatesArray,
             altitude: altitudeArray,
+            start: activityStartTime,
+            endTime: moment().format('YYYY-MM-DD hh:mm:ss'),
         };
 
-        setActivityStarted(false);
-        setShowStartActivity(false);
-        setShowStopActivity(true);
         navigation.push('ActivityScreen', { activityData: activityData });
     }
 
@@ -97,7 +98,6 @@ export default function TrackingScreen({ navigation }) {
                         setSelectedActivityType(itemValue)
                     }>
                     <Picker.Item label='Walk' value='walk' />
-                    {/* <Picker.Item labal='Hike' value='hike' /> */}
                     <Picker.Item label='Run' value='run' />
                     <Picker.Item label='Cycle' value='cycle' />
                     <Picker.Item label='Hike' value='hike' />
@@ -109,7 +109,8 @@ export default function TrackingScreen({ navigation }) {
                 title='Start Activity'
                 disabled={showStartActivity}
                 onPress={() => {
-                    setActivityStarted(true)
+                    setActivityStartTime(moment().format('YYYY-MM-DD hh:mm:ss'));
+                    setActivityStarted(true);
                     Keyboard.dismiss()
                 }} />
             <Button
