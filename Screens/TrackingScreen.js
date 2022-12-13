@@ -37,7 +37,7 @@ export default function TrackingScreen({ navigation }) {
                     setLocation(location);
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
                     altitudeArray.push({ altitude: location['coords']['altitude'] });
-                    // console.log(coordinatesArray);
+                    console.log(coordinatesArray);
                     // console.log(altitudeArray);
                 })();
             }, 1500);
@@ -90,6 +90,8 @@ export default function TrackingScreen({ navigation }) {
                 disabled={showStopActivity}
                 onPress={() => {
                     setActivityStarted(false);
+                    setShowStartActivity(false);
+                    setShowStopActivity(true);
                     navigation.push('ActivityScreen', { activityData: activityData });
                 }} />
             <MapView

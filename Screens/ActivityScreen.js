@@ -16,8 +16,8 @@ const ActivityScreen = (item) => {
     const activityRegion = {
         latitude: activity.route[0]['latitude'],
         longitude: activity.route[0]['longitude'],
-        latitudeDelta: 0.09,
-        longitudeDelta: 0.09,
+        latitudeDelta: 0.02,
+        longitudeDelta: 0.02,
     }
 
     var dis = getPreciseDistance(
@@ -36,7 +36,9 @@ const ActivityScreen = (item) => {
                 onPress={() => { navigation.push('FullScreenMap', { activityData: activity, activityRegion: activityRegion }); }}>
                 <MapView
                     style={styles.map}
-                    initialRegion={activityRegion}>
+                    initialRegion={activityRegion}
+                    scrollEnabled={false}
+                    loadingEnabled={true}>
                     <Marker
                         key={'start'}
                         coordinate={activity.route[0]}>
