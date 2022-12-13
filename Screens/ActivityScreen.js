@@ -65,6 +65,7 @@ const ActivityScreen = (item) => {
                 </MapView>
             </TouchableOpacity>
             <View style={styles.activityInfoContainer}>
+                <Text style={styles.activityInfoText}>{activity.name}</Text>
                 <Text style={styles.activityInfoText}>{activity.type}</Text>
                 <Text style={styles.activityInfoText}>{activity.date}</Text>
                 {/* <OpenWeatherMapAPI lat={activity.route[0]['latitude']} lon={activity.route[0]['longitude']} /> */}

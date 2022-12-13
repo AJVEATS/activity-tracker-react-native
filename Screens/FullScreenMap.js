@@ -1,8 +1,8 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import MapView, { Callout, Marker, Polyline } from 'react-native-maps'
-import BackButtonComponent from '../Components/BackButtonComponent'
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
+import BackButtonComponent from '../Components/BackButtonComponent';
 
 const FullScreenMap = (item) => {
 

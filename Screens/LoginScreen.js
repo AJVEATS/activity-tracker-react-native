@@ -67,6 +67,10 @@ const LoginScreen = ({ navigation }) => {
 export default LoginScreen
 
 const styles = StyleSheet.create({
-    loginContainer: {},
+    loginContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     loginForm: {},
 })

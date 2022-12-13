@@ -19,7 +19,7 @@ const MainBottomTabNavigator = () => {
                         iconName = focused
                             ? 'walk'
                             : 'walk-outline';
-                    } else if (route.name === 'Settings') {
+                    } else if (route.name === 'Your Profile') {
                         iconName = focused
                             ? 'person'
                             : 'person-outline';

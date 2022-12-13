@@ -49,7 +49,7 @@ const CreateAccountScreen = ({ navigation }) => {
                 />
                 <Button
                     color='blue'
-                    title='login'
+                    title='create account'
                     onPress={() => {
                         createAccount();
                     }} />
@@ -61,6 +61,10 @@ const CreateAccountScreen = ({ navigation }) => {
 export default CreateAccountScreen
 
 const styles = StyleSheet.create({
-    createAccountContainer: {},
+    createAccountContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     createAccountForm: {},
 })
