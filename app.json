@@ -4,7 +4,7 @@
     "slug": "ubi2",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/man-running_1f3c3-200d-2642-fe0f.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
