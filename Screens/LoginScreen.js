@@ -1,12 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import FirebaseAuthComponent from '../Components/FirebaseAuthComponent'
+import { SafeAreaView } from 'react-native-safe-area-context'
+// import FirebaseAuthComponent from '../Components/FirebaseAuthComponent'
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
     return (
-        <View>
-            <FirebaseAuthComponent />
-        </View>
+        <SafeAreaView>
+            {/* <FirebaseAuthComponent /> */}
+            <Text>Login screen</Text>
+            <Button
+                color='#a83232'
+                title='Create Account'
+                onPress={() => {
+                    navigation.push('CreateAccountScreen');
+                }} />
+        </SafeAreaView>
     )
 }
 

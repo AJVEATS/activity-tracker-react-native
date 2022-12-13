@@ -7,9 +7,7 @@ import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
 import moment from 'moment/moment';
 
-export default function TrackingScreen() {
-
-    const navigation = useNavigation();
+export default function TrackingScreen({ navigation }) {
 
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);

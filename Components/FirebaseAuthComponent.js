@@ -1,10 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { initializeApp } from 'firebase/app';
-import React from 'react';
-
 // Your web app's Firebase configuration
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyA3dqjY7sjqHRM1GKPNbMdM92I5Nd6UPKw",
     authDomain: "ubicomp-2-av.firebaseapp.com",
     projectId: "ubicomp-2-av",
@@ -12,18 +7,3 @@ const firebaseConfig = {
     messagingSenderId: "448485848532",
     appId: "1:448485848532:web:fdd2ee2cda98422b5c9241"
 };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-const FirebaseAuthComponent = () => {
-    return (
-        <SafeAreaView>
-            <Text>FirebaseAuthComponent</Text>
-        </SafeAreaView>
-    )
-}
-
-export default FirebaseAuthComponent
-
-const styles = StyleSheet.create({})

@@ -5,7 +5,7 @@ const ExploreActivityNavigator = () => {
     const appStack = createStackNavigator();
     return (
         <appStack.Navigator>
-            <appStack.Screen name="Explore" component={ExploreScreen} />
+            <appStack.Screen options={{ headerShown: false }} name="Explore" component={ExploreScreen} />
         </appStack.Navigator>
     )
 }
