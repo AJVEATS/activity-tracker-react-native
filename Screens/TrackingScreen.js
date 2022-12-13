@@ -1,4 +1,4 @@
-import { StyleSheet, Button, TextInput, View } from 'react-native';
+import { StyleSheet, Button, TextInput, View, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
@@ -37,8 +37,8 @@ export default function TrackingScreen({ navigation }) {
                     setLocation(location);
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
                     altitudeArray.push({ altitude: location['coords']['altitude'] });
-                    console.log(coordinatesArray);
-                    console.log(altitudeArray);
+                    // console.log(coordinatesArray);
+                    // console.log(altitudeArray);
                 })();
             }, 1500);
             return () => clearInterval(interval);
@@ -61,15 +61,17 @@ export default function TrackingScreen({ navigation }) {
                 <TextInput
                     onChangeText={onChangeActivityName}
                     placeholder={'Activity Name'}
-                    value={activityName} />
+                    value={activityName}
+                    onSubmitEditing={Keyboard.dismiss} />
                 <Picker
                     selectedValue={selectedActivityType}
                     onValueChange={(itemValue, itemIndex) =>
                         setSelectedActivityType(itemValue)
                     }>
-                    <Picker.Item label="Walk" value="walk" />
-                    <Picker.Item label="Run" value="run" />
-                    <Picker.Item label="Cycle" value="cycle" />
+                    <Picker.Item label='Walk' value='walk' />
+                    <Picker.Item labal='Hike' value='hike' />
+                    <Picker.Item label='Run' value='run' />
+                    <Picker.Item label='Cycle' value='cycle' />
                 </Picker>
             </View>
             <Button
@@ -77,7 +79,10 @@ export default function TrackingScreen({ navigation }) {
                 color='#32a852'
                 title='Start Activity'
                 disabled={showStartActivity}
-                onPress={() => setActivityStarted(true)} />
+                onPress={() => {
+                    setActivityStarted(true)
+                    Keyboard.dismiss()
+                }} />
             <Button
                 style={styles.buttons}
                 color='#a83232'

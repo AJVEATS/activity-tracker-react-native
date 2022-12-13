@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
 import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
 import { getDistance, getPreciseDistance } from 'geolib';
+import { useNavigation } from '@react-navigation/native';
 
 const ActivityScreen = (item) => {
     // console.log(`${Object.keys(item.route.params.activityData.route).length} coordinates passed in`);
     // console.log(item.route.params.activityData);
+
+    const navigation = useNavigation();
 
     const activity = item.route.params.activityData;
 
@@ -22,14 +25,15 @@ const ActivityScreen = (item) => {
         { latitude: 51.528308, longitude: -0.3817765 }
     );
 
-    console.log(dis);
+    // console.log(dis);
 
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>{activity.name}</Text>
             </View>
-            <View style={styles.mapViewContainer}>
+            <TouchableOpacity style={styles.mapViewContainer}
+                onPress={() => { navigation.push('FullScreenMap', { activityData: activity, activityRegion: activityRegion }); }}>
                 <MapView
                     style={styles.map}
                     initialRegion={activityRegion}>
@@ -57,13 +61,13 @@ const ActivityScreen = (item) => {
                         ]}
                         strokeWidth={3} />
                 </MapView>
-            </View>
+            </TouchableOpacity>
             <View style={styles.activityInfoContainer}>
                 <Text style={styles.activityInfoText}>{activity.type}</Text>
                 <Text style={styles.activityInfoText}>{activity.date}</Text>
                 {/* <OpenWeatherMapAPI lat={activity.route[0]['latitude']} lon={activity.route[0]['longitude']} /> */}
             </View>
-        </View>
+        </View >
     );
 }
 
