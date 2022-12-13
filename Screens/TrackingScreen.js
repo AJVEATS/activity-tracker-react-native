@@ -20,6 +20,7 @@ export default function TrackingScreen({ navigation }) {
     const [selectedActivityType, setSelectedActivityType] = useState('Walking');
 
     useEffect(() => {
+        setCoordinatesArray = [];
         if (activityStarted) {
             setShowStartActivity(true);
             setShowStopActivity(false);

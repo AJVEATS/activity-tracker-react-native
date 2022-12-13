@@ -3,7 +3,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from "../colors";
 import TrackActivityNavigator from "./TrackActivityNavigator";
 import ExploreActivityNavigator from "./ExploreActivityNavigator";
-import ProfileScreen from "../Screens/ProfileScreen";
+import ProfileNavigator from "./ProfileNavigator";
 
 const MainBottomTabNavigator = () => {
     const Tab = createBottomTabNavigator();
@@ -35,7 +35,7 @@ const MainBottomTabNavigator = () => {
             })}>
             <Tab.Screen name="Explore Routes" component={ExploreActivityNavigator} />
             <Tab.Screen name="Track Activity" component={TrackActivityNavigator} />
-            <Tab.Screen name="Settings" component={ProfileScreen} />
+            <Tab.Screen name="Your Profile" component={ProfileNavigator} />
         </Tab.Navigator>
     );
 }
