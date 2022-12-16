@@ -14,26 +14,9 @@ const ActivityScreen = (item) => {
 
     const activity = item.route.params.activityData;
     const lastCoordinate = Object.keys(activity.route).length - 1;
-
     const activityTrack = activity.route;
-
-    console.log('#########   Activity Screen   #########');
-    console.log(activityTrack);
-    console.log(typeof (activityTrack));
-
-    const activityRegion = {
-        latitude: activity.route[0]['latitude'],
-        longitude: activity.route[0]['longitude'],
-        // latitude: 37.8025259,
-        // longitude: -122.4351431,
-        latitudeDelta: 0.02,
-        longitudeDelta: 0.02,
-    }
-
     const polyLineTrack = Object.keys(activityTrack).map(key => activityTrack[key]);
-    // console.log(typeof (myData));
 
-    console.log(polyLineTrack);
     let distance = 0;
 
     for (let i = 0; i < (Object.keys(activity.route).length); i++) {
@@ -41,6 +24,20 @@ const ActivityScreen = (item) => {
             distance = getDistance(activity.route[i], activity.route[i + 1]);
         }
     }
+
+    const activityRegion = {
+        latitude: activity.route[0]['latitude'],
+        longitude: activity.route[0]['longitude'],
+        latitudeDelta: 0.02,
+        longitudeDelta: 0.02,
+    }
+
+    console.log('#########   Activity Screen   #########');
+    // console.log(activityTrack);
+    // console.log(polyLineTrack);
+    // console.log(activity);
+    // console.log(activityRegion);
+    // console.log(distance);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -73,7 +70,7 @@ const ActivityScreen = (item) => {
                         strokeWidth={3} />
                 </MapView>
             </TouchableOpacity>
-            {/* <View style={styles.activityContainer}>
+            <View style={styles.activityContainer}>
                 <View style={styles.activityInfo}>
                     <Text style={styles.activityName}>{activity.name}</Text>
                     <Text>{activity.type}</Text>
@@ -82,7 +79,7 @@ const ActivityScreen = (item) => {
                     <Text>{activity.endTime}</Text>
                     <Text>{`${distance}m`}</Text>
                 </View>
-            </View> */}
+            </View>
         </SafeAreaView>
     );
 }
