@@ -1,5 +1,5 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { Button, Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
 import { getDistance } from 'geolib';
 import colors from '../colors';
 import BackButtonComponent from '../Components/BackButtonComponent';
@@ -8,6 +8,7 @@ import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewCompone
 import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
 
 const ActivityScreen = (item) => {
+    const [notes, onChangeNotes] = useState(null);
 
     const activity = item.route.params.activityData;
     const activityTrack = activity.route;
@@ -39,6 +40,8 @@ const ActivityScreen = (item) => {
     // console.log(activity);
     // console.log(activityRegion);
 
+    console.log(notes);
+
     return (
         <SafeAreaView style={styles.container}>
             <BackButtonComponent />
@@ -52,6 +55,14 @@ const ActivityScreen = (item) => {
                     <Text>{activity.endTime}</Text>
                     <Text>{calculateActivityDistance()}</Text>
                     <OpenWeatherMapAPI lat={activityTrack[0]['latitude']} lon={activityTrack[0]['longitude']} />
+                </View>
+                <View style={styles.notesContainer}>
+                    <TextInput
+                        style={styles.notes}
+                        onChangeText={onChangeNotes}
+                        placeholder={'Notes'}
+                        value={notes}
+                        onSubmitEditing={Keyboard.dismiss} />
                 </View>
                 <View style={styles.buttonContainer}>
                     <Button
@@ -82,20 +93,23 @@ const styles = StyleSheet.create({
     },
     activityContainer: {
         width: '100%',
-        display: 'flex',
-        alignContent: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
+        paddingHorizontal: 20,
+        // display: 'flex',
+        // alignContent: 'center',
+        // alignItems: 'center',
+        // justifyContent: 'center',
         backgroundColor: colors.white,
     },
     activityInfo: {
         width: '100%',
-        paddingHorizontal: 20,
-        paddingVertical: 15,
+        // paddingHorizontal: 20,
+        paddingTop: 15,
     },
     activityName: {
         fontSize: 22,
         marginBottom: 10,
+    },
+    notesContainer: {
     },
     buttonContainer: {
         display: 'flex',
