@@ -10,32 +10,43 @@ import BackButtonComponent from '../Components/BackButtonComponent';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ActivityScreen = (item) => {
-    // console.log(`${Object.keys(item.route.params.activityData.route).length} coordinates passed in`);
-    console.log(item.route.params.activityData.route);
-
     const navigation = useNavigation();
 
     const activity = item.route.params.activityData;
+    const lastCoordinate = Object.keys(activity.route).length - 1;
+
+    const activityTrack = activity.route;
+
+    console.log('#########   Activity Screen   #########');
+    console.log(activityTrack);
+    console.log(typeof (activityTrack));
 
     const activityRegion = {
         latitude: activity.route[0]['latitude'],
         longitude: activity.route[0]['longitude'],
+        // latitude: 37.8025259,
+        // longitude: -122.4351431,
         latitudeDelta: 0.02,
         longitudeDelta: 0.02,
     }
 
-    var dis = getPreciseDistance(
-        { latitude: 20.0504188, longitude: 64.4139099 },
-        { latitude: 51.528308, longitude: -0.3817765 }
-    );
+    const polyLineTrack = Object.keys(activityTrack).map(key => activityTrack[key]);
+    // console.log(typeof (myData));
 
-    // console.log(dis);
+    console.log(polyLineTrack);
+    let distance = 0;
+
+    for (let i = 0; i < (Object.keys(activity.route).length); i++) {
+        if (i + 1 < (Object.keys(activity.route).length)) {
+            distance = getDistance(activity.route[i], activity.route[i + 1]);
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
             <BackButtonComponent />
             <TouchableOpacity style={styles.mapViewContainer}
-                onPress={() => { navigation.push('FullScreenMap', { activityData: activity, activityRegion: activityRegion }); }}>
+                onPress={() => { navigation.push('FullScreenMap', { activityRegion: activityRegion, activityTrack: polyLineTrack }); }}>
                 <MapView
                     style={styles.map}
                     initialRegion={activityRegion}
@@ -44,29 +55,34 @@ const ActivityScreen = (item) => {
                     <Marker
                         key={'start'}
                         coordinate={activity.route[0]}>
-                        <Callout
-                            style={styles.mapCallout}
-                            tooltip={true}>
-                            <View style={styles.markerView}>
-                                <Text style={styles.markerTitle}>Start</Text>
-                            </View>
-                        </Callout>
                     </Marker>
+                    <Marker
+                        key={'end'}
+                        coordinate={activity.route[lastCoordinate]}></Marker>
                     <Polyline
-                        coordinates={activity.route}
-                        strokeColor={colors.white} // fallback for when `strokeColors` is not supported by the map-provider
+                        coordinates={polyLineTrack}
+                        strokeColor={colors.black} // fallback for when `strokeColors` is not supported by the map-provider
+                        strokeColors={[
+                            '#7F0000',
+                            '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
+                            '#B24112',
+                            '#E5845C',
+                            '#238C23',
+                            '#7F0000'
+                        ]}
                         strokeWidth={3} />
                 </MapView>
             </TouchableOpacity>
-            <View style={styles.activityContainer}>
+            {/* <View style={styles.activityContainer}>
                 <View style={styles.activityInfo}>
                     <Text style={styles.activityName}>{activity.name}</Text>
                     <Text>{activity.type}</Text>
                     <Text>{activity.date}</Text>
                     <Text>{activity.start}</Text>
                     <Text>{activity.endTime}</Text>
+                    <Text>{`${distance}m`}</Text>
                 </View>
-            </View>
+            </View> */}
         </SafeAreaView>
     );
 }

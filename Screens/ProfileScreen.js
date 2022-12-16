@@ -16,7 +16,7 @@ const ProfileScreen = ({ navigation }) => {
     const signOut = () => {
         auth.signOut()
             .then(() => {
-                navigation.navigate(AuthenticationNavigator);
+                // navigation.navigate(AuthenticationNavigator);
             })
     }
     return (

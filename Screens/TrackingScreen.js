@@ -1,11 +1,10 @@
-import { StyleSheet, Button, TextInput, View, Keyboard } from 'react-native';
+import { StyleSheet, Button, TextInput, View, Keyboard, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
-import MapView from 'react-native-maps';
 import moment from 'moment/moment';
+import colors from '../colors';
 
 export default function TrackingScreen({ navigation }) {
 
@@ -21,6 +20,9 @@ export default function TrackingScreen({ navigation }) {
     const [activityStartTime, setActivityStartTime] = useState('');
 
     useEffect(() => {
+        // while (coordinatesArray.length > 0) {
+        //     coordinatesArray.pop();
+        // }
         if (activityStarted) {
             setShowStartActivity(true);
             setShowStopActivity(false);
@@ -36,9 +38,10 @@ export default function TrackingScreen({ navigation }) {
 
                     let location = await Location.getCurrentPositionAsync({});
                     setLocation(location);
+                    // setCoordinatesArray([...coordinatesArray, { latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] }]);
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
-                    altitudeArray.push({ altitude: location['coords']['altitude'] });
-                    // console.log(coordinatesArray);
+                    altitudeArray.push({ x: location['coords']['altitude'], y: moment().format('hh:mm:ss') });
+                    console.log(coordinatesArray);
                     // console.log(altitudeArray);
                 })();
             }, 1500);
@@ -52,13 +55,13 @@ export default function TrackingScreen({ navigation }) {
 
         if (name === '') {
             if (activity === 'walk') {
-                return `walk - ${moment().format('DD.MM.YYYY')}`;
+                return `walk - ${moment().format('DD.MM.YYYY')} 🚶`;
             } else if (activity === 'hike') {
-                return `hike - ${moment().format('DD.MM.YYYY')}`;
+                return `hike - ${moment().format('DD.MM.YYYY')} 🥾`;
             } else if (activity === 'cycle') {
-                return `cycle - ${moment().format('DD.MM.YYYY')}`;
+                return `cycle - ${moment().format('DD.MM.YYYY')} 🚴`;
             } else if (activity === 'run') {
-                return `run - ${moment().format('DD.MM.YYYY')}`;
+                return `run - ${moment().format('DD.MM.YYYY')} 🏃‍♂️`;
             }
         }
 
@@ -67,26 +70,31 @@ export default function TrackingScreen({ navigation }) {
 
     const endActivity = () => {
 
-        setActivityStarted(false);
-        setShowStartActivity(false);
-        setShowStopActivity(true);
+        if (coordinatesArray.length > 0) {
+            setActivityStarted(false);
+            setShowStartActivity(false);
+            setShowStopActivity(true);
 
-        let activityData = {
-            name: formatName(activityName, selectedActivityType),
-            date: moment().format('YYYY-MM-DD hh:mm:ss'),
-            type: selectedActivityType,
-            route: coordinatesArray,
-            altitude: altitudeArray,
-            start: activityStartTime,
-            endTime: moment().format('YYYY-MM-DD hh:mm:ss'),
-        };
+            console.log(`coordinates array is a ${typeof (coordinatesArray)}`);
 
-        navigation.push('ActivityScreen', { activityData: activityData });
+            const activitydata = {
+                name: formatName(activityName, selectedActivityType),
+                date: moment().format('YYYY-MM-DD hh:mm:ss'),
+                type: selectedActivityType,
+                route: coordinatesArray,
+                altitude: altitudeArray,
+                start: activityStartTime,
+                endTime: moment().format('YYYY-MM-DD hh:mm:ss'),
+            };
+
+            navigation.push('ActivityScreen', { activityData: activitydata });
+        }
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.activityInfoContainer}>
+                <Text>Track an activity</Text>
                 <TextInput
                     onChangeText={onChangeActivityName}
                     placeholder={'Activity Name'}
@@ -103,26 +111,26 @@ export default function TrackingScreen({ navigation }) {
                     <Picker.Item label='Hike' value='hike' />
                 </Picker>
             </View>
-            <Button
-                style={styles.buttons}
-                color='#32a852'
-                title='Start Activity'
-                disabled={showStartActivity}
-                onPress={() => {
-                    setActivityStartTime(moment().format('YYYY-MM-DD hh:mm:ss'));
-                    setActivityStarted(true);
-                    Keyboard.dismiss()
-                }} />
-            <Button
-                style={styles.buttons}
-                color='#a83232'
-                title='Stop Activity'
-                disabled={showStopActivity}
-                onPress={() => {
-                    endActivity();
-                }} />
-            <MapView
-                style={styles.map} />
+            <View style={styles.buttonContainer}>
+                <Button
+                    style={styles.buttons}
+                    color='#a83232'
+                    title='Stop Activity'
+                    disabled={showStopActivity}
+                    onPress={() => {
+                        endActivity();
+                    }} />
+                <Button
+                    style={styles.buttons}
+                    color='#32a852'
+                    title='Start Activity'
+                    disabled={showStartActivity}
+                    onPress={() => {
+                        setActivityStartTime(moment().format('YYYY-MM-DD hh:mm:ss'));
+                        setActivityStarted(true);
+                        Keyboard.dismiss()
+                    }} />
+            </View>
         </SafeAreaView>
     );
 }
@@ -134,9 +142,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     activityInfoContainer: {
+        width: '80%',
+    },
+    buttonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'space-evenly',
         width: '100%',
     },
-    buttons: {
-        width: 200,
-    }
+    buttons: {},
 })

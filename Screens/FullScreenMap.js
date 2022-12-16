@@ -6,8 +6,16 @@ import BackButtonComponent from '../Components/BackButtonComponent';
 
 const FullScreenMap = (item) => {
 
-    const activity = item.route.params.activityData;
+    console.log(item);
+
+    const activityTrack = item.route.params.activityTrack;
     const region = item.route.params.activityRegion;
+    console.log('#################  Full Screen  #################');
+    // console.log('activity: ' + activity);
+    console.log('activity track: ' + activityTrack);
+
+    // console.log('fullscreen map activity ' + activity.route);
+    // console.log(region);
 
     return (
         <SafeAreaView>
@@ -18,7 +26,7 @@ const FullScreenMap = (item) => {
                 loadingEnabled={true}>
                 <Marker
                     key={'start'}
-                    coordinate={activity.route[0]}>
+                    coordinate={activityTrack[0]}>
                     <Callout
                         style={styles.mapCallout}
                         tooltip={true}>
@@ -28,7 +36,7 @@ const FullScreenMap = (item) => {
                     </Callout>
                 </Marker>
                 <Polyline
-                    coordinates={activity.route}
+                    coordinates={activityTrack}
                     strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
                     strokeColors={[
                         '#7F0000',
