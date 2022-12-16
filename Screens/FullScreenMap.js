@@ -11,9 +11,9 @@ const FullScreenMap = (item) => {
     const region = item.route.params.activityRegion;
 
     console.log('#################  Full Screen  #################');
-    // console.log(item);
-    // console.log(activity);
-    // console.log(activityTrack);
+    // console.log(item); // For Testing
+    // console.log(activity); // For Testing
+    // console.log(activityTrack); // For Testing
 
     return (
         <SafeAreaView>

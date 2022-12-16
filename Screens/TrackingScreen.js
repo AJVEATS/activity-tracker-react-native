@@ -20,9 +20,6 @@ export default function TrackingScreen({ navigation }) {
     const [activityStartTime, setActivityStartTime] = useState('');
 
     useEffect(() => {
-        // while (coordinatesArray.length > 0) {
-        //     coordinatesArray.pop();
-        // }
         if (activityStarted) {
             setShowStartActivity(true);
             setShowStopActivity(false);
@@ -38,10 +35,9 @@ export default function TrackingScreen({ navigation }) {
 
                     let location = await Location.getCurrentPositionAsync({});
                     setLocation(location);
-                    // setCoordinatesArray([...coordinatesArray, { latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] }]);
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
                     altitudeArray.push({ x: location['coords']['altitude'], y: moment().format('hh:mm:ss') });
-                    console.log(coordinatesArray);
+                    // console.log(coordinatesArray);
                     // console.log(altitudeArray);
                 })();
             }, 1500);
