@@ -4,7 +4,6 @@ import { Picker } from '@react-native-picker/picker';
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import moment from 'moment/moment';
-import colors from '../colors';
 
 export default function TrackingScreen({ navigation }) {
 
@@ -21,9 +20,9 @@ export default function TrackingScreen({ navigation }) {
 
     useEffect(() => {
         if (activityStarted) {
+            // console.log('activity tracking has started');
             setShowStartActivity(true);
             setShowStopActivity(false);
-            // console.log('activity tracking has started');
             const interval = setInterval(() => {
                 (async () => {
 
@@ -70,8 +69,6 @@ export default function TrackingScreen({ navigation }) {
             setActivityStarted(false);
             setShowStartActivity(false);
             setShowStopActivity(true);
-
-            console.log(`coordinates array is a ${typeof (coordinatesArray)}`);
 
             const activitydata = {
                 name: formatName(activityName, selectedActivityType),

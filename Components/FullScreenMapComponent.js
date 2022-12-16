@@ -9,7 +9,6 @@ const FullScreenMapComponent = (data) => {
     const lastCoordinate = Object.keys(activityTrack).length - 1;
     const region = data.region;
 
-    console.log('#################  FullScreenMapComponent  #################');
     // console.log(activityTrack); // For Testing
     // console.log(region); // For Testing
     return (

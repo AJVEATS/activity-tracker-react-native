@@ -1,22 +1,19 @@
 /**
- * @fileoverview This file is for weather api that gets the current weather for the selected place.
- * It then displays its current temperature and a icon for its current weather 
+ * @fileoverview This file is for weather api that gets the current weather 
  */
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import colors from '../colors';
 
 
 const OpenWeatherMapAPI = ({ lat, lon }) => {
 
     let apiKey = "c615be41df83e8620d84a99ecba2db62";
 
-    const [temperature, setTemperature] = useState("");
-    const [weatherIcon, setWeatherIcon] = useState("");
-
-    // console.log(`latitiude${lat}`);
-    // console.log(`longtitude${lon}`);
+    const [temperature, setTemperature] = useState('');
+    const [locationName, setLocationName] = useState('');
+    const [condition, setCondition] = useState('');
+    const [weatherIcon, setWeatherIcon] = useState('');
 
     /**
      * @param {lat, lon} The places latitude and longtitude from the national trust api
@@ -29,7 +26,11 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
         fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${apiKey}&units=metric`)
             .then((response) => response.json())
             .then((responseJSON) => {
+                // console.log(responseJSON);
                 setTemperature(responseJSON.main.temp);
+                setLocationName(responseJSON.name);
+                setCondition(responseJSON.weather[1].description);
+                // setCondition(responseJSON.main)
                 if (responseJSON.weather[0].main === "Fog") {
                     setWeatherIcon(<Ionicons name={"cloud"} size={24} />)
                 } else if (responseJSON.weather[0].main === "Rain") {
@@ -65,6 +66,8 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
         <View style={styles.weatherInfo}>
             <View style={styles.weatherIcon}>{weatherIcon}</View>
             <Text style={styles.weatherTemp}>{Math.round(temperature * 10) / 10}{"\u00B0"}C</Text>
+            <Text>{locationName}</Text>
+            <Text>{condition}</Text>
         </View>
     );
 }
@@ -72,16 +75,16 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
 export default OpenWeatherMapAPI
 
 const styles = StyleSheet.create({
-    weatherInfo: {
-        flex: 1,
-        flexDirection: 'row',
-        marginBottom: 10,
-    },
-    weatherIcon: {
-        marginRight: 10,
-        alignSelf: 'center'
-    },
-    weatherTemp: {
-        fontSize: 22,
-    },
+    // weatherInfo: {
+    //     flex: 1,
+    //     flexDirection: 'row',
+    //     marginBottom: 10,
+    // },
+    // weatherIcon: {
+    //     marginRight: 10,
+    //     alignSelf: 'center'
+    // },
+    // weatherTemp: {
+    //     fontSize: 22,
+    // },
 })

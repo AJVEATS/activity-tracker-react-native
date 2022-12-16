@@ -10,7 +10,6 @@ const FullScreenMap = (item) => {
     const lastCoordinate = Object.keys(activityTrack).length - 1;
     const region = item.route.params.activityRegion;
 
-    console.log('#################  Full Screen  #################');
     // console.log(item); // For Testing
     // console.log(activity); // For Testing
     // console.log(activityTrack); // For Testing
