@@ -29,7 +29,7 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
                 // console.log(responseJSON);
                 setTemperature(responseJSON.main.temp);
                 setLocationName(responseJSON.name);
-                setCondition(responseJSON.weather[1].description);
+                setCondition(responseJSON.weather[0].description);
                 // setCondition(responseJSON.main)
                 if (responseJSON.weather[0].main === "Fog") {
                     setWeatherIcon(<Ionicons name={"cloud"} size={24} />)

@@ -1,5 +1,5 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Button, Dimensions, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,6 +8,7 @@ const FullScreenMapComponent = (data) => {
     const activityTrack = data.activityTrack;
     const lastCoordinate = Object.keys(activityTrack).length - 1;
     const region = data.region;
+    let mapStyle = data.mapStyle
 
     // console.log(activityTrack); // For Testing
     // console.log(region); // For Testing
@@ -15,7 +16,9 @@ const FullScreenMapComponent = (data) => {
         <MapView
             style={styles.map}
             initialRegion={region}
-            loadingEnabled={true}>
+            loadingEnabled={true}
+            showsCompass={false}
+            mapType={mapStyle}>
             <Marker
                 key={'start'}
                 coordinate={activityTrack[0]}>

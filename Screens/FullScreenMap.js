@@ -1,11 +1,14 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { Button, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import BackButtonComponent from '../Components/BackButtonComponent';
 import FullScreenMapComponent from '../Components/FullScreenMapComponent';
 
 const FullScreenMap = (item) => {
+    const [mapStyle, setMapStyle] = useState('standard');
+
     const activityTrack = item.route.params.activityTrack;
     const lastCoordinate = Object.keys(activityTrack).length - 1;
     const region = item.route.params.activityRegion;
@@ -14,14 +17,44 @@ const FullScreenMap = (item) => {
     // console.log(activity); // For Testing
     // console.log(activityTrack); // For Testing
 
+    const changeMapStyle = () => {
+        console.log('change map style function');
+        if (mapStyle === 'standard') {
+            setMapStyle('satellite');
+        } else if (mapStyle === 'satellite') {
+            setMapStyle('hybrid');
+        } else if (mapStyle === 'hybrid') {
+            setMapStyle('terrain');
+        } else if (mapStyle === 'terrain') {
+            setMapStyle('standard');
+        }
+    }
+
     return (
         <SafeAreaView>
             <BackButtonComponent />
-            <FullScreenMapComponent region={region} activityTrack={activityTrack} />
+            <FullScreenMapComponent region={region} activityTrack={activityTrack} mapStyle={mapStyle} />
+            <TouchableOpacity
+                style={styles.changeMapButton}
+                onPress={() => {
+                    changeMapStyle();
+                }} >
+                <Ionicons name={"color-palette-outline"} size={32} color={'white'} />
+            </TouchableOpacity>
         </SafeAreaView>
     )
 }
 
 export default FullScreenMap
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    changeMapButton: {
+        position: 'absolute',
+        bottom: 70,
+        right: 15,
+        padding: 10,
+        borderRadius: 10,
+        zIndex: 100,
+        backgroundColor: 'blue',
+    }
+})

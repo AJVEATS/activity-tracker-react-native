@@ -40,7 +40,7 @@ const ActivityScreen = (item) => {
     // console.log(activity);
     // console.log(activityRegion);
 
-    console.log(notes);
+    // console.log(notes);
 
     return (
         <SafeAreaView style={styles.container}>
