@@ -64,10 +64,14 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
 
     return (
         <View style={styles.weatherInfo}>
-            <View style={styles.weatherIcon}>{weatherIcon}</View>
-            <Text style={styles.weatherTemp}>{Math.round(temperature * 10) / 10}{"\u00B0"}C</Text>
-            <Text>{locationName}</Text>
-            <Text>{condition}</Text>
+            <View style={styles.weatherConditionContainer}>
+                <View style={styles.weatherIcon}>{weatherIcon}</View>
+                <Text>{condition}</Text>
+            </View>
+            <View style={styles.weatherTempContainer}>
+                <Text style={styles.weatherTemp}>{Math.round(temperature * 10) / 10}{"\u00B0"}C</Text>
+            </View>
+            {/* <Text>{locationName}</Text> */}
         </View>
     );
 }
@@ -75,16 +79,28 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
 export default OpenWeatherMapAPI
 
 const styles = StyleSheet.create({
-    // weatherInfo: {
-    //     flex: 1,
-    //     flexDirection: 'row',
-    //     marginBottom: 10,
-    // },
-    // weatherIcon: {
-    //     marginRight: 10,
-    //     alignSelf: 'center'
-    // },
-    // weatherTemp: {
-    //     fontSize: 22,
-    // },
+    weatherInfo: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    weatherConditionContainer: {
+        width: '70%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
+    },
+    weatherTempContainer: {
+        width: '30%',
+        display: 'flex',
+        justifyContent: 'center',
+        textAlign: 'center',
+    },
+    weatherTemp: {
+        width: 'auto',
+        backgroundColor: 'blue'
+    },
 })

@@ -7,7 +7,7 @@ const AuthenticationNavigator = () => {
     return (
         <appStack.Navigator >
             <appStack.Screen options={{ headerShown: false }} name="LoginScreen" component={LoginScreen} />
-            <appStack.Screen name="CreateAccountScreen" component={CreateAccountScreen} />
+            <appStack.Screen options={{ headerShown: false }} name="CreateAccountScreen" component={CreateAccountScreen} />
         </appStack.Navigator>
     )
 }
