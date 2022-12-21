@@ -1,10 +1,11 @@
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import MainBottomTabNavigator from '../Navigation/MainBottomTabNavigator';
+import colors from '../colors';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -33,33 +34,52 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.loginContainer}>
-            <Text>Login screen</Text>
-            <View style={styles.loginForm}>
-                <TextInput
-                    onChangeText={setEmail}
-                    value={email}
-                    placeholder={'Email'}
-                    keyboardType={'email-address'}
-                />
-                <TextInput
-                    onChangeText={setPassword}
-                    value={password}
-                    placeholder={'password'}
-                    secureTextEntry={true}
-                />
-                <Button
-                    color='blue'
-                    title='login'
-                    onPress={() => {
-                        login()
-                    }} />
-            </View>
-            <Button
-                color='#a83232'
-                title='Create Account'
-                onPress={() => {
-                    navigation.push('CreateAccountScreen');
-                }} />
+            <ImageBackground
+                style={styles.loginImage}
+                // Image owner https://unsplash.com/@jakobowens1
+                source={{ uri: 'https://images.unsplash.com/photo-1597892657493-6847b9640bac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' }}
+                resizeMode="cover">
+                <View style={styles.loginForm}>
+                    <Text style={styles.loginTitle}>Login</Text>
+                    <TextInput
+                        style={styles.loginInput}
+                        onChangeText={setEmail}
+                        value={email}
+                        placeholder={'Email'}
+                        keyboardType={'email-address'}
+                    />
+                    <TextInput
+                        style={styles.loginInput}
+                        onChangeText={setPassword}
+                        value={password}
+                        placeholder={'password'}
+                        secureTextEntry={true}
+                    />
+                    <Pressable
+                        style={styles.loginButton}
+                        accessibilityLabel='Login button'
+                        onPress={() => {
+                            login()
+                        }} >
+                        <Text style={styles.pressableText}>login</Text>
+                    </Pressable>
+                    <Pressable
+                        style={styles.createAccountButton}
+                        accessibilityLabel='create account button'
+                        onPress={() => {
+                            navigation.push('CreateAccountScreen')
+                        }} >
+                        <Text style={styles.pressableText}>create account</Text>
+                    </Pressable>
+                    {/* <Button
+                        color='#a83232'
+                        accessibilityLabel='create account button'
+                        title='Create Account'
+                        onPress={() => {
+                            navigation.push('CreateAccountScreen');
+                        }} /> */}
+                </View>
+            </ImageBackground>
         </SafeAreaView>
     )
 }
@@ -69,8 +89,44 @@ export default LoginScreen
 const styles = StyleSheet.create({
     loginContainer: {
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
     },
-    loginForm: {},
+    loginImage: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loginForm: {
+        width: '80%',
+    },
+    loginTitle: {
+        color: colors.white,
+        marginBottom: 10,
+        fontSize: 24
+    },
+    loginInput: {
+        backgroundColor: colors.white,
+        borderRadius: 4,
+        marginBottom: 10,
+        padding: 5,
+    },
+    loginButton: {
+        backgroundColor: colors.black,
+        borderRadius: 4,
+        padding: 10,
+        marginBottom: 10,
+        alignItems: 'center',
+    },
+    createAccountButton: {
+        backgroundColor: colors.black,
+        borderRadius: 4,
+        padding: 10,
+        alignItems: 'center',
+    },
+    pressableText: {
+        color: colors.white,
+        fontSize: 17,
+        fontStyle: 'bold',
+        textTransform: 'uppercase',
+    }
 })
