@@ -20,7 +20,6 @@ const LoginScreen = ({ navigation }) => {
     const login = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Signed in 
                 const user = userCredential.user;
                 // console.log(user.email);
                 navigation.navigate(MainBottomTabNavigator);
@@ -71,13 +70,6 @@ const LoginScreen = ({ navigation }) => {
                         }} >
                         <Text style={styles.pressableText}>create account</Text>
                     </Pressable>
-                    {/* <Button
-                        color='#a83232'
-                        accessibilityLabel='create account button'
-                        title='Create Account'
-                        onPress={() => {
-                            navigation.push('CreateAccountScreen');
-                        }} /> */}
                 </View>
             </ImageBackground>
         </SafeAreaView>
@@ -126,7 +118,7 @@ const styles = StyleSheet.create({
     pressableText: {
         color: colors.white,
         fontSize: 17,
-        fontStyle: 'bold',
+        fontWeight: 'bold',
         textTransform: 'uppercase',
     }
 })
