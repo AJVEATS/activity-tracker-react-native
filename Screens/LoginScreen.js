@@ -46,6 +46,7 @@ const LoginScreen = ({ navigation }) => {
                         value={email}
                         placeholder={'Email'}
                         keyboardType={'email-address'}
+                        autoCapitalize='none'
                     />
                     <TextInput
                         style={styles.loginInput}
@@ -89,7 +90,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     loginForm: {
-        width: '80%',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        borderRadius: 4,
+        padding: 10,
+        width: '85%'
     },
     loginTitle: {
         color: colors.white,

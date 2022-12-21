@@ -17,8 +17,8 @@ const MainBottomTabNavigator = () => {
                     let iconName;
                     if (route.name === 'Track Activity') {
                         iconName = focused
-                            ? 'walk'
-                            : 'walk-outline';
+                            ? 'stopwatch'
+                            : 'stopwatch-outline';
                     } else if (route.name === 'Your Profile') {
                         iconName = focused
                             ? 'person'

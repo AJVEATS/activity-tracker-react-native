@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore';
 
 import MainBottomTabNavigator from '../Navigation/MainBottomTabNavigator';
 import BackButtonComponent from '../Components/BackButtonComponent';
@@ -11,19 +12,44 @@ import colors from '../colors';
 
 const CreateAccountScreen = ({ navigation }) => {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState(null);
+    const [firstName, setFirstName] = useState(null);
+    const [lastName, setLastName] = useState(null);
+    const [password, setPassword] = useState(null);
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     // Initialize Firebase Authentication and get a reference to the service
     const auth = getAuth(app);
 
+    const db = getFirestore(app);
+
     const createAccount = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 // console.log(user.email);
+                try {
+
+                    const collectionRef = doc(db, 'users', user.uid);
+                    const newUser = {
+                        uid: user.uid,
+                        email: email,
+                        firstname: firstName,
+                        lastname: lastName,
+                    }
+                    setDoc(collectionRef, newUser, { merge: true });
+                    // const docRef = setDoc(doc(db, "users", user.uid), {
+                    //     uid: user.uid,
+                    //     email: email,
+                    //     firstname: firstName,
+                    //     lastname: lastName,
+                    // });
+                    // console.log("Document written with ID: ", docRef.id);
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+
                 navigation.navigate(MainBottomTabNavigator);
             })
             .catch((error) => {
@@ -37,7 +63,7 @@ const CreateAccountScreen = ({ navigation }) => {
             <ImageBackground
                 style={styles.createAccountImage}
                 // Image owner https://unsplash.com/@jakobowens1
-                source={{ uri: 'https://images.unsplash.com/photo-1597892657493-6847b9640bac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' }}
+                source={{ uri: 'https://images.unsplash.com/photo-1608570004513-472c257f2149?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' }}
                 resizeMode="cover">
                 <BackButtonComponent />
                 <View style={styles.createAccountFormContainer}>
@@ -49,6 +75,19 @@ const CreateAccountScreen = ({ navigation }) => {
                             value={email}
                             placeholder={'Email'}
                             keyboardType={'email-address'}
+                            autoCapitalize='none'
+                        />
+                        <TextInput
+                            style={styles.createAccountInput}
+                            onChangeText={setFirstName}
+                            value={firstName}
+                            placeholder={'First name'}
+                        />
+                        <TextInput
+                            style={styles.createAccountInput}
+                            onChangeText={setLastName}
+                            value={lastName}
+                            placeholder={'Last name'}
                         />
                         <TextInput
                             style={styles.createAccountInput}
@@ -92,9 +131,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    createAccountForm: {
-        width: '80%',
-    },
     createAccountTitle: {
         color: colors.white,
         marginBottom: 10,
@@ -118,5 +154,11 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: 'bold',
         textTransform: 'uppercase',
+    },
+    createAccountForm: {
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        borderRadius: 4,
+        padding: 10,
+        width: '85%'
     }
 })
