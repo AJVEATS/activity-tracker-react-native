@@ -4,10 +4,19 @@ import { getDistance } from 'geolib';
 import colors from '../colors';
 import BackButtonComponent from '../Components/BackButtonComponent';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewComponent';
 import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
+import ActivityInfoComponent from '../Components/ActivityInfoComponent';
+import { useNavigation } from '@react-navigation/native';
+
+
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore';
 
 const ActivityScreen = (item) => {
+    const navigation = useNavigation();
     const [notes, onChangeNotes] = useState(null);
 
     const activity = item.route.params.activityData;
@@ -35,27 +44,42 @@ const ActivityScreen = (item) => {
         return formattedDistance;
     }
 
-    // console.log(activityTrack);
-    // console.log(polyLineTrack);
-    // console.log(activity);
-    // console.log(activityRegion);
+    // console.log(activityTrack); // For Testing
+    // console.log(polyLineTrack); // For Testing
+    // console.log(activity); // For Testing
+    // console.log(activityRegion); // For Testing
+    // console.log(calculateActivityDistance()); // For Testing
+    // console.log(notes); // For Testing
 
-    // console.log(notes);
+    const discardActivity = () => {
+        // console.log('Discard activity pressed');
+        navigation.goBack();
+    }
+
+    const saveActivity = () => {
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        const db = getFirestore(app);
+
+        try {
+            const collectionRef = doc(db, 'activities', 'testWalk2');
+            setDoc(collectionRef, activity, { merge: true });
+            navigation.goBack();
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+        // console.log('Save activity pressed');
+    }
 
     return (
         <SafeAreaView style={styles.container}>
             <BackButtonComponent />
             <ActivityMapPreviewComponent activityTrack={activityTrack} polyLineTrack={polyLineTrack} />
+
             <View style={styles.activityContainer}>
-                <View style={styles.activityInfo}>
-                    <Text style={styles.activityName}>{activity.name}</Text>
-                    <Text>{activity.type}</Text>
-                    {/* <Text>{activity.date}</Text> */}
-                    <Text>{activity.start}</Text>
-                    <Text>{activity.endTime}</Text>
-                    <Text>{calculateActivityDistance()}</Text>
-                    <OpenWeatherMapAPI lat={activityTrack[0]['latitude']} lon={activityTrack[0]['longitude']} />
-                </View>
+                <ActivityInfoComponent activityInfo={activity} activityDistance={calculateActivityDistance()} />
+                <OpenWeatherMapAPI lat={activityTrack[0]['latitude']} lon={activityTrack[0]['longitude']} />
                 <View style={styles.notesContainer}>
                     <TextInput
                         style={styles.notes}
@@ -70,14 +94,14 @@ const ActivityScreen = (item) => {
                         color='#a83232'
                         title='Discard Activity'
                         onPress={() => {
-                            console.log('Save activity pressed')
+                            discardActivity();
                         }} />
                     <Button
                         style={styles.buttons}
                         color='#a83232'
                         title='Save Activity'
                         onPress={() => {
-                            console.log('Save activity pressed')
+                            saveActivity();
                         }} />
                 </View>
             </View>
@@ -93,11 +117,7 @@ const styles = StyleSheet.create({
     },
     activityContainer: {
         width: '100%',
-        paddingHorizontal: 20,
-        // display: 'flex',
-        // alignContent: 'center',
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        padding: 20,
         backgroundColor: colors.white,
     },
     activityInfo: {
@@ -112,6 +132,8 @@ const styles = StyleSheet.create({
     notesContainer: {
     },
     buttonContainer: {
+        width: '100%',
+        // backgroundColor: 'blue',
         display: 'flex',
         flexDirection: 'row',
         alignContent: 'space-between'

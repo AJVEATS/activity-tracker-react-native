@@ -1,10 +1,10 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import React, { useEffect, useState } from 'react';
-import { getFirestore, collection, doc, getDocs, query, where, getDocFromCache, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 import AuthenticationNavigator from '../Navigation/AuthenticationNavigator';
 

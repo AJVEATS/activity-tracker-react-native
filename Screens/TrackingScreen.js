@@ -64,6 +64,7 @@ export default function TrackingScreen({ navigation }) {
     }
 
     const endActivity = () => {
+        // console.log('end activity initiated');
 
         if (coordinatesArray.length > 0) {
             setActivityStarted(false);

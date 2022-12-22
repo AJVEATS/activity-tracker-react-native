@@ -56,22 +56,24 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
             try {
                 fetchWeather(lat, lon);
             } catch (error) {
-                console.warn(error)
+                console.warn(error);
             }
         }
         getData();
     }, []);
 
     return (
-        <View style={styles.weatherInfo}>
-            <View style={styles.weatherConditionContainer}>
-                <View style={styles.weatherIcon}>{weatherIcon}</View>
-                <Text>{condition}</Text>
+        <View>
+            <View style={styles.weatherInfo}>
+                <View style={styles.weatherConditionContainer}>
+                    <View style={styles.weatherIcon}>{weatherIcon}</View>
+                    <Text style={styles.weatherCondition}>{condition}</Text>
+                </View>
+                <View style={styles.weatherTempContainer}>
+                    <Text style={styles.weatherTemp}>{Math.round(temperature * 10) / 10}{"\u00B0"}C</Text>
+                </View>
             </View>
-            <View style={styles.weatherTempContainer}>
-                <Text style={styles.weatherTemp}>{Math.round(temperature * 10) / 10}{"\u00B0"}C</Text>
-            </View>
-            {/* <Text>{locationName}</Text> */}
+            <Text>{locationName}</Text>
         </View>
     );
 }
@@ -91,7 +93,11 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-around',
+    },
+    weatherIcon: {
+    },
+    weatherCondition: {
     },
     weatherTempContainer: {
         width: '30%',
@@ -101,6 +107,7 @@ const styles = StyleSheet.create({
     },
     weatherTemp: {
         width: 'auto',
-        backgroundColor: 'blue'
+        textAlign: 'center',
+        // backgroundColor: 'blue'
     },
 })
