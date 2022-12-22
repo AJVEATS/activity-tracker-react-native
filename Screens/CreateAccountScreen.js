@@ -104,12 +104,6 @@ const CreateAccountScreen = ({ navigation }) => {
                             }} >
                             <Text style={styles.pressableText}>create account</Text>
                         </Pressable>
-                        {/* <Button
-                            color='blue'
-                            title='create account'
-                            onPress={() => {
-                                createAccount();
-                            }} /> */}
                     </View>
                 </View>
             </ImageBackground>

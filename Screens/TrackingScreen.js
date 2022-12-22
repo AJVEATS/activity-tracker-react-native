@@ -19,6 +19,14 @@ export default function TrackingScreen({ navigation }) {
     const [activityStartTime, setActivityStartTime] = useState('');
 
     useEffect(() => {
+
+        const clearActivity = navigation.addListener("focus", () => {
+            onChangeActivityName('');
+            setCoordinatesArray([]);
+            setAltitudeArray([]);
+            setActivityStartTime('');
+        })
+
         if (activityStarted) {
             // console.log('activity tracking has started');
             setShowStartActivity(true);
@@ -44,19 +52,21 @@ export default function TrackingScreen({ navigation }) {
         } else if (!activityStarted) {
             // console.log('activity tracking has stopped');
         }
-    }, [activityStarted]);
+    }, [activityStarted, navigation]);
 
     const formatName = (name, activity) => {
 
         if (name === '') {
             if (activity === 'walk') {
-                return `walk - ${moment().format('DD.MM.YYYY')} 🚶`;
+                return `🚶 Walk - ${moment().format('DD.MM.YYYY')}`;
             } else if (activity === 'hike') {
-                return `hike - ${moment().format('DD.MM.YYYY')} 🥾`;
+                return `🥾 Hike - ${moment().format('DD.MM.YYYY')}`;
             } else if (activity === 'cycle') {
-                return `cycle - ${moment().format('DD.MM.YYYY')} 🚴`;
+                return `🚴 Ride - ${moment().format('DD.MM.YYYY')} `;
             } else if (activity === 'run') {
-                return `run - ${moment().format('DD.MM.YYYY')} 🏃‍♂️`;
+                return `🏃‍♂️Run - ${moment().format('DD.MM.YYYY')}`;
+            } else if (activity === 'mountainBiking') {
+                return `🚵 Ride - ${moment().format('DD.MM.YYYY')}`;
             }
         }
 
@@ -102,6 +112,7 @@ export default function TrackingScreen({ navigation }) {
                     <Picker.Item label='Walk' value='walk' />
                     <Picker.Item label='Run' value='run' />
                     <Picker.Item label='Cycle' value='cycle' />
+                    <Picker.Item label='Mountain Biking' value='mountainBiking' />
                     <Picker.Item label='Hike' value='hike' />
                 </Picker>
             </View>

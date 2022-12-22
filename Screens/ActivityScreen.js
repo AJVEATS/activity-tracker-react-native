@@ -4,7 +4,7 @@ import { getDistance } from 'geolib';
 import colors from '../colors';
 import BackButtonComponent from '../Components/BackButtonComponent';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import moment from 'moment/moment';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewComponent';
 import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
@@ -14,10 +14,32 @@ import { useNavigation } from '@react-navigation/native';
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 const ActivityScreen = (item) => {
     const navigation = useNavigation();
     const [notes, onChangeNotes] = useState(null);
+    const [userID, setUserID] = useState(null);
+    const [userEmail, setUserEmail] = useState(null);
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Firebase Authentication and get a reference to the service
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user.uid;
+            setUserID(uid);
+            const email = user.email;
+            setUserEmail(email);
+            // console.log(`user ID is - ${uid}`);
+            // console.log(`email is - ${email}`);
+        } else {
+            // User is signed out
+        }
+    });
 
     const activity = item.route.params.activityData;
     const activityTrack = activity.route;
@@ -63,7 +85,13 @@ const ActivityScreen = (item) => {
         const db = getFirestore(app);
 
         try {
-            const collectionRef = doc(db, 'activities', 'testWalk2');
+            activity.uid = userID;
+
+            if (notes != null) {
+                activity.notes = notes;
+            }
+
+            const collectionRef = doc(db, 'activities', `${userID}:${moment().format('YYYY-MM-DD hh:mm:ss')}`);
             setDoc(collectionRef, activity, { merge: true });
             navigation.goBack();
         } catch (e) {
@@ -78,15 +106,20 @@ const ActivityScreen = (item) => {
             <ActivityMapPreviewComponent activityTrack={activityTrack} polyLineTrack={polyLineTrack} />
 
             <View style={styles.activityContainer}>
-                <ActivityInfoComponent activityInfo={activity} activityDistance={calculateActivityDistance()} />
-                <OpenWeatherMapAPI lat={activityTrack[0]['latitude']} lon={activityTrack[0]['longitude']} />
+                <ActivityInfoComponent
+                    activityInfo={activity}
+                    activityDistance={calculateActivityDistance()} />
+                <OpenWeatherMapAPI
+                    lat={activityTrack[0]['latitude']}
+                    lon={activityTrack[0]['longitude']} />
                 <View style={styles.notesContainer}>
                     <TextInput
                         style={styles.notes}
                         onChangeText={onChangeNotes}
                         placeholder={'Notes'}
                         value={notes}
-                        onSubmitEditing={Keyboard.dismiss} />
+                        onSubmitEditing={Keyboard.dismiss}
+                        textAlignVertical={'top'} />
                 </View>
                 <View style={styles.buttonContainer}>
                     <Button
@@ -122,20 +155,25 @@ const styles = StyleSheet.create({
     },
     activityInfo: {
         width: '100%',
-        // paddingHorizontal: 20,
         paddingTop: 15,
     },
     activityName: {
         fontSize: 22,
         marginBottom: 10,
     },
-    notesContainer: {
+    notes: {
+        backgroundColor: colors.white,
+        height: 100,
+        elevation: 5,
+        marginBottom: 10,
+        borderRadius: 4,
+        padding: 5,
     },
     buttonContainer: {
         width: '100%',
-        // backgroundColor: 'blue',
         display: 'flex',
         flexDirection: 'row',
-        alignContent: 'space-between'
-    }
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+    },
 });

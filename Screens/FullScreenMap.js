@@ -18,7 +18,7 @@ const FullScreenMap = (item) => {
     // console.log(activityTrack); // For Testing
 
     const changeMapStyle = () => {
-        console.log('change map style function');
+        // console.log('change map style function');
         if (mapStyle === 'standard') {
             setMapStyle('satellite');
         } else if (mapStyle === 'satellite') {

@@ -11,14 +11,11 @@ import AuthenticationNavigator from '../Navigation/AuthenticationNavigator';
 const ProfileScreen = ({ navigation }) => {
     const [userID, setUserID] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
-    const [todos, setTodos] = useState([]);
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     // Initialize Firebase Authentication and get a reference to the service
     const auth = getAuth(app);
-
-    const db = getFirestore(app);
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -32,21 +29,6 @@ const ProfileScreen = ({ navigation }) => {
             // User is signed out
         }
     });
-
-    const fetchPost = async () => {
-
-        await getDocs(collection(db, "users", userID))
-            .then((querySnapshot) => {
-                const newData = querySnapshot.docs
-                    .map((doc) => ({ ...doc.data(), id: doc.id }));
-                setTodos(newData);
-                console.log(todos, newData);
-            })
-
-    }
-    useEffect(() => {
-        fetchPost();
-    }, [])
 
     const signOut = () => {
         auth.signOut()

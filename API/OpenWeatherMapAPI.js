@@ -63,7 +63,7 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
     }, []);
 
     return (
-        <View>
+        <View style={styles.weatherContainer}>
             <View style={styles.weatherInfo}>
                 <View style={styles.weatherConditionContainer}>
                     <View style={styles.weatherIcon}>{weatherIcon}</View>
@@ -73,7 +73,7 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
                     <Text style={styles.weatherTemp}>{Math.round(temperature * 10) / 10}{"\u00B0"}C</Text>
                 </View>
             </View>
-            <Text>{locationName}</Text>
+            <Text style={styles.weatherLocation}>{locationName}</Text>
         </View>
     );
 }
@@ -81,6 +81,10 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
 export default OpenWeatherMapAPI
 
 const styles = StyleSheet.create({
+    weatherContainer: {
+        width: '100%',
+        marginBottom: 10,
+    },
     weatherInfo: {
         width: '100%',
         display: 'flex',
@@ -108,6 +112,8 @@ const styles = StyleSheet.create({
     weatherTemp: {
         width: 'auto',
         textAlign: 'center',
-        // backgroundColor: 'blue'
+    },
+    weatherLocation: {
+        textAlign: 'center'
     },
 })
