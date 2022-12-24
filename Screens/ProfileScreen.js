@@ -7,11 +7,13 @@ import React, { useEffect, useState } from 'react';
 import { getFirestore, collection, getDoc, doc, Firestore } from 'firebase/firestore';
 
 import AuthenticationNavigator from '../Navigation/AuthenticationNavigator';
+import ProfileInfoComponent from '../Components/ProfileInfoComponent';
 
 const ProfileScreen = ({ navigation }) => {
     const [userFirstname, setUserFirstname] = useState('loading...');
     const [userLastname, setUserLastname] = useState('loading...');
     const [userEmail, setUserEmail] = useState('loading...');
+    const [userInfo, setUsetInfo] = useState([]);
 
     useEffect(() => {
 
@@ -34,7 +36,8 @@ const ProfileScreen = ({ navigation }) => {
 
         const db = getFirestore(app);
 
-        const docRef = doc(db, "users", user.uid);
+        // const docRef = doc(db, "users", user.uid);
+        const docRef = doc(db, 'users', 'HPApDQRYl4gUslEzx1Cb2KHLJ703');
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -42,12 +45,18 @@ const ProfileScreen = ({ navigation }) => {
             setUserEmail(docSnap.data().email);
             setUserFirstname(docSnap.data().firstname);
             setUserLastname(docSnap.data().lastname);
+
+            setUsetInfo({
+                userID: user.uid,
+                email: docSnap.data().email,
+                firstname: docSnap.data().firstname,
+                lastname: docSnap.data().lastname,
+            });
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
         }
     }
-
 
     const signOut = () => {
         auth.signOut()
@@ -55,15 +64,23 @@ const ProfileScreen = ({ navigation }) => {
                 navigation.navigate(AuthenticationNavigator);
             })
     }
+
+    const deleteAccount = (uid) => {
+        console.log(`account delete initialised ${uid}`);
+    }
+
     return (
         <SafeAreaView>
-            <Text>Profile Screen</Text>
-            <Text>{userEmail}</Text>
-            <Text>{userFirstname}</Text>
-            <Text>{userLastname}</Text>
+            <ProfileInfoComponent info={userInfo} />
+            <Button
+                title='Update info'
+                onPress={() => navigation.push('Edit Info Screen', { info: userInfo })} />
             <Button
                 title='Sign out'
                 onPress={() => signOut()} />
+            <Button
+                title='Delete Account'
+                onPress={() => deleteAccount(userInfo.userID)} />
         </SafeAreaView>
     )
 }

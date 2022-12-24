@@ -1,11 +1,13 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileScreen from "../Screens/ProfileScreen";
+import EditInfoScreen from '../Screens/EditInfoScreen';
 
 const ProfileNavigator = () => {
     const appStack = createStackNavigator();
     return (
         <appStack.Navigator>
             <appStack.Screen options={{ headerShown: false }} name="Profile Screen" component={ProfileScreen} />
+            <appStack.Screen options={{ headerShown: false }} name="Edit Info Screen" component={EditInfoScreen} />
         </appStack.Navigator>
     )
 }
