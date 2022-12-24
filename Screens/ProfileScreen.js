@@ -4,7 +4,7 @@ import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import React, { useEffect, useState } from 'react';
-import { getFirestore, collection, getDoc, doc, Firestore } from 'firebase/firestore';
+import { getFirestore, getDoc, doc, deleteDoc } from 'firebase/firestore';
 
 import AuthenticationNavigator from '../Navigation/AuthenticationNavigator';
 import ProfileInfoComponent from '../Components/ProfileInfoComponent';
@@ -33,9 +33,9 @@ const ProfileScreen = ({ navigation }) => {
     // Initialize Firebase Authentication and get a reference to the service
     const auth = getAuth(app);
 
-    async function getUserDetails(user) {
+    const db = getFirestore(app);
 
-        const db = getFirestore(app);
+    async function getUserDetails(user) {
 
         const docRef = doc(db, "users", user.uid);
         // const docRef = doc(db, 'users', 'HPApDQRYl4gUslEzx1Cb2KHLJ703');
@@ -68,12 +68,15 @@ const ProfileScreen = ({ navigation }) => {
             })
     }
 
-    const deleteAccount = (uid) => {
+    async function deleteAccount(uid) {
         console.log(`account delete initialised ${uid}`);
+        await deleteDoc(doc(db, 'users', uid));
+        navigation.navigate(AuthenticationNavigator);
     }
 
     return (
         <SafeAreaView>
+            <Text style={styles.title}>Welcome back {userFirstname} 👋</Text>
             <ProfileInfoComponent info={userInfo} />
             <Button
                 title='Update info'
@@ -90,4 +93,11 @@ const ProfileScreen = ({ navigation }) => {
 
 export default ProfileScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    title: {
+        paddingTop: 15,
+        paddingBottom: 10,
+        fontSize: 24,
+        paddingHorizontal: '5%',
+    }
+})
