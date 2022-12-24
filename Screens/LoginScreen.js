@@ -52,7 +52,7 @@ const LoginScreen = ({ navigation }) => {
                         style={styles.loginInput}
                         onChangeText={setPassword}
                         value={password}
-                        placeholder={'password'}
+                        placeholder={'Password'}
                         secureTextEntry={true}
                     />
                     <Pressable

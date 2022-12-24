@@ -25,6 +25,7 @@ const CreateAccountScreen = ({ navigation }) => {
     const db = getFirestore(app);
 
     const createAccount = () => {
+        console.log('create account initiated');
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
@@ -93,7 +94,7 @@ const CreateAccountScreen = ({ navigation }) => {
                             style={styles.createAccountInput}
                             onChangeText={setPassword}
                             value={password}
-                            placeholder={'password'}
+                            placeholder={'Password'}
                             secureTextEntry={true}
                         />
                         <Pressable
