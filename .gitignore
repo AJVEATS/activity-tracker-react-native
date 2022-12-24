@@ -1,4 +1,5 @@
 node_modules/
+Components/FireBaseAuthComponent.js
 .expo/
 dist/
 npm-debug.*
