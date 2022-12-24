@@ -40,13 +40,6 @@ const CreateAccountScreen = ({ navigation }) => {
                         lastname: lastName,
                     }
                     setDoc(collectionRef, newUser, { merge: true });
-                    // const docRef = setDoc(doc(db, "users", user.uid), {
-                    //     uid: user.uid,
-                    //     email: email,
-                    //     firstname: firstName,
-                    //     lastname: lastName,
-                    // });
-                    // console.log("Document written with ID: ", docRef.id);
                 } catch (e) {
                     console.error("Error adding document: ", e);
                 }
