@@ -11,6 +11,7 @@ const ProfileInfoComponent = (data) => {
             <Text>{user.email}</Text>
             <Text>{user.firstname}</Text>
             <Text>{user.lastname}</Text>
+            <Text>{user.activity}</Text>
         </View>
     )
 }

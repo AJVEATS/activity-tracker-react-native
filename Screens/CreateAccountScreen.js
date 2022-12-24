@@ -9,12 +9,14 @@ import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestor
 import MainBottomTabNavigator from '../Navigation/MainBottomTabNavigator';
 import BackButtonComponent from '../Components/BackButtonComponent';
 import colors from '../colors';
+import { Picker } from '@react-native-picker/picker';
 
 const CreateAccountScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState(null);
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
+    const [favouriteActivity, setFavouriteActivity] = useState(null);
     const [password, setPassword] = useState(null);
 
     // Initialize Firebase
@@ -38,6 +40,7 @@ const CreateAccountScreen = ({ navigation }) => {
                         email: email,
                         firstname: firstName,
                         lastname: lastName,
+                        activity: favouriteActivity,
                     }
                     setDoc(collectionRef, newUser, { merge: true });
                 } catch (e) {
@@ -83,6 +86,20 @@ const CreateAccountScreen = ({ navigation }) => {
                             value={lastName}
                             placeholder={'Last name'}
                         />
+                        <View style={styles.createAccountSelectContainer}>
+                            <Picker
+                                style={styles.createAccountSelectInput}
+                                selectedValue={favouriteActivity}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setFavouriteActivity(itemValue)
+                                }>
+                                <Picker.Item label='Walking' value='Walking' />
+                                <Picker.Item label='Running' value='Running' />
+                                <Picker.Item label='Cycling' value='Cycling' />
+                                <Picker.Item label='Mountain Biking' value='Mountain Biking' />
+                                <Picker.Item label='Hiking' value='Hiking' />
+                            </Picker>
+                        </View>
                         <TextInput
                             style={styles.createAccountInput}
                             onChangeText={setPassword}
@@ -129,6 +146,26 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginBottom: 10,
         padding: 5,
+    },
+    createAccountSelectContainer: {
+        overflow: 'hidden',
+        borderRadius: 4,
+        marginBottom: 10,
+        backgroundColor: colors.white,
+        height: 37,
+        fontSize: 10,
+    },
+    createAccountSelectInput: {
+        opacity: 0.45,
+        width: '110%',
+        transform: [
+            { scaleX: 0.9 },
+            { scaleY: 0.9 },
+            { translateX: -20 },
+            { translateY: -8 },
+        ],
+        padding: 0,
+        margin: 0,
     },
     createAccountButton: {
         backgroundColor: colors.black,

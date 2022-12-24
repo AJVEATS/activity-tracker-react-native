@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { firebaseConfig } from './FirebaseAuthComponent';
 import { initializeApp } from 'firebase/app';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
+import { Picker } from '@react-native-picker/picker';
 
 const EditInfoComponent = (data) => {
     console.log(data.info);
@@ -11,10 +12,10 @@ const EditInfoComponent = (data) => {
     const [updatedEmail, updateEmail] = useState(user.email);
     const [updatedFirstname, updateFirstname] = useState(user.firstname);
     const [updatedLastName, updateLastname] = useState(user.lastname)
+    const [updatedActivity, updateActivity] = useState(user.activity);
 
     const updateUserInfo = (uid) => {
-        console.log(`update user info for ${uid}`);
-
+        // console.log(`update user info for ${uid}`);
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -26,6 +27,7 @@ const EditInfoComponent = (data) => {
                 email: updatedEmail,
                 firstname: updatedFirstname,
                 lastname: updatedLastName,
+                activity: updatedActivity,
             }
             setDoc(collectionRef, updatedUser, { merge: true });
         } catch (e) {
@@ -54,6 +56,20 @@ const EditInfoComponent = (data) => {
                     onChangeText={updateLastname}
                     value={updatedLastName}
                 />
+                <View style={styles.selectContainer}>
+                    <Picker
+                        style={styles.updateUserActivity}
+                        selectedValue={updatedActivity}
+                        onValueChange={(itemValue, itemIndex) =>
+                            updateActivity(itemValue)
+                        }>
+                        <Picker.Item label='Walking' value='Walking' />
+                        <Picker.Item label='Running' value='Running' />
+                        <Picker.Item label='Cycling' value='Cycling' />
+                        <Picker.Item label='Mountain Biking' value='Mountain Biking' />
+                        <Picker.Item label='Hiking' value='Hiking' />
+                    </Picker>
+                </View>
                 <Button
                     title='update info'
                     onPress={() => {
@@ -92,5 +108,22 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 1,
         borderRadius: 4,
-    }
+    },
+    selectContainer: {
+        height: 30,
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderRadius: 4,
+        marginBottom: 10,
+    },
+    updateUserActivity: {
+        fontSize: 28,
+        width: '110%',
+        transform: [
+            { scaleX: 1.3 },
+            { scaleY: 1.3 },
+            { translateX: 40 },
+            { translateY: -11 },
+        ],
+    },
 })

@@ -13,6 +13,7 @@ const ProfileScreen = ({ navigation }) => {
     const [userFirstname, setUserFirstname] = useState('loading...');
     const [userLastname, setUserLastname] = useState('loading...');
     const [userEmail, setUserEmail] = useState('loading...');
+    const [favouriteActivity, setFavouriteActivity] = useState('loading...');
     const [userInfo, setUsetInfo] = useState([]);
 
     useEffect(() => {
@@ -36,8 +37,8 @@ const ProfileScreen = ({ navigation }) => {
 
         const db = getFirestore(app);
 
-        // const docRef = doc(db, "users", user.uid);
-        const docRef = doc(db, 'users', 'HPApDQRYl4gUslEzx1Cb2KHLJ703');
+        const docRef = doc(db, "users", user.uid);
+        // const docRef = doc(db, 'users', 'HPApDQRYl4gUslEzx1Cb2KHLJ703');
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -45,12 +46,14 @@ const ProfileScreen = ({ navigation }) => {
             setUserEmail(docSnap.data().email);
             setUserFirstname(docSnap.data().firstname);
             setUserLastname(docSnap.data().lastname);
+            setFavouriteActivity(docSnap.data().activity);
 
             setUsetInfo({
                 userID: user.uid,
                 email: docSnap.data().email,
                 firstname: docSnap.data().firstname,
                 lastname: docSnap.data().lastname,
+                activity: docSnap.data().activity
             });
         } else {
             // doc.data() will be undefined in this case
