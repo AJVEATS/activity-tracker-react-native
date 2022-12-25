@@ -13,9 +13,9 @@ import { useNavigation } from '@react-navigation/native';
 
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartComponent';
 
 const ActivityScreen = (item) => {
     const navigation = useNavigation();
@@ -112,6 +112,8 @@ const ActivityScreen = (item) => {
                 <OpenWeatherMapAPI
                     lat={activityTrack[0]['latitude']}
                     lon={activityTrack[0]['longitude']} />
+                <ActivityAltitudeChartComponent
+                    altitude={activity.altitude} />
                 <View style={styles.notesContainer}>
                     <TextInput
                         style={styles.notes}

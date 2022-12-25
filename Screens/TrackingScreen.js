@@ -43,7 +43,7 @@ export default function TrackingScreen({ navigation }) {
                     let location = await Location.getCurrentPositionAsync({});
                     setLocation(location);
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
-                    altitudeArray.push({ x: location['coords']['altitude'], y: moment().format('hh:mm:ss') });
+                    altitudeArray.push({ x: moment().format('hh:mm:ss'), y: location['coords']['altitude'] });
                     // console.log(coordinatesArray);
                     // console.log(altitudeArray);
                 })();

@@ -10,7 +10,7 @@ const ProfileInfoComponent = (data) => {
     return (
         <View style={styles.infoContainer}>
             <View style={styles.userInfo}>
-                <Text style={styles.userInfoTitle}>Your info</Text>
+                <Text style={styles.userInfoTitle}>Your info:</Text>
                 <Text style={styles.info}>
                     <Text style={{ fontWeight: 'bold' }}>Email: </Text>
                     {user.email}

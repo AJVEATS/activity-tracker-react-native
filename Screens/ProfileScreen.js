@@ -69,7 +69,7 @@ const ProfileScreen = ({ navigation }) => {
     }
 
     async function deleteAccount(uid) {
-        console.log(`account delete initialised ${uid}`);
+        // console.log(`account delete initialised ${uid}`);
         await deleteDoc(doc(db, 'users', uid));
         navigation.navigate(AuthenticationNavigator);
     }
