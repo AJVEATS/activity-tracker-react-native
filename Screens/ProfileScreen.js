@@ -26,7 +26,18 @@ const ProfileScreen = ({ navigation }) => {
                 // User is signed out
             }
         });
-    }, [])
+    }, []);
+
+    const profileInfoRerender = navigation.addListener("focus", () => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // setUserEmail(user.email);
+                getUserDetails(user);
+            } else {
+                // User is signed out
+            }
+        });
+    })
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);

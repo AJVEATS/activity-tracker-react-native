@@ -4,7 +4,7 @@ import colors from '../colors';
 
 const ProfileInfoComponent = (data) => {
 
-    console.log(data.info);
+    // console.log(data.info);
     const user = data.info;
 
     return (

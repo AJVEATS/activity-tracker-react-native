@@ -4,9 +4,11 @@ import { firebaseConfig } from './FirebaseAuthComponent';
 import { initializeApp } from 'firebase/app';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
 
 const EditInfoComponent = (data) => {
-    console.log(data.info);
+    const navigation = useNavigation();
+    // console.log(data.info);
     const user = data.info;
 
     const [updatedEmail, updateEmail] = useState(user.email);
@@ -30,6 +32,7 @@ const EditInfoComponent = (data) => {
                 activity: updatedActivity,
             }
             setDoc(collectionRef, updatedUser, { merge: true });
+            navigation.goBack();
         } catch (e) {
             console.error("Error adding document: ", e);
         }
@@ -118,12 +121,10 @@ const styles = StyleSheet.create({
     },
     updateUserActivity: {
         fontSize: 28,
-        width: '110%',
+        width: '100%',
         transform: [
-            { scaleX: 1.3 },
-            { scaleY: 1.3 },
-            { translateX: 40 },
-            { translateY: -11 },
+            { translateX: 0 },
+            { translateY: -13 },
         ],
     },
 })
