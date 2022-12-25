@@ -60,15 +60,15 @@ export default function TrackingScreen({ navigation }) {
     const formatName = (name, activity) => {
 
         if (name === '') {
-            if (activity === 'walk') {
+            if (activity === 'Walk') {
                 return `🚶 Walk - ${moment().format('DD.MM.YYYY')}`;
-            } else if (activity === 'hike') {
+            } else if (activity === 'Hike') {
                 return `🥾 Hike - ${moment().format('DD.MM.YYYY')}`;
-            } else if (activity === 'cycle') {
+            } else if (activity === 'Cycle') {
                 return `🚴 Ride - ${moment().format('DD.MM.YYYY')} `;
-            } else if (activity === 'run') {
+            } else if (activity === 'Run') {
                 return `🏃 Run - ${moment().format('DD.MM.YYYY')}`;
-            } else if (activity === 'mountainBiking') {
+            } else if (activity === 'Mountain Biking') {
                 return `🚵 Ride - ${moment().format('DD.MM.YYYY')}`;
             }
         }
@@ -112,11 +112,11 @@ export default function TrackingScreen({ navigation }) {
                     onValueChange={(itemValue, itemIndex) =>
                         setSelectedActivityType(itemValue)
                     }>
-                    <Picker.Item label='Walk' value='walk' />
-                    <Picker.Item label='Run' value='run' />
-                    <Picker.Item label='Cycle' value='cycle' />
-                    <Picker.Item label='Mountain Biking' value='mountainBiking' />
-                    <Picker.Item label='Hike' value='hike' />
+                    <Picker.Item label='Walk' value='Walk' />
+                    <Picker.Item label='Run' value='Run' />
+                    <Picker.Item label='Cycle' value='Cycle' />
+                    <Picker.Item label='Mountain Biking' value='Mountain Biking' />
+                    <Picker.Item label='Hike' value='Hike' />
                 </Picker>
             </View>
             <View style={styles.buttonContainer}>
