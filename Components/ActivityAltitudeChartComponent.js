@@ -4,12 +4,12 @@ import React from 'react'
 import colors from '../colors';
 
 const ActivityAltitudeChartComponent = (data) => {
-    console.log(data.altitude);
+    // console.log(data.altitude);
 
     return (
-        <View>
-            {/* <Text>ActivityAltitudeChartComponent</Text> */}
-            <VictoryChart>
+        <View style={styles.ActivityAltitudeChartComponent}>
+            <VictoryChart
+                style={styles.VictoryChart}>
                 <VictoryLine
                     data={data.altitude}
                     stoke={colors.black}
@@ -21,4 +21,6 @@ const ActivityAltitudeChartComponent = (data) => {
 
 export default ActivityAltitudeChartComponent
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+})

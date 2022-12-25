@@ -18,6 +18,8 @@ export default function TrackingScreen({ navigation }) {
     const [selectedActivityType, setSelectedActivityType] = useState('walk');
     const [activityStartTime, setActivityStartTime] = useState('');
 
+    let altitudeCounter = 0;
+
     useEffect(() => {
 
         const clearActivity = navigation.addListener("focus", () => {
@@ -43,7 +45,8 @@ export default function TrackingScreen({ navigation }) {
                     let location = await Location.getCurrentPositionAsync({});
                     setLocation(location);
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
-                    altitudeArray.push({ x: moment().format('hh:mm:ss'), y: location['coords']['altitude'] });
+                    altitudeArray.push({ x: altitudeCounter, y: location['coords']['altitude'] });
+                    altitudeCounter = altitudeCounter + 1;
                     // console.log(coordinatesArray);
                     // console.log(altitudeArray);
                 })();
