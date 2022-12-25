@@ -67,7 +67,7 @@ export default function TrackingScreen({ navigation }) {
             } else if (activity === 'cycle') {
                 return `🚴 Ride - ${moment().format('DD.MM.YYYY')} `;
             } else if (activity === 'run') {
-                return `🏃‍♂️Run - ${moment().format('DD.MM.YYYY')}`;
+                return `🏃 Run - ${moment().format('DD.MM.YYYY')}`;
             } else if (activity === 'mountainBiking') {
                 return `🚵 Ride - ${moment().format('DD.MM.YYYY')}`;
             }

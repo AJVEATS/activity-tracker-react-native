@@ -66,12 +66,29 @@ const ActivityScreen = (item) => {
         return formattedDistance;
     }
 
+    const calculateActivityDuration = (start, end) => {
+        const duration = moment.duration(moment(start).diff(moment(end)));
+        const activityDuration = {
+            hours: duration.hours(),
+            minutes: duration.minutes(),
+            seconds: duration.seconds(),
+        };
+
+        activity.time = activityDuration;
+
+        return activityDuration;
+    }
+
+
+    const activityTime = calculateActivityDuration(activity.endTime, activity.start);
+
     // console.log(activityTrack); // For Testing
     // console.log(polyLineTrack); // For Testing
     // console.log(activity); // For Testing
     // console.log(activityRegion); // For Testing
     // console.log(calculateActivityDistance()); // For Testing
     // console.log(notes); // For Testing
+    // console.log(activityTime); // For Testing
 
     const discardActivity = () => {
         // console.log('Discard activity pressed');
@@ -105,7 +122,6 @@ const ActivityScreen = (item) => {
             <BackButtonComponent />
             <ScrollView>
                 <ActivityMapPreviewComponent activityTrack={activityTrack} polyLineTrack={polyLineTrack} />
-
                 <View style={styles.activityContainer}>
                     <ActivityInfoComponent
                         activityInfo={activity}

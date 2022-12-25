@@ -16,7 +16,7 @@ const CreateAccountScreen = ({ navigation }) => {
     const [email, setEmail] = useState(null);
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
-    const [favouriteActivity, setFavouriteActivity] = useState(null);
+    const [favouriteActivity, setFavouriteActivity] = useState('Walking');
     const [password, setPassword] = useState(null);
 
     // Initialize Firebase
@@ -27,7 +27,7 @@ const CreateAccountScreen = ({ navigation }) => {
     const db = getFirestore(app);
 
     const createAccount = () => {
-        console.log('create account initiated');
+        // console.log('create account initiated');
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;

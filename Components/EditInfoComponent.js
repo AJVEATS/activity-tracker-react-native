@@ -1,10 +1,11 @@
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { firebaseConfig } from './FirebaseAuthComponent';
 import { initializeApp } from 'firebase/app';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import colors from '../colors';
 
 const EditInfoComponent = (data) => {
     const navigation = useNavigation();
@@ -73,12 +74,12 @@ const EditInfoComponent = (data) => {
                         <Picker.Item label='Hiking' value='Hiking' />
                     </Picker>
                 </View>
-                <Button
-                    title='update info'
-                    onPress={() => {
-                        updateUserInfo(user.userID);
-                    }}
-                />
+                <Pressable
+                    style={styles.accountButton}
+                    accessibilityLabel='Update Info button'
+                    onPress={() => updateUserInfo(user.userID)} >
+                    <Text style={styles.pressableText}>Update Info</Text>
+                </Pressable>
             </View>
         </View>
     )
@@ -126,5 +127,19 @@ const styles = StyleSheet.create({
             { translateX: 0 },
             { translateY: -13 },
         ],
+    },
+    accountButton: {
+        backgroundColor: colors.black,
+        borderRadius: 4,
+        padding: 10,
+        marginHorizontal: 0,
+        marginBottom: 10,
+        alignItems: 'center',
+    },
+    pressableText: {
+        color: colors.white,
+        fontSize: 17,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
     },
 })

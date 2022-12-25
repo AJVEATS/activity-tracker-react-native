@@ -64,6 +64,7 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
 
     return (
         <View style={styles.weatherContainer}>
+            <Text style={styles.weatherLocation}><Text style={{ fontWeight: 'bold' }}>Location: </Text> {locationName}</Text>
             <View style={styles.weatherInfo}>
                 <View style={styles.weatherConditionContainer}>
                     <View style={styles.weatherIcon}>{weatherIcon}</View>
@@ -73,7 +74,6 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
                     <Text style={styles.weatherTemp}>{Math.round(temperature * 10) / 10}{"\u00B0"}C</Text>
                 </View>
             </View>
-            <Text style={styles.weatherLocation}>{locationName}</Text>
         </View>
     );
 }
@@ -114,6 +114,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     weatherLocation: {
-        textAlign: 'center'
+        paddingBottom: 10,
+        fontSize: 16,
+        // textAlign: 'center'
     },
 })
