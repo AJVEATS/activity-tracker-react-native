@@ -8,7 +8,8 @@ export default function App() {
   LogBox.ignoreLogs([
     'Require cycle:',
     'AsyncStorage'
-  ])
+  ]);
+
   return (
     <NavigationContainer>
       <MainStackNavigator />
