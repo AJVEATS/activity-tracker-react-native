@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 
 const ExploreScreen = ({ navigation }) => {
@@ -17,9 +16,7 @@ const ExploreScreen = ({ navigation }) => {
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            setActivities(activities => [...activities, { activityId: doc.id, activityData: doc.data() }])
-            // activities.push({ activityId: doc.id, activityData: doc.data() });
+            setActivities(activities => [...activities, { activityId: doc.id, activityData: doc.data() }]);
             // console.log(doc.id, " => ", doc.data());
         });
     }
@@ -29,26 +26,23 @@ const ExploreScreen = ({ navigation }) => {
             setActivities([]);
             getActivities();
         })
-        // getActivities();
     }, []);
 
     return (
-        <SafeAreaView>
-            <Text>Explore</Text>
+        <SafeAreaView style={styles.exploreScreen}>
+            <Text style={styles.exploreTitle}>Explore Past Activities</Text>
             <FlatList
                 data={activities}
+                ItemSeparatorComponent={() => {
+                    return (
+                        <View style={styles.flatListSeperator}></View>
+                    )
+                }}
                 renderItem={({ item }) => (
-                    <View>
+                    <TouchableOpacity style={styles.activityCard}>
                         <Text>{item.activityData.name}</Text>
-                        <Text>{item.activityData.type}</Text>
-                        <Text>{item.activityData.date}</Text>
-                        <Text>{item.activityData.endTime}</Text>
-                        <Text>{item.activityData.start}</Text>
-                        <Text>{item.activityData.time.seconds}</Text>
-                        <Text>{item.activityData.uid}</Text>
-                    </View>
+                    </TouchableOpacity>
                 )}
-            // keyExtractor={(item) => item.activityId}
             />
         </SafeAreaView>
     )
@@ -56,4 +50,22 @@ const ExploreScreen = ({ navigation }) => {
 
 export default ExploreScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    exploreScreen: {
+        marginHorizontal: 20,
+        marginTop: 5,
+    },
+    exploreTitle: {
+        fontSize: 24,
+        marginBottom: 10,
+    },
+    flatListSeperator: {
+        height: 10,
+    },
+    activityCard: {
+        borderWidth: 2,
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderRadius: 4,
+    },
+})
