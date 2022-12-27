@@ -4,15 +4,33 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import colors from '../colors';
+import { getAuth } from 'firebase/auth';
 
 const ExploreScreen = ({ navigation }) => {
     const [activities, setActivities] = useState([]);
 
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const user = (auth.currentUser);
+    console.log(user.uid)
+    // setUserID(user.uid);
+
+    useEffect(() => {
+        const getActivitiesRerender = navigation.addListener("focus", () => {
+            setActivities([]);
+            getActivities();
+
+        })
+    }, []);
+
     async function getActivities() {
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
+
         const db = getFirestore(app);
-        const q = query(collection(db, "activities"));
+
+        const q = query(collection(db, "activities"), where('uid', '==', user.uid));
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -20,13 +38,6 @@ const ExploreScreen = ({ navigation }) => {
             // console.log(doc.id, " => ", doc.data());
         });
     }
-
-    useEffect(() => {
-        const getActivitiesRerender = navigation.addListener("focus", () => {
-            setActivities([]);
-            getActivities();
-        })
-    }, []);
 
     return (
         <SafeAreaView style={styles.exploreScreen}>
@@ -43,6 +54,11 @@ const ExploreScreen = ({ navigation }) => {
                         <Text>{item.activityData.name}</Text>
                     </TouchableOpacity>
                 )}
+                ListEmptyComponent={() => {
+                    return (
+                        <Text style={styles.noActivities}>No Activity History 😥</Text>
+                    )
+                }}
             />
         </SafeAreaView>
     )
@@ -53,7 +69,7 @@ export default ExploreScreen
 const styles = StyleSheet.create({
     exploreScreen: {
         marginHorizontal: 20,
-        marginTop: 5,
+        marginTop: 10,
     },
     exploreTitle: {
         fontSize: 24,
@@ -61,6 +77,13 @@ const styles = StyleSheet.create({
     },
     flatListSeperator: {
         height: 10,
+    },
+    noActivities: {
+        alignSelf: 'center',
+        marginTop: 20,
+        fontSize: 18,
+        color: colors.black,
+        opacity: 0.8,
     },
     activityCard: {
         borderWidth: 2,

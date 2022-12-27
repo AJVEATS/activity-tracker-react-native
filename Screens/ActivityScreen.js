@@ -21,26 +21,14 @@ const ActivityScreen = (item) => {
     const navigation = useNavigation();
     const [notes, onChangeNotes] = useState(null);
     const [activityWeather, setActivityWeather] = useState([]);
-    const [userID, setUserID] = useState(null);
-    const [userEmail, setUserEmail] = useState(null);
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     // Initialize Firebase Authentication and get a reference to the service
     const auth = getAuth(app);
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const uid = user.uid;
-            setUserID(uid);
-            const email = user.email;
-            setUserEmail(email);
-            // console.log(`user ID is - ${uid}`);
-            // console.log(`email is - ${email}`);
-        } else {
-            // User is signed out
-        }
-    });
+    const user = (auth.currentUser);
+    const userID = user.uid;
 
     const activity = item.route.params.activityData;
     const activityTrack = activity.route;
