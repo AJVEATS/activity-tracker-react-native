@@ -97,15 +97,13 @@ const ActivityScreen = (item) => {
         return gain;
     }
 
-    const getActivityWeather = (temperature, condition) => {
-        console.log(`temp: ${temperature} condition: ${condition}`);
+    const getActivityWeather = (temperature, condition, location) => {
+        // console.log(`temp: ${temperature} condition: ${condition} location ${location}`);
         activityWeather.push({ temperature: temperature, condition: condition });
+        activity.location = location;
         activity.weather = activityWeather;
         return null;
     }
-
-    // console.log(calculateAltitudeGain());
-
 
     const activityTime = calculateActivityDuration(activity.endTime, activity.start);
 
@@ -118,6 +116,7 @@ const ActivityScreen = (item) => {
     // console.log(calculateActivityDistance()); // For Testing
     // console.log(notes); // For Testing
     // console.log(activityTime); // For Testing
+    // console.log(calculateAltitudeGain()); // For Testing
 
     const discardActivity = () => {
         // console.log('Discard activity pressed');
