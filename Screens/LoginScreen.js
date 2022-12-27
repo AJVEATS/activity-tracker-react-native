@@ -6,6 +6,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import MainBottomTabNavigator from '../Navigation/MainBottomTabNavigator';
 import colors from '../colors';
+import BackButtonComponent from '../Components/BackButtonComponent';
 
 const LoginScreen = ({ navigation }) => {
 
