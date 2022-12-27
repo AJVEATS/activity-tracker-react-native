@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-const OpenWeatherMapAPI = ({ lat, lon }) => {
+const OpenWeatherMapAPI = ({ lat, lon, setWeather }) => {
 
     let apiKey = "c615be41df83e8620d84a99ecba2db62";
 
@@ -30,6 +30,7 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
                 setTemperature(responseJSON.main.temp);
                 setLocationName(responseJSON.name);
                 setCondition(responseJSON.weather[0].description);
+                setWeather(responseJSON.main.temp, responseJSON.weather[0].description);
                 // setCondition(responseJSON.main)
                 if (responseJSON.weather[0].main === "Fog") {
                     setWeatherIcon(<Ionicons name={"cloud"} size={24} />)
@@ -55,6 +56,8 @@ const OpenWeatherMapAPI = ({ lat, lon }) => {
         async function getData() {
             try {
                 fetchWeather(lat, lon);
+                // const roundTemp = Math.round(temperature * 10) / 10;
+                // setWeather((Math.round(temperature * 10) / 10), condition)
             } catch (error) {
                 console.warn(error);
             }

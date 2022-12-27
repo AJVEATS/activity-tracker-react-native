@@ -97,6 +97,13 @@ const ActivityScreen = (item) => {
         return gain;
     }
 
+    const getActivityWeather = (temperature, condition) => {
+        console.log(`temp: ${temperature} condition: ${condition}`);
+        activityWeather.push({ temperature: temperature, condition: condition });
+        activity.weather = activityWeather;
+        return null;
+    }
+
     // console.log(calculateAltitudeGain());
 
 
@@ -150,7 +157,8 @@ const ActivityScreen = (item) => {
                         activityDistance={calculateActivityDistance()} />
                     <OpenWeatherMapAPI
                         lat={activityTrack[0]['latitude']}
-                        lon={activityTrack[0]['longitude']} />
+                        lon={activityTrack[0]['longitude']}
+                        setWeather={getActivityWeather} />
                     <ActivityAltitudeChartComponent
                         altitude={activity.altitude} />
                     <View style={styles.notesContainer}>
