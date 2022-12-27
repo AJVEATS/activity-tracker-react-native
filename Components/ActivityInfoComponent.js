@@ -28,6 +28,7 @@ const ActivityInfoComponent = (data) => {
             <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity type: </Text>{activity.type}</Text>
             <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity time: </Text>{formatTime(activity.time)}</Text>
             <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity distance: </Text>{data.activityDistance}</Text>
+            <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity Gain: </Text>{activity.altitudeGain}m</Text>
         </View>
     )
 }

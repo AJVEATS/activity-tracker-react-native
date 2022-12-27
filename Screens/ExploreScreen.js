@@ -20,9 +20,6 @@ const ExploreScreen = ({ navigation }) => {
             // doc.data() is never undefined for query doc snapshots
             setActivities(activities => [...activities, { activityId: doc.id, activityData: doc.data() }])
             // activities.push({ activityId: doc.id, activityData: doc.data() });
-            // activities.push({ activityId: location['coords']['latitude'], longitude: location['coords']['longitude'] })
-            // console.log(activities[0].activityId);
-            // console.log(activities);
             // console.log(doc.id, " => ", doc.data());
         });
     }

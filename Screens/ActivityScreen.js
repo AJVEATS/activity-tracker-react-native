@@ -20,6 +20,7 @@ import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartC
 const ActivityScreen = (item) => {
     const navigation = useNavigation();
     const [notes, onChangeNotes] = useState(null);
+    const [activityWeather, setActivityWeather] = useState([]);
     const [userID, setUserID] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
 
@@ -79,8 +80,29 @@ const ActivityScreen = (item) => {
         return activityDuration;
     }
 
+    const calculateAltitudeGained = () => {
+        let gain = 0;
+
+        // activity.altitude = [{ "x": 0, "y": 0 }, { "x": 1, "y": 2 }, { "x": 2, "y": 10 }, { "x": 3, "y": 3 }, { "x": 4, "y": 10 }, { "x": 5, "y": 0 }, { "x": 6, "y": 0 }, { "x": 7, "y": 0 }, { "x": 8, "y": 0 }, { "x": 9, "y": 0 }];    // For Testing
+
+        for (let i = 1; i < activity.altitude.length; i++) {
+            if (activity.altitude[i]['y'] > activity.altitude[i - 1]['y']) {
+                gain += activity.altitude[i]['y'] - activity.altitude[i - 1]['y'];
+            }
+        }
+        // console.log(`altitude gained ${gain}`); // For Testing
+
+        activity.altitudeGain = gain;
+
+        return gain;
+    }
+
+    // console.log(calculateAltitudeGain());
+
 
     const activityTime = calculateActivityDuration(activity.endTime, activity.start);
+
+    const activityGain = calculateAltitudeGained();
 
     // console.log(activityTrack); // For Testing
     // console.log(polyLineTrack); // For Testing
