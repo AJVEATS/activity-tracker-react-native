@@ -6,16 +6,15 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import colors from '../colors';
 import { getAuth } from 'firebase/auth';
+import PastActivityCard from '../Components/PastActivityCard';
 
 const ExploreScreen = ({ navigation }) => {
     const [activities, setActivities] = useState([]);
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-
     const user = (auth.currentUser);
-    console.log(user.uid)
-    // setUserID(user.uid);
+    // console.log(user.uid); // For Testing
 
     useEffect(() => {
         const getActivitiesRerender = navigation.addListener("focus", () => {
@@ -35,7 +34,7 @@ const ExploreScreen = ({ navigation }) => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             setActivities(activities => [...activities, { activityId: doc.id, activityData: doc.data() }]);
-            // console.log(doc.id, " => ", doc.data());
+            // console.log(doc.id, " => ", doc.data()); // For Testing
         });
     }
 
@@ -50,13 +49,16 @@ const ExploreScreen = ({ navigation }) => {
                     )
                 }}
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={styles.activityCard}>
-                        <Text>{item.activityData.name}</Text>
-                    </TouchableOpacity>
+                    <PastActivityCard activityData={item.activityData} />
                 )}
                 ListEmptyComponent={() => {
                     return (
                         <Text style={styles.noActivities}>No Activity History 😥</Text>
+                    )
+                }}
+                ListFooterComponent={() => {
+                    return (
+                        <View style={styles.flatListFooter}></View>
                     )
                 }}
             />
@@ -78,17 +80,14 @@ const styles = StyleSheet.create({
     flatListSeperator: {
         height: 10,
     },
+    flatListFooter: {
+        height: 50,
+    },
     noActivities: {
         alignSelf: 'center',
         marginTop: 20,
         fontSize: 18,
         color: colors.black,
         opacity: 0.8,
-    },
-    activityCard: {
-        borderWidth: 2,
-        borderStyle: 'solid',
-        borderColor: 'black',
-        borderRadius: 4,
     },
 })

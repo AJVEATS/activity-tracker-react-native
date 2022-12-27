@@ -36,16 +36,12 @@ const styles = StyleSheet.create({
     },
     userInfo: {
         width: '90%',
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderWidth: 2,
-        borderStyle: 'solid',
-        borderRadius: 4,
         marginBottom: 10,
     },
     userInfoTitle: {
-        fontSize: 20,
+        fontSize: 22,
         marginBottom: 5,
+        fontWeight: 'bold',
     },
     info: {
         fontSize: 18,

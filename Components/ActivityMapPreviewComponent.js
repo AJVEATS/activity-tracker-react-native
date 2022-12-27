@@ -28,11 +28,10 @@ const ActivityMapPreview = (data) => {
                 loadingEnabled={true}>
                 <Marker
                     key={'start'}
-                    coordinate={activityTrack[0]}>
-                </Marker>
+                    coordinate={activityTrack[0]} />
                 <Marker
                     key={'end'}
-                    coordinate={activityTrack[lastCoordinate]}></Marker>
+                    coordinate={activityTrack[lastCoordinate]} />
                 <Polyline
                     coordinates={polyLineTrack}
                     strokeColor={colors.black} // fallback for when `strokeColors` is not supported by the map-provider

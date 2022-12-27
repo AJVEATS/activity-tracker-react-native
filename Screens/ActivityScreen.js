@@ -52,6 +52,8 @@ const ActivityScreen = (item) => {
             formattedDistance = `${distance}m`;
         }
 
+        activity.distance = formattedDistance;
+
         return formattedDistance;
     }
 
@@ -63,7 +65,17 @@ const ActivityScreen = (item) => {
             seconds: duration.seconds(),
         };
 
-        activity.time = activityDuration;
+        let formattedTime = '';
+
+        if (activityDuration.hours == 0 && activityDuration.minutes != 0) {
+            formattedTime = `${activityDuration.minutes}m ${activityDuration.seconds}s`;
+        } else if (activityDuration.minutes == 0) {
+            formattedTime = `${activityDuration.seconds}s`;
+        } else {
+            formattedTime = `${activityDuration.hours}h ${activityDuration.minutes}m ${activityDuration.seconds}s`;
+        }
+
+        activity.time = formattedTime;
 
         return activityDuration;
     }
@@ -80,7 +92,7 @@ const ActivityScreen = (item) => {
         }
         // console.log(`altitude gained ${gain}`); // For Testing
 
-        activity.altitudeGain = gain;
+        activity.altitudeGain = `${gain.toFixed(2)}m`;
 
         return gain;
     }
@@ -112,6 +124,7 @@ const ActivityScreen = (item) => {
     }
 
     const saveActivity = () => {
+        // console.log('Save activity pressed');    // For Testing
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
 
@@ -130,7 +143,6 @@ const ActivityScreen = (item) => {
         } catch (e) {
             console.error("Error adding document: ", e);
         }
-        // console.log('Save activity pressed');
     }
 
     return (

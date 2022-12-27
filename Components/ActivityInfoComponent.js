@@ -6,19 +6,19 @@ const ActivityInfoComponent = (data) => {
 
     // console.log(data.activityDistance);
 
-    const formatTime = (time) => {
-        let formattedTime = '';
+    // const formatTime = (time) => {
+    //     let formattedTime = '';
 
-        if (time.hours == 0 && time.minutes != 0) {
-            formattedTime = `${time.minutes}m ${time.seconds}s`;
-        } else if (time.minutes == 0) {
-            formattedTime = `${time.seconds}s`;
-        } else {
-            formattedTime = `${time.hours}h ${time.minutes}m ${time.seconds}s`;
-        }
+    //     if (time.hours == 0 && time.minutes != 0) {
+    //         formattedTime = `${time.minutes}m ${time.seconds}s`;
+    //     } else if (time.minutes == 0) {
+    //         formattedTime = `${time.seconds}s`;
+    //     } else {
+    //         formattedTime = `${time.hours}h ${time.minutes}m ${time.seconds}s`;
+    //     }
 
-        return formattedTime;
-    }
+    //     return formattedTime;
+    // }
 
     // console.log(formatTime(activity.time)); // For Testing
 
@@ -26,9 +26,9 @@ const ActivityInfoComponent = (data) => {
         <View style={styles.activityInfoContainer}>
             <Text style={styles.activityName}>{activity.name}</Text>
             <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity type: </Text>{activity.type}</Text>
-            <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity time: </Text>{formatTime(activity.time)}</Text>
+            <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity time: </Text>{activity.time}</Text>
             <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity distance: </Text>{data.activityDistance}</Text>
-            <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity Gain: </Text>{activity.altitudeGain}m</Text>
+            <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity Gain: </Text>{activity.altitudeGain}</Text>
         </View>
     )
 }
