@@ -15,7 +15,7 @@ export default function TrackingScreen({ navigation }) {
     const [showStartActivity, setShowStartActivity] = useState(false);
     const [showStopActivity, setShowStopActivity] = useState(true);
     const [activityName, onChangeActivityName] = useState('');
-    const [selectedActivityType, setSelectedActivityType] = useState('walk');
+    const [selectedActivityType, setSelectedActivityType] = useState('Walk');
     const [activityStartTime, setActivityStartTime] = useState('');
 
     let altitudeCounter = 0;
@@ -59,7 +59,10 @@ export default function TrackingScreen({ navigation }) {
 
     const formatName = (name, activity) => {
 
-        if (name === '') {
+        if (name == '') {
+            // console.log(name);  // For Testing
+            // console.log(actotesivity);  // For Testing
+            // return `🚶 Walk - ${moment().format('DD.MM.YYYY')}`;
             if (activity === 'Walk') {
                 return `🚶 Walk - ${moment().format('DD.MM.YYYY')}`;
             } else if (activity === 'Hike') {
