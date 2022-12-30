@@ -30,14 +30,6 @@ const PastActivityCardMap = (data) => {
             <Polyline
                 coordinates={activityRoute}
                 strokeColor={colors.black}
-                strokeColors={[
-                    '#7F0000',
-                    '#00000000',
-                    '#B24112',
-                    '#E5845C',
-                    '#238C23',
-                    '#7F0000'
-                ]}
                 strokeWidth={3} />
         </MapView>
     )

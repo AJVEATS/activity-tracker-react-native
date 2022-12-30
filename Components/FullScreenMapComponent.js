@@ -38,21 +38,13 @@ const FullScreenMapComponent = (data) => {
                     style={styles.mapCallout}
                     tooltip={true}>
                     <View style={styles.markerView}>
-                        <Text style={styles.markerTitle}>End</Text>
+                        <Text style={styles.markerTitle}>Finish</Text>
                     </View>
                 </Callout>
             </Marker>
             <Polyline
                 coordinates={activityTrack}
                 strokeColor="#000"
-                strokeColors={[
-                    '#7F0000',
-                    '#00000000',
-                    '#B24112',
-                    '#E5845C',
-                    '#238C23',
-                    '#7F0000'
-                ]}
                 strokeWidth={3} />
         </MapView>
     )

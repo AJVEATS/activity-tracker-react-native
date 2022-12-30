@@ -4,7 +4,7 @@ import React from 'react';
 const ActivityInfoComponent = (data) => {
     const activity = data.activityInfo;
 
-    // console.log(data.activityDistance); // For Testing
+    // console.log(activity); // For Testing
     // console.log(formatTime(activity.time)); // For Testing
 
     return (

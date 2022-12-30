@@ -65,7 +65,7 @@ const OpenWeatherMapAPI = ({ lat, lon, setWeather }) => {
 
     return (
         <View style={styles.weatherContainer}>
-            <Text style={styles.weatherLocation}><Text style={{ fontWeight: 'bold' }}>Location: </Text> {locationName}</Text>
+            {/* <Text style={styles.weatherLocation}><Text style={{ fontWeight: 'bold' }}>Location: </Text> {locationName}</Text> */}
             <View style={styles.weatherInfo}>
                 <View style={styles.weatherConditionContainer}>
                     <View style={styles.weatherIcon}>{weatherIcon}</View>

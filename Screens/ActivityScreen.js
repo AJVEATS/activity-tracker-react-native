@@ -184,14 +184,14 @@ const ActivityScreen = (item) => {
                     <View style={styles.buttonContainer}>
                         <Button
                             style={styles.buttons}
-                            color='#a83232'
+                            color={colors.black}
                             title='Discard Activity'
                             onPress={() => {
                                 discardActivity();
                             }} />
                         <Button
                             style={styles.buttons}
-                            color='#a83232'
+                            color={colors.black}
                             title='Save Activity'
                             onPress={() => {
                                 saveActivity();
@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderRadius: 4,
         padding: 5,
+        marginHorizontal: 10,
     },
     buttonContainer: {
         width: '100%',
@@ -236,5 +237,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
+        marginBottom: 10,
     },
 });

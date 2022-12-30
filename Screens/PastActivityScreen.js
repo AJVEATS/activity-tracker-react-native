@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import BackButtonComponent from '../Components/BackButtonComponent';
@@ -20,7 +20,7 @@ const PastActivityScreen = (data) => {
                 <Text style={styles.notes}>{activity.notes}</Text>
             )
         } else {
-            console.log('no notes');
+            // console.log('no notes');
         }
     }
 
