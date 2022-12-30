@@ -1,3 +1,7 @@
+/**
+ * @fileoverview This file represets the ProfileNavigator which is used to navigate between the
+ * ProfileScreen and the EditInfoScreen.
+ */
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileScreen from "../Screens/ProfileScreen";
 import EditInfoScreen from '../Screens/EditInfoScreen';

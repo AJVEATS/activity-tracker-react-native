@@ -1,10 +1,10 @@
-import { Button, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BackButtonComponent from '../Components/BackButtonComponent';
 import FullScreenMapComponent from '../Components/FullScreenMapComponent';
+import colors from '../colors';
 
 const FullScreenMap = (item) => {
     const [mapStyle, setMapStyle] = useState('standard');
@@ -18,7 +18,7 @@ const FullScreenMap = (item) => {
     // console.log(activityTrack); // For Testing
 
     const changeMapStyle = () => {
-        // console.log('change map style function');
+        // console.log('change map style function'); // For Testing
         if (mapStyle === 'standard') {
             setMapStyle('satellite');
         } else if (mapStyle === 'satellite') {
@@ -39,7 +39,7 @@ const FullScreenMap = (item) => {
                 onPress={() => {
                     changeMapStyle();
                 }} >
-                <Ionicons name={"color-palette-outline"} size={32} color={'white'} />
+                <Ionicons name={"color-palette-outline"} size={32} color={colors.black} />
             </TouchableOpacity>
         </SafeAreaView>
     )
@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         zIndex: 100,
-        backgroundColor: 'blue',
+        backgroundColor: colors.white,
     }
 })

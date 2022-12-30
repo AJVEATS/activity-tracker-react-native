@@ -1,4 +1,4 @@
-import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { firebaseConfig } from './FirebaseAuthComponent';
 import { initializeApp } from 'firebase/app';
@@ -9,7 +9,7 @@ import colors from '../colors';
 
 const EditInfoComponent = (data) => {
     const navigation = useNavigation();
-    // console.log(data.info);
+    // console.log(data.info);  // For Testing
     const user = data.info;
 
     const [updatedEmail, updateEmail] = useState(user.email);
@@ -18,8 +18,7 @@ const EditInfoComponent = (data) => {
     const [updatedActivity, updateActivity] = useState(user.activity);
 
     const updateUserInfo = (uid) => {
-        // console.log(`update user info for ${uid}`);
-        // Initialize Firebase
+        // console.log(`update user info for ${uid}`);  // For Testing
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -37,7 +36,6 @@ const EditInfoComponent = (data) => {
         } catch (e) {
             console.error("Error adding document: ", e);
         }
-
     }
 
     return (
@@ -101,9 +99,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontSize: 18,
     },
-    updateInfoForm: {
-
-    },
+    updateInfoForm: {},
     updateUserInput: {
         fontSize: 20,
         marginBottom: 10,

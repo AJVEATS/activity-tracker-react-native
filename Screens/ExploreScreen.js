@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
@@ -6,7 +6,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import colors from '../colors';
 import { getAuth } from 'firebase/auth';
-import PastActivityCard from '../Components/PastActivityCard';
+import PastActivityCardComponent from '../Components/PastActivityCardComponent';
 
 const ExploreScreen = ({ navigation }) => {
     const [activities, setActivities] = useState([]);
@@ -18,17 +18,14 @@ const ExploreScreen = ({ navigation }) => {
 
     useEffect(() => {
         const getActivitiesRerender = navigation.addListener("focus", () => {
-            setActivities([]);
             getActivities();
-
-        })
+        });
     }, []);
 
     async function getActivities() {
-        // Initialize Firebase
 
+        setActivities([]);
         const db = getFirestore(app);
-
         const q = query(collection(db, "activities"), where('uid', '==', user.uid));
 
         const querySnapshot = await getDocs(q);
@@ -40,7 +37,7 @@ const ExploreScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.exploreScreen}>
-            <Text style={styles.exploreTitle}>Explore Past Activities</Text>
+            <Text style={styles.exploreTitle}>Activity History</Text>
             <FlatList
                 data={activities}
                 ItemSeparatorComponent={() => {
@@ -49,7 +46,7 @@ const ExploreScreen = ({ navigation }) => {
                     )
                 }}
                 renderItem={({ item }) => (
-                    <PastActivityCard activityData={item.activityData} />
+                    <PastActivityCardComponent activityData={item.activityData} />
                 )}
                 ListEmptyComponent={() => {
                     return (
@@ -70,12 +67,12 @@ export default ExploreScreen
 
 const styles = StyleSheet.create({
     exploreScreen: {
-        marginHorizontal: 20,
         marginTop: 10,
     },
     exploreTitle: {
         fontSize: 24,
         marginBottom: 10,
+        paddingHorizontal: 15,
     },
     flatListSeperator: {
         height: 10,

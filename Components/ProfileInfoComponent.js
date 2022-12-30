@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import colors from '../colors';
+/**
+ * @fileoverview This file represets the ProfileInfoComponet which displays the user's account information
+ * 
+ * @param {Object} data - The user's account information
+ */
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
 const ProfileInfoComponent = (data) => {
-
-    // console.log(data.info);
+    // console.log(data.info); // For Testing
     const user = data.info;
 
     return (

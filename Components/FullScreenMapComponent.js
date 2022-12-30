@@ -1,7 +1,6 @@
-import { Button, Dimensions, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const FullScreenMapComponent = (data) => {
 
@@ -12,12 +11,14 @@ const FullScreenMapComponent = (data) => {
 
     // console.log(activityTrack); // For Testing
     // console.log(region); // For Testing
+
     return (
         <MapView
             style={styles.map}
             initialRegion={region}
             loadingEnabled={true}
             showsCompass={false}
+            showsScale={true}
             mapType={mapStyle}>
             <Marker
                 key={'start'}
@@ -43,10 +44,10 @@ const FullScreenMapComponent = (data) => {
             </Marker>
             <Polyline
                 coordinates={activityTrack}
-                strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+                strokeColor="#000"
                 strokeColors={[
                     '#7F0000',
-                    '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
+                    '#00000000',
                     '#B24112',
                     '#E5845C',
                     '#238C23',

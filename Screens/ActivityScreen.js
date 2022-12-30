@@ -1,20 +1,19 @@
-import { Button, Keyboard, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Keyboard, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import React, { useState } from 'react';
 import { getDistance } from 'geolib';
-import colors from '../colors';
-import BackButtonComponent from '../Components/BackButtonComponent';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import moment from 'moment/moment';
+import colors from '../colors';
+
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewComponent';
+import BackButtonComponent from '../Components/BackButtonComponent';
 import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
 import ActivityInfoComponent from '../Components/ActivityInfoComponent';
-import { useNavigation } from '@react-navigation/native';
-
-
-import { initializeApp } from 'firebase/app';
-import { getFirestore, setDoc, doc } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartComponent';
 
 const ActivityScreen = (item) => {
@@ -55,7 +54,7 @@ const ActivityScreen = (item) => {
         activity.distance = formattedDistance;
 
         return formattedDistance;
-    }
+    };
 
     const calculateActivityDuration = (start, end) => {
         const duration = moment.duration(moment(start).diff(moment(end)));
@@ -78,12 +77,23 @@ const ActivityScreen = (item) => {
         activity.time = formattedTime;
 
         return activityDuration;
-    }
+    };
 
     const calculateAltitudeGained = () => {
         let gain = 0;
 
-        // activity.altitude = [{ "x": 0, "y": 0 }, { "x": 1, "y": 2 }, { "x": 2, "y": 10 }, { "x": 3, "y": 3 }, { "x": 4, "y": 10 }, { "x": 5, "y": 0 }, { "x": 6, "y": 0 }, { "x": 7, "y": 0 }, { "x": 8, "y": 0 }, { "x": 9, "y": 0 }];    // For Testing
+        // activity.altitude = [
+        //     { "x": 0, "y": 0 },
+        //     { "x": 1, "y": 2 },
+        //     { "x": 2, "y": 10 },
+        //     { "x": 3, "y": 3 },
+        //     { "x": 4, "y": 10 },
+        //     { "x": 5, "y": 0 },
+        //     { "x": 6, "y": 0 },
+        //     { "x": 7, "y": 0 },
+        //     { "x": 8, "y": 0 },
+        //     { "x": 9, "y": 0 }
+        // ]; // For Testing
 
         for (let i = 1; i < activity.altitude.length; i++) {
             if (activity.altitude[i]['y'] > activity.altitude[i - 1]['y']) {
@@ -95,15 +105,15 @@ const ActivityScreen = (item) => {
         activity.altitudeGain = `${gain.toFixed(2)}m`;
 
         return gain;
-    }
+    };
 
     const getActivityWeather = (temperature, condition, location) => {
-        // console.log(`temp: ${temperature} condition: ${condition} location ${location}`);
+        // console.log(`temp: ${temperature} condition: ${condition} location ${location}`);    // For Testing
         activityWeather.push({ temperature: temperature, condition: condition });
         activity.location = location;
         activity.weather = activityWeather;
         return null;
-    }
+    };
 
     const activityTime = calculateActivityDuration(activity.endTime, activity.start);
 
@@ -119,12 +129,12 @@ const ActivityScreen = (item) => {
     // console.log(calculateAltitudeGain()); // For Testing
 
     const discardActivity = () => {
-        // console.log('Discard activity pressed');
+        // console.log('Discard activity pressed'); // For Testing
         navigation.goBack();
-    }
+    };
 
     const saveActivity = () => {
-        // console.log('Save activity pressed');    // For Testing
+        // console.log('Save activity pressed'); // For Testing
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
 
@@ -137,13 +147,15 @@ const ActivityScreen = (item) => {
                 activity.notes = notes;
             }
 
+            delete activity.endTime;
+
             const collectionRef = doc(db, 'activities', `${userID}:${moment().format('YYYY-MM-DD hh:mm:ss')}`);
             setDoc(collectionRef, activity, { merge: true });
             navigation.goBack();
         } catch (e) {
             console.error("Error adding document: ", e);
         }
-    }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -199,7 +211,7 @@ const styles = StyleSheet.create({
     },
     activityContainer: {
         width: '100%',
-        padding: 20,
+        // padding: 20,
         backgroundColor: colors.white,
     },
     activityInfo: {

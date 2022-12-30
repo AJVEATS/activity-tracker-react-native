@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EditInfoComponent from '../Components/EditInfoComponent'
@@ -6,7 +6,7 @@ import BackButtonComponent from '../Components/BackButtonComponent'
 
 const EditInfoScreen = (item) => {
     const userInfo = item.route.params.info
-    // console.log(userInfo);
+    // console.log(userInfo); // For Testing
     return (
         <SafeAreaView>
             <BackButtonComponent />

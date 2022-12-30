@@ -1,7 +1,7 @@
 import { Button, Pressable, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
-import { deleteUser, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import React, { useEffect, useState } from 'react';
 import { getFirestore, getDoc, doc, deleteDoc } from 'firebase/firestore';
@@ -37,13 +37,12 @@ const ProfileScreen = ({ navigation }) => {
     const app = initializeApp(firebaseConfig);
     // Initialize Firebase Authentication and get a reference to the service
     const auth = getAuth(app);
-
     const db = getFirestore(app);
 
     async function getUserDetails(user) {
 
         const docRef = doc(db, "users", user.uid);
-        // const docRef = doc(db, 'users', 'HPApDQRYl4gUslEzx1Cb2KHLJ703');
+        // const docRef = doc(db, 'users', 'HPApDQRYl4gUslEzx1Cb2KHLJ703'); // For Testing
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -76,14 +75,6 @@ const ProfileScreen = ({ navigation }) => {
         console.log(`account delete initialised ${uid}`);
         deleteDoc(doc(db, 'users', uid));
         navigation.navigate(AuthenticationNavigator);
-        // deleteUser(uid).then(() => {
-        //     deleteDoc(doc(db, 'users', uid));
-        //     navigation.navigate(AuthenticationNavigator);
-        //     // User deleted.
-        // }).catch((error) => {
-        //     // An error ocurred
-        //     // ...
-        // });
     }
 
     return (

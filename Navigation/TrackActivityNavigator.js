@@ -1,3 +1,7 @@
+/**
+ * @fileoverview This file represets the TrackActivitynNavigator which is used to navigate between
+ * the TrackingScreen, the ActivityScreen and the FullMapScreen.
+ */
 import { createStackNavigator } from "@react-navigation/stack";
 import TrackingScreen from "../Screens/TrackingScreen";
 import ActivityScreen from "../Screens/ActivityScreen";

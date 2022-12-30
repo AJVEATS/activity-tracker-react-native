@@ -1,5 +1,6 @@
 /**
- * @fileoverview This file is for weather api that gets the current weather 
+ * @fileoverview This file is for weather api that gets the current weather for the location where the activity took place
+ * It updates the weather useState within the  ActivityScreen.js
  */
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
@@ -16,7 +17,7 @@ const OpenWeatherMapAPI = ({ lat, lon, setWeather }) => {
     const [weatherIcon, setWeatherIcon] = useState('');
 
     /**
-     * @param {lat, lon} The places latitude and longtitude from the national trust api
+     * @param {lat, lon} The places latitude and longtitude from the the user's activity route
      * 
      * The function fetches the data for the places by its location. It then sets the temperature
      * from the data returned by the open weather map api. It also sets an icon depending of the 
@@ -26,12 +27,11 @@ const OpenWeatherMapAPI = ({ lat, lon, setWeather }) => {
         fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${apiKey}&units=metric`)
             .then((response) => response.json())
             .then((responseJSON) => {
-                // console.log(responseJSON);
+                // console.log(responseJSON);  // For Testing
                 setTemperature(responseJSON.main.temp);
                 setLocationName(responseJSON.name);
                 setCondition(responseJSON.weather[0].description);
                 setWeather(responseJSON.main.temp, responseJSON.weather[0].description, responseJSON.name);
-                // setCondition(responseJSON.main)
                 if (responseJSON.weather[0].main === "Fog") {
                     setWeatherIcon(<Ionicons name={"cloud"} size={24} />)
                 } else if (responseJSON.weather[0].main === "Rain") {
@@ -56,8 +56,6 @@ const OpenWeatherMapAPI = ({ lat, lon, setWeather }) => {
         async function getData() {
             try {
                 fetchWeather(lat, lon);
-                // const roundTemp = Math.round(temperature * 10) / 10;
-                // setWeather((Math.round(temperature * 10) / 10), condition)
             } catch (error) {
                 console.warn(error);
             }
@@ -102,10 +100,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
     },
-    weatherIcon: {
-    },
-    weatherCondition: {
-    },
+    weatherIcon: {},
+    weatherCondition: {},
     weatherTempContainer: {
         width: '30%',
         display: 'flex',
@@ -119,6 +115,5 @@ const styles = StyleSheet.create({
     weatherLocation: {
         paddingBottom: 10,
         fontSize: 16,
-        // textAlign: 'center'
     },
 })

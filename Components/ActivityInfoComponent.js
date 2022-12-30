@@ -4,31 +4,50 @@ import React from 'react';
 const ActivityInfoComponent = (data) => {
     const activity = data.activityInfo;
 
-    // console.log(data.activityDistance);
-
-    // const formatTime = (time) => {
-    //     let formattedTime = '';
-
-    //     if (time.hours == 0 && time.minutes != 0) {
-    //         formattedTime = `${time.minutes}m ${time.seconds}s`;
-    //     } else if (time.minutes == 0) {
-    //         formattedTime = `${time.seconds}s`;
-    //     } else {
-    //         formattedTime = `${time.hours}h ${time.minutes}m ${time.seconds}s`;
-    //     }
-
-    //     return formattedTime;
-    // }
-
+    // console.log(data.activityDistance); // For Testing
     // console.log(formatTime(activity.time)); // For Testing
 
     return (
         <View style={styles.activityInfoContainer}>
             <Text style={styles.activityName}>{activity.name}</Text>
-            <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity type: </Text>{activity.type}</Text>
-            <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity time: </Text>{activity.time}</Text>
-            <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity distance: </Text>{data.activityDistance}</Text>
-            <Text style={styles.activityInfo}><Text style={styles.activityLabel}>Activity Gain: </Text>{activity.altitudeGain}</Text>
+            <View style={styles.activityStatsContainer}>
+                <View style={styles.activityStatsTopRow}>
+                    <View style={styles.activityStat}>
+                        <View style={styles.activityStatLabelContainer}>
+                            <Text style={styles.activityStatsLabel}>Distance</Text>
+                        </View>
+                        <View style={styles.activityStatValueConatainer}>
+                            <Text style={styles.activityStatValue}>{activity.distance}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.activityStat}>
+                        <View style={styles.activityStatLabelContainer}>
+                            <Text style={styles.activityStatsLabel}>Elevation Gained</Text>
+                        </View>
+                        <View style={styles.activityStatValueConatainer}>
+                            <Text style={styles.activityStatValue}>{activity.altitudeGain}</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.activityStatsBottomRow}>
+                    <View style={styles.activityStat}>
+                        <View style={styles.activityStatLabelContainer}>
+                            <Text style={styles.activityStatsLabel}>Activity Type</Text>
+                        </View>
+                        <View style={styles.activityStatValueConatainer}>
+                            <Text style={styles.activityStatValue}>{activity.type}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.activityStat}>
+                        <View style={styles.activityStatLabelContainer}>
+                            <Text style={styles.activityStatsLabel}>Location</Text>
+                        </View>
+                        <View style={styles.activityStatValueConatainer}>
+                            <Text style={styles.activityStatValue}>{activity.location}</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
         </View>
     )
 }
@@ -36,12 +55,46 @@ const ActivityInfoComponent = (data) => {
 export default ActivityInfoComponent
 
 const styles = StyleSheet.create({
-    activityInfoContainer: {
-        // marginBottom: 5,
-    },
+    activityInfoContainer: {},
     activityName: {
-        fontSize: 22,
-        marginBottom: 5,
+        fontSize: 24,
+        marginVertical: 10,
+        marginHorizontal: 20,
+    },
+    activityStatsContainer: {
+        // margin: 5,
+        width: '100%',
+
+    },
+    activityStatsTopRow: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+    },
+    activityStatsBottomRow: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+    },
+    activityStat: {
+        width: '45%',
+        // padding: 10,
+        textAlign: 'center',
+        marginBottom: 10,
+    },
+    activityStatLabelContainer: {
+        width: '100%',
+    },
+    activityStatValueConatainer: {
+    },
+    activityStatsLabel: {
+        textAlign: 'center',
+        paddingBottom: 5,
+    },
+    activityStatValue: {
+        textAlign: 'center',
     },
     activityInfo: {
         fontSize: 16,

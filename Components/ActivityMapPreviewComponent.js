@@ -1,10 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import colors from '../colors';
 import { useNavigation } from '@react-navigation/native';
 
-const ActivityMapPreview = (data) => {
+const ActivityMapPreviewComponent = (data) => {
 
     const navigation = useNavigation();
     const activityTrack = data.activityTrack;
@@ -34,10 +34,10 @@ const ActivityMapPreview = (data) => {
                     coordinate={activityTrack[lastCoordinate]} />
                 <Polyline
                     coordinates={polyLineTrack}
-                    strokeColor={colors.black} // fallback for when `strokeColors` is not supported by the map-provider
+                    strokeColor={colors.black}
                     strokeColors={[
                         '#7F0000',
-                        '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
+                        '#00000000',
                         '#B24112',
                         '#E5845C',
                         '#238C23',
@@ -49,12 +49,12 @@ const ActivityMapPreview = (data) => {
     )
 }
 
-export default ActivityMapPreview
+export default ActivityMapPreviewComponent
 
 const styles = StyleSheet.create({
     mapViewContainer: {
         overflow: 'hidden',
-        borderRadius: 6,
+        borderBottomEndRadius: 6,
         borderWidth: 1,
         borderColor: 'transparent',
     },

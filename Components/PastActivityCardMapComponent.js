@@ -1,16 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native'
+/**
+ * @fileoverview This file represets the P which is the title section for the ListScreen
+ */
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import MapView, { Marker, Polyline } from 'react-native-maps'
 import colors from '../colors';
 
 const PastActivityCardMap = (data) => {
     const activityRoute = data.activityRoute;
-
     const activityRegion = {
         latitude: activityRoute[0]['latitude'],
         longitude: activityRoute[0]['longitude'],
-        latitudeDelta: 0.02,
-        longitudeDelta: 0.02,
+        latitudeDelta: 0.007,
+        longitudeDelta: 0.007,
     }
 
     return (
@@ -30,7 +32,7 @@ const PastActivityCardMap = (data) => {
                 strokeColor={colors.black}
                 strokeColors={[
                     '#7F0000',
-                    '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
+                    '#00000000',
                     '#B24112',
                     '#E5845C',
                     '#238C23',

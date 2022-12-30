@@ -18,6 +18,8 @@ export default function TrackingScreen({ navigation }) {
     const [selectedActivityType, setSelectedActivityType] = useState('Walk');
     const [activityStartTime, setActivityStartTime] = useState('');
 
+    const [time, setTime] = useState(0);
+
     let altitudeCounter = 0;
 
     useEffect(() => {
@@ -27,13 +29,16 @@ export default function TrackingScreen({ navigation }) {
             setCoordinatesArray([]);
             setAltitudeArray([]);
             setActivityStartTime('');
+            setTime(0);
         })
 
         if (activityStarted) {
-            // console.log('activity tracking has started');
+            // console.log('activity tracking has started'); // For Testing
             setShowStartActivity(true);
             setShowStopActivity(false);
+
             const interval = setInterval(() => {
+                setTime(time => time + 1);
                 (async () => {
 
                     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -47,41 +52,38 @@ export default function TrackingScreen({ navigation }) {
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
                     altitudeArray.push({ x: altitudeCounter, y: location['coords']['altitude'] });
                     altitudeCounter = altitudeCounter + 1;
-                    // console.log(coordinatesArray);
-                    // console.log(altitudeArray);
+                    // console.log(coordinatesArray); // For Testing
+                    // console.log(altitudeArray); // For Testing
                 })();
-            }, 1500);
+            }, 1000);
             return () => clearInterval(interval);
+
         } else if (!activityStarted) {
-            // console.log('activity tracking has stopped');
+            // console.log('activity tracking has stopped'); // For Testing
         }
-    }, [activityStarted, navigation]);
+    }, [activityStarted, navigation, time]);
 
     const formatName = (name, activity) => {
-
         if (name == '') {
             // console.log(name);  // For Testing
-            // console.log(actotesivity);  // For Testing
-            // return `🚶 Walk - ${moment().format('DD.MM.YYYY')}`;
+            // console.log(activity);  // For Testing
             if (activity === 'Walk') {
-                return `🚶 Walk - ${moment().format('DD.MM.YYYY')}`;
+                return `Walk - ${moment().format('DD.MM.YYYY')} 🚶`;
             } else if (activity === 'Hike') {
-                return `🥾 Hike - ${moment().format('DD.MM.YYYY')}`;
+                return `Hike - ${moment().format('DD.MM.YYYY')} 🥾`;
             } else if (activity === 'Cycle') {
-                return `🚴 Ride - ${moment().format('DD.MM.YYYY')} `;
+                return `Ride - ${moment().format('DD.MM.YYYY')} 🚴`;
             } else if (activity === 'Run') {
-                return `🏃 Run - ${moment().format('DD.MM.YYYY')}`;
+                return `Run - ${moment().format('DD.MM.YYYY')} 🏃`;
             } else if (activity === 'Mountain Biking') {
-                return `🚵 Ride - ${moment().format('DD.MM.YYYY')}`;
+                return `Ride - ${moment().format('DD.MM.YYYY')} 🚵`;
             }
         }
-
         return name;
     }
 
     const endActivity = () => {
-        // console.log('end activity initiated');
-
+        // console.log('end activity initiated'); // For Testing
         if (coordinatesArray.length > 0) {
             setActivityStarted(false);
             setShowStartActivity(false);
@@ -89,14 +91,13 @@ export default function TrackingScreen({ navigation }) {
 
             const activitydata = {
                 name: formatName(activityName, selectedActivityType),
-                date: moment().format('YYYY-MM-DD hh:mm:ss'),
+                date: moment().format('ll'),
                 type: selectedActivityType,
                 route: coordinatesArray,
                 altitude: altitudeArray,
                 start: activityStartTime,
                 endTime: moment().format('YYYY-MM-DD hh:mm:ss'),
             };
-
             navigation.push('ActivityScreen', { activityData: activitydata });
         }
     }
@@ -142,6 +143,7 @@ export default function TrackingScreen({ navigation }) {
                         Keyboard.dismiss()
                     }} />
             </View>
+            {/* <Text>{time}</Text> */}
         </SafeAreaView>
     );
 }

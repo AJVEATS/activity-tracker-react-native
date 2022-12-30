@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file represets the MainBottomTabNavigator which displays a bottom
+ * tab navigator and is used to navigate between 3 stack navigators the ProfileNavigator,
+ * the TrackActivityNavigator and the ExploreActivityNavigator.
+ */
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from "../colors";
@@ -30,7 +35,7 @@ const MainBottomTabNavigator = () => {
                     }
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: 'black',
+                tabBarActiveTintColor: colors.black,
                 tabBarInactiveTintColor: 'gray',
             })}>
             <Tab.Screen name="Explore Routes" component={ExploreActivityNavigator} />

@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
 
 import MainBottomTabNavigator from '../Navigation/MainBottomTabNavigator';
 import BackButtonComponent from '../Components/BackButtonComponent';
