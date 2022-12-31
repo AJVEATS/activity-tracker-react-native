@@ -17,10 +17,7 @@ export default function TrackingScreen({ navigation }) {
     const [activityName, onChangeActivityName] = useState('');
     const [selectedActivityType, setSelectedActivityType] = useState('Walk');
     const [activityStartTime, setActivityStartTime] = useState('');
-
     const [time, setTime] = useState(0);
-
-    let altitudeCounter = 0;
 
     useEffect(() => {
 
@@ -50,8 +47,7 @@ export default function TrackingScreen({ navigation }) {
                     let location = await Location.getCurrentPositionAsync({});
                     setLocation(location);
                     coordinatesArray.push({ latitude: location['coords']['latitude'], longitude: location['coords']['longitude'] });
-                    altitudeArray.push({ x: altitudeCounter, y: location['coords']['altitude'] });
-                    altitudeCounter = altitudeCounter + 1;
+                    altitudeArray.push({ x: time, y: location['coords']['altitude'] });
                     // console.log(coordinatesArray); // For Testing
                     // console.log(altitudeArray); // For Testing
                 })();

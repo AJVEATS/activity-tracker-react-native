@@ -37,9 +37,7 @@ export default PastActivityCardInfoComponent
 
 const styles = StyleSheet.create({
     activityInfoContainer: {},
-    activityInfoTitle: {
-
-    },
+    activityInfoTitle: {},
     activityName: {
         fontSize: 24,
     },
@@ -48,14 +46,17 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
+        marginVertical: 5,
     },
     activityTime: {
         paddingRight: 7,
         borderRightWidth: 1,
         borderColor: colors.black,
+        fontSize: 16,
     },
     activityLocation: {
         paddingLeft: 7,
+        fontSize: 16,
     },
     activityInfoStats: {
         width: '100%',
@@ -66,6 +67,10 @@ const styles = StyleSheet.create({
     activityInfoStat: {
         width: 80,
     },
-    activityInfoStatTitle: {},
-    activityInfoStatValue: {},
+    activityInfoStatTitle: {
+        fontSize: 16,
+    },
+    activityInfoStatValue: {
+        fontSize: 16,
+    },
 })

@@ -1,8 +1,17 @@
-import { StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+/**
+ * @fileoverview This file represets the ActivityMapPreviewComponent which renders a small MapView
+ * to show the activities route, start and finish. Clicking on the mapView will navigation the the 
+ * FullScreenMap.
+ * 
+ * @param {Object} data - An object containing the polyLineTrack for the PolyLine and an array of 
+ *                        the activities coordinates.
+ * 
+ */
 import MapView, { Marker, Polyline } from 'react-native-maps';
-import colors from '../colors';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import colors from '../colors';
+import React from 'react';
 
 const ActivityMapPreviewComponent = (data) => {
 

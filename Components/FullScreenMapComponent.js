@@ -1,6 +1,13 @@
+/**
+ * @fileoverview This file represets the FullScreenMapComponent which displays a full screen
+ * MapView with the activities route as well as a marker for the start and finish.
+ * 
+ * @param {Object} data - An object containing the activitiy's region, the activity's track and the map style 
+ * 
+ */
+import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
 
 const FullScreenMapComponent = (data) => {
 

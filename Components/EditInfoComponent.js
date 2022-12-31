@@ -1,10 +1,17 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
-import { firebaseConfig } from './FirebaseAuthComponent';
-import { initializeApp } from 'firebase/app';
+/**
+ * @fileoverview This file represets the EditInfoComponent which displays a form which allows the user to
+ * update their account information that is stored in the firebase firestore collection.
+ * 
+ * @param {Object} data - An object which includes all of the user's information from the firestore document.
+ * 
+ */
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
-import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import { firebaseConfig } from './FirebaseAuthComponent';
+import { Picker } from '@react-native-picker/picker';
+import { initializeApp } from 'firebase/app';
+import React, { useState } from 'react';
 import colors from '../colors';
 
 const EditInfoComponent = (data) => {
@@ -23,7 +30,6 @@ const EditInfoComponent = (data) => {
         const db = getFirestore(app);
 
         try {
-
             const collectionRef = doc(db, 'users', user.userID);
             const updatedUser = {
                 email: updatedEmail,

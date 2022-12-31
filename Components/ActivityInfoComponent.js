@@ -1,11 +1,16 @@
+/**
+ * @fileoverview This file represets the ActivityInfoComponent which the activities Info. Such as 
+ * the activities title, overall distance, elevation gained, activity type and activity location.
+ * 
+ * @param {Object} data - An object which includes all of the activitie's data.
+ * 
+ */
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 const ActivityInfoComponent = (data) => {
     const activity = data.activityInfo;
-
     // console.log(activity); // For Testing
-    // console.log(formatTime(activity.time)); // For Testing
 
     return (
         <View style={styles.activityInfoContainer}>

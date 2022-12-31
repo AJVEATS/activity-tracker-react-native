@@ -1,6 +1,9 @@
 /**
  * @fileoverview This file represets the ActivityAltitdeComponent which displays a line chart (using victory chart native)
- * to show the user's altitude during their activity.
+ * to show the user's altitude during their activity as a line chart.
+ * 
+ * @param {Object} data - An object of the activities altitude and the time stamp for the altitude value.
+ * 
  */
 import { StyleSheet, View, Text } from 'react-native';
 import { VictoryLine, VictoryChart } from 'victory-native';
@@ -30,7 +33,6 @@ const ActivityAltitudeChartComponent = (data) => {
         <View style={styles.activityAltitudeChartComponent}>
             <Text style={styles.chartTitle}>Altitude Chart</Text>
             <VictoryChart
-                // style={styles.victoryChart}
                 padding={{ top: 10, bottom: 40, left: 50, right: 20 }}>
                 <VictoryLine
                     data={data.altitude}

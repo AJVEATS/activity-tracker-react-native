@@ -1,9 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import colors from '../colors';
-import PastActivityCardMapComponent from './PastActivityCardMapComponent';
-import { useNavigation } from '@react-navigation/native';
 import PastActivityCardInfoComponent from './PastActivityCardInfoComponent';
+import PastActivityCardMapComponent from './PastActivityCardMapComponent';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import colors from '../colors';
+import React from 'react';
 
 const PastActivityCardComponent = (data) => {
     const activity = data.activityData;
@@ -14,6 +14,7 @@ const PastActivityCardComponent = (data) => {
     const cardOnPress = () => {
         navigation.push('PastActivity', { data: activity });
     }
+
     return (
         <TouchableOpacity
             style={styles.activityCard}

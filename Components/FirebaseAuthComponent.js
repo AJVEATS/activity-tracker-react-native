@@ -1,4 +1,6 @@
-// Your web app's Firebase configuration
+/**
+ * @fileoverview This file represets the the configuration for the app's firebase connection * 
+ */
 export const firebaseConfig = {
     apiKey: "AIzaSyA3dqjY7sjqHRM1GKPNbMdM92I5Nd6UPKw",
     authDomain: "ubicomp-2-av.firebaseapp.com",
