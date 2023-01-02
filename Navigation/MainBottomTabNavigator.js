@@ -4,11 +4,11 @@
  * the TrackActivityNavigator and the ExploreActivityNavigator.
  */
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import colors from "../colors";
-import TrackActivityNavigator from "./TrackActivityNavigator";
 import ExploreActivityNavigator from "./ExploreActivityNavigator";
+import TrackActivityNavigator from "./TrackActivityNavigator";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProfileNavigator from "./ProfileNavigator";
+import colors from "../colors";
 
 const MainBottomTabNavigator = () => {
     const Tab = createBottomTabNavigator();
@@ -36,7 +36,7 @@ const MainBottomTabNavigator = () => {
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: colors.black,
-                tabBarInactiveTintColor: 'gray',
+                tabBarInactiveTintColor: colors.gray,
             })}>
             <Tab.Screen name="Explore Routes" component={ExploreActivityNavigator} />
             <Tab.Screen name="Track Activity" component={TrackActivityNavigator} />

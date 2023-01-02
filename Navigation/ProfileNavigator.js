@@ -3,8 +3,8 @@
  * ProfileScreen and the EditInfoScreen.
  */
 import { createStackNavigator } from "@react-navigation/stack";
-import ProfileScreen from "../Screens/ProfileScreen";
 import EditInfoScreen from '../Screens/EditInfoScreen';
+import ProfileScreen from "../Screens/ProfileScreen";
 
 const ProfileNavigator = () => {
     const appStack = createStackNavigator();

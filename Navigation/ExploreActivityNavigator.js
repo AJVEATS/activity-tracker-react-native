@@ -1,7 +1,11 @@
+/**
+ * @fileoverview This file represets the ExploreActivityNavigator which is used to navigate between the
+ * ExploreSCreen, the PastActivityScreen and the FullScreenMapScreen.
+ */
 import { createStackNavigator } from "@react-navigation/stack";
+import PastActivityScreen from "../Screens/PastActivityScreen";
 import ExploreScreen from "../Screens/ExploreScreen";
 import FullScreenMap from "../Screens/FullScreenMap";
-import PastActivityScreen from "../Screens/PastActivityScreen";
 
 const ExploreActivityNavigator = () => {
     const appStack = createStackNavigator();
