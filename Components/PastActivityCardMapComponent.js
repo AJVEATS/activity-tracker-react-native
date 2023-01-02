@@ -1,10 +1,14 @@
 /**
- * @fileoverview This file represets the P which is the title section for the ListScreen
+ * @fileoverview This file represets the PastActivityCardMapComponent which renders a map view
+ * for that activity, showing the activities route, start and finish within the activities card. 
+ * This is part of the PastActivityCardComponent.
+ * 
+ * @param {Object} data - The activities route's coordinates
  */
-import { StyleSheet } from 'react-native'
-import React from 'react'
-import MapView, { Marker, Polyline } from 'react-native-maps'
+import MapView, { Marker, Polyline } from 'react-native-maps';
+import { StyleSheet } from 'react-native';
 import colors from '../colors';
+import React from 'react';
 
 const PastActivityCardMap = (data) => {
     const activityRoute = data.activityRoute;

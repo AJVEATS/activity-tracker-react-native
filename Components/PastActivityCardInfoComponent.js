@@ -1,11 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+/**
+ * @fileoverview This file represets the PastActivityCardInfoComponent which displays the activities infomation.
+ * It is part of the PastActivityCardComponent showing the activities information as part of the activities card.
+ * 
+ * @param {Object} data - An object of the activity's information
+ */
+import { StyleSheet, Text, View } from 'react-native';
 import colors from '../colors';
-import moment from 'moment';
+import React from 'react';
 
 const PastActivityCardInfoComponent = (data) => {
     const activity = data.activity;
-    // console.log(data.activity); // For Testing
+    // console.log(activity); // For Testing
     return (
         <View style={styles.activityInfoContainer}>
             <View style={styles.activityInfoTitle}>

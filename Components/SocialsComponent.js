@@ -1,6 +1,6 @@
 /**
- * @fileoverview This file is for SocialsComponent renders pressable icons for our social 
- * media accounts. Pressing an icon will open that social media in the user's browser
+ * @fileoverview This file reprsents the SocialsComponent that renders pressable icons for all of the social 
+ * media accounts. Pressing an icon will open that social media in the user's browser.
  */
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, View, Linking } from 'react-native';

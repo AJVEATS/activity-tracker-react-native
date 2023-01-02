@@ -1,6 +1,7 @@
 /**
  * @fileoverview This file represets the EditInfoComponent which displays a form which allows the user to
- * update their account information that is stored in the firebase firestore collection.
+ * update their account information that is stored in the firebase firestore collection. Each field is pre
+ * populated with the user's current information from their firestore collection.
  * 
  * @param {Object} data - An object which includes all of the user's information from the firestore document.
  * 
@@ -24,6 +25,13 @@ const EditInfoComponent = (data) => {
     const [updatedLastName, updateLastname] = useState(user.lastname)
     const [updatedActivity, updateActivity] = useState(user.activity);
 
+    /**
+     * Updates the user's information stored in the firebase firestore collection. The user's document is 
+     * updated using the values from the forms inputs. There is error handling in case there is an error 
+     * updating the user's information
+     * 
+     * @param {uid} The current user's userID
+     */
     const updateUserInfo = (uid) => {
         // console.log(`update user info for ${uid}`);  // For Testing
         const app = initializeApp(firebaseConfig);
@@ -70,7 +78,8 @@ const EditInfoComponent = (data) => {
                         selectedValue={updatedActivity}
                         onValueChange={(itemValue, itemIndex) =>
                             updateActivity(itemValue)
-                        }>
+                        }
+                    >
                         <Picker.Item label='Walking' value='Walking' />
                         <Picker.Item label='Running' value='Running' />
                         <Picker.Item label='Cycling' value='Cycling' />
@@ -81,7 +90,8 @@ const EditInfoComponent = (data) => {
                 <Pressable
                     style={styles.accountButton}
                     accessibilityLabel='Update Info button'
-                    onPress={() => updateUserInfo(user.userID)} >
+                    onPress={() => updateUserInfo(user.userID)}
+                >
                     <Text style={styles.pressableText}>Update Info</Text>
                 </Pressable>
             </View>

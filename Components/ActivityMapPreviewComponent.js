@@ -4,7 +4,7 @@
  * FullScreenMap.
  * 
  * @param {Object} data - An object containing the polyLineTrack for the PolyLine and an array of 
- *                        the activities coordinates.
+ * the activities coordinates.
  * 
  */
 import MapView, { Marker, Polyline } from 'react-native-maps';
@@ -34,17 +34,21 @@ const ActivityMapPreviewComponent = (data) => {
                 style={styles.map}
                 initialRegion={activityRegion}
                 scrollEnabled={false}
-                loadingEnabled={true}>
+                loadingEnabled={true}
+            >
                 <Marker
                     key={'start'}
-                    coordinate={activityTrack[0]} />
+                    coordinate={activityTrack[0]}
+                />
                 <Marker
                     key={'end'}
-                    coordinate={activityTrack[lastCoordinate]} />
+                    coordinate={activityTrack[lastCoordinate]}
+                />
                 <Polyline
                     coordinates={polyLineTrack}
                     strokeColor={colors.black}
-                    strokeWidth={3} />
+                    strokeWidth={3}
+                />
             </MapView>
         </TouchableOpacity>
     )

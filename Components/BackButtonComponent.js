@@ -2,11 +2,11 @@
  * @fileoverview This file represets the PlaceButtonComponent this includes a back pressable to navigate to
  * the previous screen and a favourite pressable.
  */
-import { StyleSheet, View, Pressable } from 'react-native'
-import React from 'react'
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Pressable } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 import colors from '../colors';
+import React from 'react';
 
 const BackButtonComponent = () => {
     const navigation = useNavigation();

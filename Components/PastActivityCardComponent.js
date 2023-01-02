@@ -1,3 +1,12 @@
+/**
+ * @fileoverview This file represets the PastActivityCardComponent which renders a card showing information on an
+ * activity. Is uses the PastActivityCardInfoComponent to show the activities information and the 
+ * PastActivityCardMapComponent to show a mapView preview of the activities route. Each card is a pressable, which
+ * will navigate the users to the activies page where there are able to see more information and data about the 
+ * activity.
+ * 
+ * @param {Object} data - An object of the activity's information
+ */
 import PastActivityCardInfoComponent from './PastActivityCardInfoComponent';
 import PastActivityCardMapComponent from './PastActivityCardMapComponent';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -8,9 +17,14 @@ import React from 'react';
 const PastActivityCardComponent = (data) => {
     const activity = data.activityData;
     const navigation = useNavigation();
-    // console.log(activity.name); // For Testing
-    // console.log(activity.type); // For Testing
+    // console.log(activity); // For Testing
 
+    /**
+     * Navigates to the 'PastActivity' screen for the TouchableOpacity onPress. It passes through the data which is an 
+     * object containing the activities information.
+     * 
+     * @param {item} The activities information
+     */
     const cardOnPress = () => {
         navigation.push('PastActivity', { data: activity });
     }
