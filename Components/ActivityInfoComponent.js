@@ -45,10 +45,10 @@ const ActivityInfoComponent = (data) => {
                     </View>
                     <View style={styles.activityStat}>
                         <View style={styles.activityStatLabelContainer}>
-                            <Text style={styles.activityStatsLabel}>Location</Text>
+                            <Text style={styles.activityStatsLabel}>Time</Text>
                         </View>
                         <View style={styles.activityStatValueConatainer}>
-                            <Text style={styles.activityStatValue}>{activity.location}</Text>
+                            <Text style={styles.activityStatValue}>{activity.time}</Text>
                         </View>
                     </View>
                 </View>

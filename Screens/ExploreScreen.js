@@ -58,20 +58,20 @@ const ExploreScreen = ({ navigation }) => {
      * Changes the firestore get query to show all of the activities set to public
     */
     const publicButtonPress = () => {
-        console.log('public button pressed');
+        // console.log('public button pressed'); // For Testing
         setActivities([]);
         getActivities('privacy', 'public');
-        console.log('privacy', 'public');
+        // console.log('privacy', 'public'); // For Testing
     }
 
     /**
      * Changes the firestore get query to show all of the user's activities
     */
     const privateButtonPress = () => {
-        console.log('private button pressed');
+        // console.log('private button pressed'); // For Testing
         setActivities([]);
         getActivities('uid', user.uid);
-        console.log('uid', user.uid);
+        // console.log('uid', user.uid); // For Testing
     }
 
     return (
