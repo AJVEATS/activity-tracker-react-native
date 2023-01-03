@@ -41,4 +41,33 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontSize: 46,
     },
+
+    clock: {
+        width: 250,
+        height: 250,
+        borderRadius: 125,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    face: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        backgroundColor: '#eee',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    handContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    hand: {
+        width: '50%',  // set the width of the hand to half the width of the clock face
+        height: 5,
+        backgroundColor: 'black',
+    },
 })

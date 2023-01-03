@@ -18,7 +18,7 @@ import colors from '../colors';
 
 const ExploreScreen = ({ navigation }) => {
     const [activities, setActivities] = useState([]);
-    const [activityQuery, setActivityQuery] = useState(false);
+    // const [activityQuery, setActivityQuery] = useState(false);
 
     const app = initializeApp(firebaseConfig);  // Connecting to the firestore collection
     const auth = getAuth(app);
