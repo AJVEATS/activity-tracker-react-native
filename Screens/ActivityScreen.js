@@ -196,10 +196,9 @@ const ActivityScreen = (item) => {
             if (notes != null) {
                 activity.notes = notes;
             }
+            const collectionRef = doc(db, 'activities', `${userID}:${activity.endTime}`);
 
             delete activity.endTime;
-
-            const collectionRef = doc(db, 'activities', `${userID}:${activity.endTime}`);
             setDoc(collectionRef, activity, { merge: true });
             navigation.goBack();
         } catch (e) {
