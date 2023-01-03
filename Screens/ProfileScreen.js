@@ -1,13 +1,19 @@
-import { Button, Pressable, StyleSheet, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { firebaseConfig } from '../Components/FirebaseAuthComponent';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import React, { useEffect, useState } from 'react';
-import { getFirestore, getDoc, doc, deleteDoc } from 'firebase/firestore';
-
+/**
+ * @fileoverview This file represets the ProfileScreen which allows the user to view their account details
+ * using the 'ProfileInfoComponent'. The user is also able to go to the 'EditInfoScreen' to update their
+ * account's information, to sign out of their account and to delete their account.
+ * 
+ * @param navigtaion - For navigation
+ */
 import AuthenticationNavigator from '../Navigation/AuthenticationNavigator';
+import { getFirestore, getDoc, doc, deleteDoc } from 'firebase/firestore';
 import ProfileInfoComponent from '../Components/ProfileInfoComponent';
+import { firebaseConfig } from '../Components/FirebaseAuthComponent';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { Pressable, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { initializeApp } from 'firebase/app';
 import colors from '../colors';
 
 const ProfileScreen = ({ navigation }) => {
@@ -18,6 +24,9 @@ const ProfileScreen = ({ navigation }) => {
     const [userInfo, setUsetInfo] = useState([]);
 
     useEffect(() => {
+        /**
+         * Gets the user's information from firebase authentication 
+         */
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 getUserDetails(user);
@@ -25,6 +34,10 @@ const ProfileScreen = ({ navigation }) => {
         });
     }, []);
 
+    /**
+     * Updates the user's account useState variables when the screen in focus. This is to allow
+     * the display variables to be updates once a user has just updated their accounts details.
+     */
     const profileInfoRerender = navigation.addListener("focus", () => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -37,8 +50,16 @@ const ProfileScreen = ({ navigation }) => {
     const app = initializeApp(firebaseConfig);
     // Initialize Firebase Authentication and get a reference to the service
     const auth = getAuth(app);
+    // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore(app);
 
+    /**
+     * Gets the current user's information stored in the firebase firestore 'users' collection, using the
+     * user's id to get their specific information. It then updates the useState variables to the data
+     * retrieved from the user's document 
+     * 
+     * @param {user} The current user's user id
+     */
     async function getUserDetails(user) {
 
         const docRef = doc(db, "users", user.uid);
@@ -64,6 +85,11 @@ const ProfileScreen = ({ navigation }) => {
         }
     }
 
+    /**
+     * If the user presses the sign out pressable the user is signed out using firebase authentication.
+     * They will be redirected to the 'WelcomeScreen' in the 'AuthenticationNavigator' as they are now
+     * signed out.
+     */
     const signOut = () => {
         auth.signOut()
             .then(() => {
@@ -71,6 +97,12 @@ const ProfileScreen = ({ navigation }) => {
             })
     }
 
+    /**
+     * If the user has pressed the 'Delete Account' pressable the user's information is removed from the firebase
+     * firestore 'users' collection.
+     * 
+     * @param {user} The current user's user id
+     */
     async function deleteAccount(uid) {
         console.log(`account delete initialised ${uid}`);
         deleteDoc(doc(db, 'users', uid));

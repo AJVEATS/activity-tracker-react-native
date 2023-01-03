@@ -5,7 +5,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import PastActivityScreen from "../Screens/PastActivityScreen";
 import ExploreScreen from "../Screens/ExploreScreen";
-import FullScreenMap from "../Screens/FullScreenMap";
+import FullScreenMapScreen from "../Screens/FullScreenMapScreen";
 
 const ExploreActivityNavigator = () => {
     const appStack = createStackNavigator();
@@ -13,7 +13,7 @@ const ExploreActivityNavigator = () => {
         <appStack.Navigator>
             <appStack.Screen options={{ headerShown: false }} name="Explore" component={ExploreScreen} />
             <appStack.Screen options={{ headerShown: false }} name="PastActivity" component={PastActivityScreen} />
-            <appStack.Screen options={{ headerShown: false }} name="FullScreenMap" component={FullScreenMap} />
+            <appStack.Screen options={{ headerShown: false }} name="FullScreenMap" component={FullScreenMapScreen} />
         </appStack.Navigator>
     )
 }

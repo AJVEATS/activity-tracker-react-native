@@ -20,6 +20,7 @@ const ActivityMapPreviewComponent = (data) => {
     const polyLineTrack = data.polyLineTrack;
     const lastCoordinate = Object.keys(activityTrack).length - 1;
 
+    // The Activity's region for the MapView initialRegion Prop
     const activityRegion = {
         latitude: activityTrack[0]['latitude'],
         longitude: activityTrack[0]['longitude'],

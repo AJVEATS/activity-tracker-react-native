@@ -1,10 +1,10 @@
 import { Alert, ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import MainBottomTabNavigator from '../Navigation/MainBottomTabNavigator';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { initializeApp } from 'firebase/app';
-import MainBottomTabNavigator from '../Navigation/MainBottomTabNavigator';
+import React, { useState } from 'react';
 import colors from '../colors';
 
 const LoginScreen = ({ navigation }) => {

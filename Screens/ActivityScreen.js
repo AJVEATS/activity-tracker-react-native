@@ -1,20 +1,39 @@
+/**
+ * @fileoverview This file represets the ActivityScreen, which is where a user is taken to
+ * after recording an activity. They are able to see the activities data, information and
+ * statistics. This screen calculates many statistics about the activity such as the overall
+ * distance, activity duration and altitude gained.
+ * 
+ * Users are able to add notes about the activity. There are also  buttons to discard and save 
+ * the activity. DIscarding the activity will delete the activity and return the user to the
+ * tracking page. Saving the activity will save the activity in the firebase firestore
+ * 'activities' collection as a document.
+ * 
+ * This screen uses these components:
+ *  - ActivityMapPreviewComponent
+ *  - ActivityInfoComponent
+ *  - ActivityAltitudeChartComponent
+ *  - BackButtonComponent
+ *  - OpenWeatherMapAPI
+ * 
+ * @param {Object} item - An object containing the activities information and data
+ */
+import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartComponent';
 import { Button, Keyboard, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewComponent';
+import ActivityInfoComponent from '../Components/ActivityInfoComponent';
+import { firebaseConfig } from '../Components/FirebaseAuthComponent';
+import BackButtonComponent from '../Components/BackButtonComponent';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import React, { useState } from 'react';
 import { getDistance } from 'geolib';
 import moment from 'moment/moment';
 import colors from '../colors';
-
-import { firebaseConfig } from '../Components/FirebaseAuthComponent';
-import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewComponent';
-import BackButtonComponent from '../Components/BackButtonComponent';
-import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
-import ActivityInfoComponent from '../Components/ActivityInfoComponent';
-import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartComponent';
 
 const ActivityScreen = (item) => {
     const navigation = useNavigation();
@@ -33,6 +52,11 @@ const ActivityScreen = (item) => {
     const activityTrack = activity.route;
     const polyLineTrack = Object.keys(activityTrack).map(key => activityTrack[key]);
 
+    /**
+     * This function calculates the total distance covered in the activity. The distance is 
+     * then formatted depending on the activitiy's length and then added to the activity
+     * object.
+     */
     const calculateActivityDistance = () => {
 
         let distance = 0;
@@ -56,6 +80,13 @@ const ActivityScreen = (item) => {
         return formattedDistance;
     };
 
+    /**
+     * @param {start} The activity's start time
+     * @param {end} The activity's end time
+     * 
+     * This function calculates the length of the activity(time) using the recorded start and 
+     * end time. The time is then formatted and added the activity object.
+     */
     const calculateActivityDuration = (start, end) => {
         const duration = moment.duration(moment(start).diff(moment(end)));
         const activityDuration = {
@@ -79,6 +110,10 @@ const ActivityScreen = (item) => {
         return activityDuration;
     };
 
+    /**
+     * This function calculates the total altitude gained during the activity. It is then
+     * formatted and added to the activity object.
+     */
     const calculateAltitudeGained = () => {
         let gain = 0;
 
@@ -107,6 +142,14 @@ const ActivityScreen = (item) => {
         return gain;
     };
 
+    /**
+     * @param {temperature} The activity's location temperature
+     * @param {condition} The activity's location condition
+     * @param {location} The activity's location location
+     * 
+     * This function uses the OpenWeatherMapAPI to set the useState variables for the activities locations
+     * weather condition, temperature and location. The new variables are then added the activity object.
+     */
     const getActivityWeather = (temperature, condition, location) => {
         // console.log(`temp: ${temperature} condition: ${condition} location ${location}`);    // For Testing
         activityWeather.push({ temperature: temperature, condition: condition });
@@ -128,11 +171,18 @@ const ActivityScreen = (item) => {
     // console.log(activityTime); // For Testing
     // console.log(calculateAltitudeGain()); // For Testing
 
+    /**
+     * This function navigates the user back to the track activity screen.
+     */
     const discardActivity = () => {
         // console.log('Discard activity pressed'); // For Testing
         navigation.goBack();
     };
 
+    /**
+     * This function saves the activty object as a document to the 'activities' collection
+     * from firebase firestore. Once the activity is saved the user is redirected to the track activity screen.
+     */
     const saveActivity = () => {
         // console.log('Save activity pressed'); // For Testing
         // Initialize Firebase

@@ -1,15 +1,24 @@
-import { ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { firebaseConfig } from '../Components/FirebaseAuthComponent';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { getFirestore, setDoc, doc } from 'firebase/firestore';
-
+/**
+ * @fileoverview This file represets the CreateAccountScreen which allows user's to create an account for this application.
+ * The user will be added using firebase authentication as well as firebase firestore for additional account information.
+ * In the form user's enter in their email, first name, last name, their preferred sport and set a password. This data will be
+ * stored in the 'users' collection as a document, using their user id as it's key.
+ * 
+ * If they create a valid account they will be logged in and navigated to the 'MainBottomTabNavigator' to the 'TrackingScreen'.
+ * 
+ * @param navigation - For navigation
+ */
+import { ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import MainBottomTabNavigator from '../Navigation/MainBottomTabNavigator';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import BackButtonComponent from '../Components/BackButtonComponent';
-import colors from '../colors';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Picker } from '@react-native-picker/picker';
+import { initializeApp } from 'firebase/app';
+import React, { useState } from 'react';
+import colors from '../colors';
 
 const CreateAccountScreen = ({ navigation }) => {
 
@@ -23,9 +32,17 @@ const CreateAccountScreen = ({ navigation }) => {
     const app = initializeApp(firebaseConfig);
     // Initialize Firebase Authentication and get a reference to the service
     const auth = getAuth(app);
-
+    // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore(app);
 
+    /**
+     * When a user presses the create accoung button this will run. It creates a user using
+     * firebase authentication using the user's email and password. If the user has been
+     * authenticated the other form inputs data will be added to the 'users' firebase firestore
+     * collection.
+     * 
+     * The user will then be navigated to 'TrackingScreen' in the 'MainBottomTabNavigator' .
+     */
     const createAccount = () => {
         // console.log('create account initiated');
         createUserWithEmailAndPassword(auth, email, password)

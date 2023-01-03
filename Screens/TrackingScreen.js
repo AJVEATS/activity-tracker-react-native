@@ -1,3 +1,21 @@
+/**
+ * @fileoverview This file represets the TrackingScreen which is where the user is able to record
+ * an activity, set the activity's name and the activity type.
+ * 
+ * When a user pressess the 'start activity' button it will record the users current location (lat,
+ * lon coordinates), and their current altitude level. It will only track the user's location if the
+ * user has allowed the location tracking permission.
+ * 
+ * When the 'stop activity' button is pressed the activity will stop recording and the activity's 
+ * information will be packaged into an object and passed through navigation intto the 'ActivityScreen'.
+ * If the user has not entered anything into the activity name, a formatted name made up of the date and 
+ * activity type will be used.
+ * 
+ * Every time this screen is in focus the useState of all of the activity variables will be reset to allow 
+ * a new activty to be recorded.
+ * 
+ * @param navigation - For navigation
+ */
 import { StyleSheet, Button, TextInput, View, Keyboard, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Picker } from '@react-native-picker/picker';
@@ -21,6 +39,10 @@ export default function TrackingScreen({ navigation }) {
 
     useEffect(() => {
 
+        /**
+        * This resets all of the activity tracking variables when the screen becomes
+        * the in focus. This allows for a new activity to be tracked.
+        */
         const clearActivity = navigation.addListener("focus", () => {
             onChangeActivityName('');
             setCoordinatesArray([]);
@@ -29,6 +51,12 @@ export default function TrackingScreen({ navigation }) {
             setTime(0);
         })
 
+        /**
+        * if the 'start activity' button has been pressed and the activityStarted variable 
+        * has been set to true the user's current latitude and longtitude coordinates and 
+        * their current altitude will be recorded every second. This will only happen if the
+        * user allows location permissions.
+        */
         if (activityStarted) {
             // console.log('activity tracking has started'); // For Testing
             setShowStartActivity(true);
@@ -59,6 +87,10 @@ export default function TrackingScreen({ navigation }) {
         }
     }, [activityStarted, navigation, time]);
 
+    /**
+    * This creates a name for the activity if the user has not set a name. It makes a name with the activity type with the activities
+    * timestamp plus an emoji for that activity.
+    */
     const formatName = (name, activity) => {
         if (name == '') {
             // console.log(name);  // For Testing
@@ -78,6 +110,15 @@ export default function TrackingScreen({ navigation }) {
         return name;
     }
 
+    /**
+    * This if for when a user has started tracking an activity and has now pressed the 'stop activity' button.
+    * First it checks if any coordinates have been recorded, if there are recorded coordinates it will stop 
+    * tracking the user's location and altitude.
+    * 
+    * The activities data in then packaged into and object called 'activitydata'. The user will then be navigated 
+    * to the 'ActivityScreen' passing throug the 'activitydata' object to see the tracked activities data in more
+    * detail.
+    */
     const endActivity = () => {
         // console.log('end activity initiated'); // For Testing
         if (coordinatesArray.length > 0) {

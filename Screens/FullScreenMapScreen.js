@@ -1,9 +1,21 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import BackButtonComponent from '../Components/BackButtonComponent';
+/**
+ * @fileoverview This file represets the FullScreenMapScreen which is a full screen MapView displaying the tracked
+ * activities route with a poly line plus a marker for the activities start and end.
+ * 
+ * The user is able to change the map's style by pressing the the touchable button in the bottom right of the screen.
+ * The map will change between the standard, satellite, hybrid and terrain style.
+ * 
+ * This screen uses the BackButtonComponent for a back button to get back to the previous screen. It also uses the 
+ * FullScreenMapComponent to display the full screen map.
+ * 
+ * @param {Object} item - An object that contains the activity's region and poly line track
+ */
 import FullScreenMapComponent from '../Components/FullScreenMapComponent';
+import BackButtonComponent from '../Components/BackButtonComponent';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import React, { useState } from 'react';
 import colors from '../colors';
 
 const FullScreenMap = (item) => {
@@ -17,6 +29,10 @@ const FullScreenMap = (item) => {
     // console.log(activity); // For Testing
     // console.log(activityTrack); // For Testing
 
+    /**
+     * This changes the mapStyle useState variable. This allows for the MapView's style to changed on button press.
+     * The map will change between the standard, satellite, hybrid and terrain style.
+     */
     const changeMapStyle = () => {
         // console.log('change map style function'); // For Testing
         if (mapStyle === 'standard') {

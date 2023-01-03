@@ -1,15 +1,27 @@
-import { Pressable, ScrollView, StyleSheet, Text } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import BackButtonComponent from '../Components/BackButtonComponent';
+/**
+ * @fileoverview This file represets the PasAcivityScreen which shows detailed information and data
+ * on a user's past activity that they have recorded.
+ * 
+ * This screen uses these component:
+ *  - 'BackButtonComponent' to navigted back to the 'ExploreScreen'
+ *  - 'ActivityMapPreviewComponent' to show a preview of the activity's route
+ *  - 'ActivityInfoComponent' to show the activitiy's key statistics and info
+ *  - 'ActivityAltitudeChartComponent' to display a line chart of the activity's altitiude
+ * 
+ * @param {Object} data - An object of the activity's information
+ */
+import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartComponent';
 import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewComponent';
 import ActivityInfoComponent from '../Components/ActivityInfoComponent';
-import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartComponent';
-import colors from '../colors';
-import { deleteDoc, doc, getFirestore } from 'firebase/firestore';
+import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
-import { initializeApp } from 'firebase/app';
+import BackButtonComponent from '../Components/BackButtonComponent';
+import { deleteDoc, doc, getFirestore } from 'firebase/firestore';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import { initializeApp } from 'firebase/app';
+import colors from '../colors';
+import React from 'react';
 
 const PastActivityScreen = (data) => {
     const activity = data.route.params.data;
@@ -22,6 +34,9 @@ const PastActivityScreen = (data) => {
     const activityTrack = activity.route;
     const polyLineTrack = Object.keys(activityTrack).map(key => activityTrack[key]);
 
+    /**
+     * Displays the activities notes, if the user has added notes to the activity
+     */
     const hasNotes = () => {
         if (activity.notes) {
             // console.log('no notes');
@@ -33,6 +48,9 @@ const PastActivityScreen = (data) => {
         }
     }
 
+    /**
+     * Deletes the activity if they have pressed the 'Delete Activity' pressable
+     */
     const deleteActivity = () => {
         deleteDoc(doc(db, 'activities', `${activity.uid}:${activity.endTime}`));
         navigation.goBack();

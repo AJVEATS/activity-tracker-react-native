@@ -4,12 +4,15 @@
  * 
  * @param {Object} data - An object of the activity's information
  */
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, View } from 'react-native';
 import colors from '../colors';
-import React from 'react';
+import React, { useState } from 'react';
 
 const PastActivityCardInfoComponent = (data) => {
+    const [activityIcon, setActivityIcon] = useState('');
     const activity = data.activity;
+
     // console.log(activity); // For Testing
     return (
         <View style={styles.activityInfoContainer}>
@@ -17,6 +20,7 @@ const PastActivityCardInfoComponent = (data) => {
                 <Text style={styles.activityName}>{activity.name}</Text>
             </View>
             <View style={styles.activityData}>
+                <Ionicons name={activityIcon} color={colors.black} size={24} />
                 <Text style={styles.activityTime}>{activity.date}</Text>
                 <Text style={styles.activityLocation}>{activity.location}</Text>
             </View>
