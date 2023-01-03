@@ -25,9 +25,6 @@ const ExploreScreen = ({ navigation }) => {
     const user = (auth.currentUser);    // Getting the current user's data
     // console.log(user.uid); // For Testing
 
-    const [field, setField] = useState('uid');
-    const [fieldValue, setFieldValue] = useState(user.uid);
-
     useEffect(() => {
         /**
          * This fetches the user's past recorded activities every time this screen comes in focus.
