@@ -10,7 +10,7 @@ import { getFirestore, getDoc, doc, deleteDoc, query, collection, where, getDocs
 import ProfileInfoComponent from '../Components/ProfileInfoComponent';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { deleteUser, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';

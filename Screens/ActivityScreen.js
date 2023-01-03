@@ -19,7 +19,7 @@
  * @param {Object} item - An object containing the activities information and data
  */
 import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartComponent';
-import { Button, Keyboard, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Button, Keyboard, ScrollView, StyleSheet, Switch, TextInput, View, Text } from 'react-native';
 import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewComponent';
 import ActivityInfoComponent from '../Components/ActivityInfoComponent';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
@@ -39,6 +39,12 @@ const ActivityScreen = (item) => {
     const navigation = useNavigation();
     const [notes, onChangeNotes] = useState(null);
     const [activityWeather, setActivityWeather] = useState([]);
+
+
+    const [publicStatus, setPublic] = useState(false);
+    const toggleSwitch = () => setPublic(previousState => !previousState);
+
+    console.log(publicStatus);
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
@@ -196,9 +202,15 @@ const ActivityScreen = (item) => {
             if (notes != null) {
                 activity.notes = notes;
             }
+
+            if (publicStatus) {
+                activity.privacy = 'public';
+            } else {
+                activity.privacy = 'private';
+            }
             const collectionRef = doc(db, 'activities', `${userID}:${activity.endTime}`);
 
-            delete activity.endTime;
+            // delete activity.endTime;
             setDoc(collectionRef, activity, { merge: true });
             navigation.goBack();
         } catch (e) {
@@ -229,6 +241,16 @@ const ActivityScreen = (item) => {
                             value={notes}
                             onSubmitEditing={Keyboard.dismiss}
                             textAlignVertical={'top'} />
+                    </View>
+                    <View style={styles.switchContainer}>
+                        <Text style={styles.switchText}>Make Activity publicStatus</Text>
+                        <Switch
+                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            thumbColor={publicStatus ? colors.black : "#f4f3f4"}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={publicStatus}
+                        />
                     </View>
                     <View style={styles.buttonContainer}>
                         <Button
@@ -279,6 +301,13 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         padding: 5,
         marginHorizontal: 10,
+    },
+    switchContainer: {
+        marginHorizontal: 20,
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     buttonContainer: {
         width: '100%',

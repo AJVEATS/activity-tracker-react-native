@@ -22,6 +22,7 @@ import { Picker } from '@react-native-picker/picker';
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import moment from 'moment/moment';
+import colors from '../colors';
 
 export default function TrackingScreen({ navigation }) {
 
@@ -140,45 +141,52 @@ export default function TrackingScreen({ navigation }) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.activityInfoContainer}>
-                <Text>Track an activity</Text>
-                <TextInput
-                    onChangeText={onChangeActivityName}
-                    placeholder={'Activity Name'}
-                    value={activityName}
-                    onSubmitEditing={Keyboard.dismiss} />
-                <Picker
-                    selectedValue={selectedActivityType}
-                    onValueChange={(itemValue, itemIndex) =>
-                        setSelectedActivityType(itemValue)
-                    }>
-                    <Picker.Item label='Walk' value='Walk' />
-                    <Picker.Item label='Run' value='Run' />
-                    <Picker.Item label='Cycle' value='Cycle' />
-                    <Picker.Item label='Mountain Biking' value='Mountain Biking' />
-                    <Picker.Item label='Hike' value='Hike' />
-                </Picker>
-            </View>
-            <View style={styles.buttonContainer}>
-                <Button
-                    style={styles.buttons}
-                    color='#a83232'
-                    title='Stop Activity'
-                    disabled={showStopActivity}
-                    onPress={() => {
-                        endActivity();
-                    }} />
-                <Button
-                    style={styles.buttons}
-                    color='#32a852'
-                    title='Start Activity'
-                    disabled={showStartActivity}
-                    onPress={() => {
-                        setActivityStartTime(moment().format('YYYY-MM-DD hh:mm:ss'));
-                        setActivityStarted(true);
-                        Keyboard.dismiss()
-                    }} />
+        <SafeAreaView style={styles.TrackingScreen}>
+            <Text style={styles.title}>Track an activity</Text>
+            <View style={styles.container}>
+                <View style={styles.activityInfoContainer}>
+                    {/* <Text>Track an activity</Text> */}
+                    <TextInput
+                        onChangeText={onChangeActivityName}
+                        placeholder={'Click to enter activity name'}
+                        value={activityName}
+                        placeholderTextColor={colors.white}
+                        style={styles.activityName}
+                        onSubmitEditing={Keyboard.dismiss} />
+                    <Picker
+                        style={styles.activityPicker}
+                        selectedValue={selectedActivityType}
+                        dropdownIconColor={colors.white}
+                        onValueChange={(itemValue, itemIndex) =>
+                            setSelectedActivityType(itemValue)
+                        }>
+                        <Picker.Item label='Walk' value='Walk' />
+                        <Picker.Item label='Run' value='Run' />
+                        <Picker.Item label='Cycle' value='Cycle' />
+                        <Picker.Item label='Mountain Biking' value='Mountain Biking' />
+                        <Picker.Item label='Hike' value='Hike' />
+                    </Picker>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        style={styles.buttons}
+                        color='#a83232'
+                        title='Stop Activity'
+                        disabled={showStopActivity}
+                        onPress={() => {
+                            endActivity();
+                        }} />
+                    <Button
+                        style={styles.buttons}
+                        color='#32a852'
+                        title='Start Activity'
+                        disabled={showStartActivity}
+                        onPress={() => {
+                            setActivityStartTime(moment().format('YYYY-MM-DD hh:mm:ss'));
+                            setActivityStarted(true);
+                            Keyboard.dismiss()
+                        }} />
+                </View>
             </View>
             {/* <Text>{time}</Text> */}
         </SafeAreaView>
@@ -186,20 +194,45 @@ export default function TrackingScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    TrackingScreen: {
+        // backgroundColor: 'black',
+        flex: 1,
+    },
+    title: {
+        fontSize: 24,
+        padding: 20,
+    },
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'flex-end',
+        paddingBottom: 40,
     },
     activityInfoContainer: {
-        width: '80%',
+        width: '90%',
+        padding: 20,
+        paddingBottom: 10,
+        backgroundColor: colors.transparentBlack,
+        borderTopStartRadius: 4,
+        borderTopEndRadius: 4,
+    },
+    activityName: {
+        fontSize: 20,
+        color: colors.white,
+    },
+    activityPicker: {
+        color: colors.white,
     },
     buttonContainer: {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'nowrap',
         justifyContent: 'space-evenly',
-        width: '100%',
+        width: '90%',
+        paddingBottom: 20,
+        backgroundColor: colors.transparentBlack,
+        borderBottomStartRadius: 4,
+        borderBottomEndRadius: 4,
     },
     buttons: {},
 })
