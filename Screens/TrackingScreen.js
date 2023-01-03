@@ -14,15 +14,18 @@
  * Every time this screen is in focus the useState of all of the activity variables will be reset to allow 
  * a new activty to be recorded.
  * 
+ * It uses the 'TimerComponent' to show the activities timer whilst recording and activity.
+ * 
  * @param navigation - For navigation
  */
-import { StyleSheet, Button, TextInput, View, Keyboard, Text } from 'react-native';
+import { StyleSheet, Button, TextInput, View, Keyboard, Text, Vibration } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Picker } from '@react-native-picker/picker';
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import moment from 'moment/moment';
 import colors from '../colors';
+import TimerComponent from '../Components/TimerComponent';
 
 export default function TrackingScreen({ navigation }) {
 
@@ -37,6 +40,7 @@ export default function TrackingScreen({ navigation }) {
     const [selectedActivityType, setSelectedActivityType] = useState('Walk');
     const [activityStartTime, setActivityStartTime] = useState('');
     const [time, setTime] = useState(0);
+    const [showTimer, setShowTimer] = useState('none');
 
     useEffect(() => {
 
@@ -50,6 +54,7 @@ export default function TrackingScreen({ navigation }) {
             setAltitudeArray([]);
             setActivityStartTime('');
             setTime(0);
+            setShowTimer('none');
         })
 
         /**
@@ -64,6 +69,7 @@ export default function TrackingScreen({ navigation }) {
             setShowStopActivity(false);
 
             const interval = setInterval(() => {
+                setShowTimer('flex');
                 setTime(time => time + 1);
                 (async () => {
 
@@ -122,6 +128,7 @@ export default function TrackingScreen({ navigation }) {
     */
     const endActivity = () => {
         // console.log('end activity initiated'); // For Testing
+        Vibration.vibrate();
         if (coordinatesArray.length > 0) {
             setActivityStarted(false);
             setShowStartActivity(false);
@@ -144,8 +151,8 @@ export default function TrackingScreen({ navigation }) {
         <SafeAreaView style={styles.TrackingScreen}>
             <Text style={styles.title}>Track an activity</Text>
             <View style={styles.container}>
+                <TimerComponent time={time} show={showTimer} />
                 <View style={styles.activityInfoContainer}>
-                    {/* <Text>Track an activity</Text> */}
                     <TextInput
                         onChangeText={onChangeActivityName}
                         placeholder={'Click to enter activity name'}
@@ -182,13 +189,13 @@ export default function TrackingScreen({ navigation }) {
                         title='Start Activity'
                         disabled={showStartActivity}
                         onPress={() => {
+                            Vibration.vibrate();
                             setActivityStartTime(moment().format('YYYY-MM-DD hh:mm:ss'));
                             setActivityStarted(true);
                             Keyboard.dismiss()
                         }} />
                 </View>
             </View>
-            {/* <Text>{time}</Text> */}
         </SafeAreaView>
     );
 }
