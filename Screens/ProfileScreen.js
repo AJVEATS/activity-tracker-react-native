@@ -6,15 +6,17 @@
  * @param navigtaion - For navigation
  */
 import AuthenticationNavigator from '../Navigation/AuthenticationNavigator';
-import { getFirestore, getDoc, doc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, getDoc, doc, deleteDoc, query, collection, where, getDocs } from 'firebase/firestore';
 import ProfileInfoComponent from '../Components/ProfileInfoComponent';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { deleteUser, getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import colors from '../colors';
+import 'firebase/firestore';
+
 
 const ProfileScreen = ({ navigation }) => {
     const [userFirstname, setUserFirstname] = useState('loading...');
@@ -105,6 +107,14 @@ const ProfileScreen = ({ navigation }) => {
      */
     async function deleteAccount(uid) {
         console.log(`account delete initialised ${uid}`);
+
+        const q1 = query(collection(db, "activities"), where('uid', '==', uid));   // Creating a query to get the activities with the user's user id
+
+        const querySnapshot = await getDocs(q1);
+        querySnapshot.forEach((doc) => {
+            deleteDoc(doc.ref);
+            console.log(doc.ref); // For Testing
+        });
         deleteDoc(doc(db, 'users', uid));
         navigation.navigate(AuthenticationNavigator);
     }
