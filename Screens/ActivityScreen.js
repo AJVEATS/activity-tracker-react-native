@@ -19,12 +19,12 @@
  * @param {Object} item - An object containing the activities information and data
  */
 import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartComponent';
-import { Button, Keyboard, ScrollView, StyleSheet, Switch, TextInput, View, Text } from 'react-native';
+import { Button, Keyboard, ScrollView, StyleSheet, Switch, TextInput, View, Text, Pressable } from 'react-native';
 import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewComponent';
 import ActivityInfoComponent from '../Components/ActivityInfoComponent';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import BackButtonComponent from '../Components/BackButtonComponent';
-import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
@@ -39,20 +39,21 @@ const ActivityScreen = (item) => {
     const navigation = useNavigation();
     const [notes, onChangeNotes] = useState(null);
     const [activityWeather, setActivityWeather] = useState([]);
-
-
+    const [legacyStats, setLegacyStats] = useState([]);
     const [publicStatus, setPublic] = useState(false);
     const toggleSwitch = () => setPublic(previousState => !previousState);
-
-    console.log(publicStatus);
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     // Initialize Firebase Authentication and get a reference to the service
     const auth = getAuth(app);
+    // Initialize Cloud Firestore and get a reference to the service
+    const db = getFirestore(app);
 
     const user = (auth.currentUser);
     const userID = user.uid;
+
+    const newStats = {};
 
     const activity = item.route.params.activityData;
     const activityTrack = activity.route;
@@ -72,6 +73,9 @@ const ActivityScreen = (item) => {
                 distance = distance + getDistance(activityTrack[i], activityTrack[i + 1]);
             }
         }
+
+        newStats.distance = distance;
+        // console.log(newStats.distance); // For Testing
 
         let formattedDistance = '';
 
@@ -100,6 +104,9 @@ const ActivityScreen = (item) => {
             minutes: duration.minutes(),
             seconds: duration.seconds(),
         };
+
+        newStats.duration = activityDuration;
+        // console.log(newStats.duration); // For Testing
 
         let formattedTime = '';
 
@@ -143,6 +150,8 @@ const ActivityScreen = (item) => {
         }
         // console.log(`altitude gained ${gain}`); // For Testing
 
+        newStats.gain = gain.toFixed(2);
+        // console.log(newStats.gain); // For Testing
         activity.altitudeGain = `${gain.toFixed(2)}m`;
 
         return gain;
@@ -176,6 +185,7 @@ const ActivityScreen = (item) => {
     // console.log(notes); // For Testing
     // console.log(activityTime); // For Testing
     // console.log(calculateAltitudeGain()); // For Testing
+    // console.log(publicStatus); // For Testing
 
     /**
      * This function navigates the user back to the track activity screen.
@@ -186,15 +196,54 @@ const ActivityScreen = (item) => {
     };
 
     /**
+     * This function gets the user's all time stats and adds this activities stats to the 
+     * all time stats. The all time stats are then updated in the firebase firestore collection
+     * 'legacyStats' 
+     */
+    async function updatingLegacyStats() {
+        const getLegacyStatsRef = doc(db, 'legacyStats', userID);
+        const docSnap = await getDoc(getLegacyStatsRef);
+
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+
+            setLegacyStats(docSnap.data());
+            console.log(docSnap.data().totalDuration.hours);
+
+            if ((Number(docSnap.data().totalDuration.minutes) + Number(newStats.duration.minutes)) > 60) {
+                newStats.duration.hours = newStats.duration.hours + 1;
+                newStats.duration.minutes = newStats.duration.minutes - 60;
+            }
+
+            if ((Number(docSnap.data().totalDuration.seconds) + Number(newStats.duration.seconds)) > 60) {
+                newStats.duration.minutes = newStats.duration.minutes + 1;
+                newStats.duration.seconds = newStats.duration.seconds - 60;
+            }
+
+            const updateLegacyStats = {
+                totalDistance: Number(docSnap.data().totalDistance) + Number(newStats.distance),
+                totalDuration: {
+                    hours: Number(docSnap.data().totalDuration.hours) + Number(newStats.duration.hours),
+                    minutes: Number(docSnap.data().totalDuration.minutes) + Number(newStats.duration.minutes),
+                    seconds: Number(docSnap.data().totalDuration.seconds) + Number(newStats.duration.seconds),
+                },
+                totalGain: Number(docSnap.data().totalGain) + Number(newStats.gain),
+            }
+
+            const legacyCollectionRef = doc(db, 'legacyStats', userID);
+            setDoc(legacyCollectionRef, updateLegacyStats, { merge: true });
+        } else {
+            console.log("No such document!");
+        }
+    };
+
+    /**
      * This function saves the activty object as a document to the 'activities' collection
      * from firebase firestore. Once the activity is saved the user is redirected to the track activity screen.
      */
     const saveActivity = () => {
         // console.log('Save activity pressed'); // For Testing
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
 
-        const db = getFirestore(app);
 
         try {
             activity.uid = userID;
@@ -212,6 +261,9 @@ const ActivityScreen = (item) => {
 
             // delete activity.endTime;
             setDoc(collectionRef, activity, { merge: true });
+
+            updatingLegacyStats();
+
             navigation.goBack();
         } catch (e) {
             console.error("Error adding document: ", e);
@@ -253,20 +305,36 @@ const ActivityScreen = (item) => {
                         />
                     </View>
                     <View style={styles.buttonContainer}>
-                        <Button
+                        {/* <Button
                             style={styles.buttons}
                             color={colors.black}
                             title='Discard Activity'
                             onPress={() => {
                                 discardActivity();
-                            }} />
-                        <Button
+                            }} /> */}
+                        <Pressable
+                            style={styles.activityButton}
+                            accessibilityLabel='Delete Activity'
+                            onPress={() => {
+                                discardActivity();
+                            }} >
+                            <Text style={styles.pressableText}>Delete Activity</Text>
+                        </Pressable>
+                        {/* <Button
                             style={styles.buttons}
                             color={colors.black}
                             title='Save Activity'
                             onPress={() => {
                                 saveActivity();
-                            }} />
+                            }} /> */}
+                        <Pressable
+                            style={styles.activityButton}
+                            accessibilityLabel='Save Activity'
+                            onPress={() => {
+                                saveActivity();
+                            }} >
+                            <Text style={styles.pressableText}>Save Activity</Text>
+                        </Pressable>
                     </View>
                 </View>
             </ScrollView>
@@ -312,9 +380,23 @@ const styles = StyleSheet.create({
     buttonContainer: {
         width: '100%',
         display: 'flex',
-        flexDirection: 'row',
+        // flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
+        // marginBottom: 10,
+    },
+    activityButton: {
+        backgroundColor: colors.black,
+        width: '95%',
+        borderRadius: 4,
+        padding: 10,
         marginBottom: 10,
+        alignItems: 'center',
+    },
+    pressableText: {
+        color: colors.white,
+        fontSize: 17,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
     },
 });

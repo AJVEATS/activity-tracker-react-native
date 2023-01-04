@@ -5,6 +5,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import colors from '../colors';
 
 
 const OpenWeatherMapAPI = ({ lat, lon, setWeather }) => {
@@ -33,21 +34,21 @@ const OpenWeatherMapAPI = ({ lat, lon, setWeather }) => {
                 setCondition(responseJSON.weather[0].description);
                 setWeather(responseJSON.main.temp, responseJSON.weather[0].description, responseJSON.name);
                 if (responseJSON.weather[0].main === "Fog") {
-                    setWeatherIcon(<Ionicons name={"cloud"} size={24} />)
+                    setWeatherIcon(<Ionicons name={"cloud"} size={24} color={colors.white} />)
                 } else if (responseJSON.weather[0].main === "Rain") {
-                    setWeatherIcon(<Ionicons name={"rainy-outline"} size={24} />)
+                    setWeatherIcon(<Ionicons name={"rainy-outline"} size={24} color={colors.white} />)
                 } else if (responseJSON.weather[0].main === "Clear") {
-                    setWeatherIcon(<Ionicons name={"sunny-outline"} size={24} />)
+                    setWeatherIcon(<Ionicons name={"sunny-outline"} size={24} color={colors.white} />)
                 } else if (responseJSON.weather[0].main === "Clouds") {
-                    setWeatherIcon(<Ionicons name="cloudy-outline" size={24} />)
+                    setWeatherIcon(<Ionicons name="cloudy-outline" size={24} color={colors.white} />)
                 } else if (responseJSON.weather[0].main === "Snow") {
-                    setWeatherIcon(<Ionicons name="snow-outline" size={24} />)
+                    setWeatherIcon(<Ionicons name="snow-outline" size={24} color={colors.white} />)
                 } else if (responseJSON.weather[0].main === "Drizzle") {
-                    setWeatherIcon(<Ionicons name="water-outline" size={24} />)
+                    setWeatherIcon(<Ionicons name="water-outline" size={24} color={colors.white} />)
                 } else if (responseJSON.weather[0].main === "Thunderstorm") {
-                    setWeatherIcon(<Ionicons name="thunderstorm-outline" size={24} />)
+                    setWeatherIcon(<Ionicons name="thunderstorm-outline" size={24} color={colors.white} />)
                 } else {
-                    setWeatherIcon(<Ionicons name="thermometer-outline" size={24} />)
+                    setWeatherIcon(<Ionicons name="thermometer-outline" size={24} color={colors.white} />)
                 }
             });
     }
@@ -82,15 +83,18 @@ export default OpenWeatherMapAPI
 
 const styles = StyleSheet.create({
     weatherContainer: {
-        width: '100%',
+        marginHorizontal: '3%',
+        borderRadius: 4,
+        backgroundColor: colors.lesserTransparentBlack,
         marginBottom: 10,
+        padding: 5,
     },
     weatherInfo: {
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
+        padding: 5,
     },
     weatherConditionContainer: {
         width: '70%',
@@ -101,6 +105,7 @@ const styles = StyleSheet.create({
     },
     weatherCondition: {
         fontSize: 18,
+        color: colors.white,
     },
     weatherTempContainer: {
         width: '30%',
@@ -112,5 +117,6 @@ const styles = StyleSheet.create({
         width: 'auto',
         textAlign: 'center',
         fontSize: 18,
+        color: colors.white,
     },
 })

@@ -5,6 +5,7 @@
  */
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import colors from '../colors';
 
 const ProfileInfoComponent = (data) => {
     // console.log(data.info); // For Testing
@@ -34,8 +35,12 @@ export default ProfileInfoComponent
 
 const styles = StyleSheet.create({
     infoContainer: {
-        width: '100%',
-        alignItems: 'center',
+        backgroundColor: colors.lesserTransparentBlack,
+        borderRadius: 4,
+        padding: 10,
+        paddingBottom: 0,
+        marginHorizontal: '5%',
+        marginBottom: 10,
     },
     userInfo: {
         width: '90%',
@@ -45,9 +50,11 @@ const styles = StyleSheet.create({
         fontSize: 22,
         marginBottom: 5,
         fontWeight: 'bold',
+        color: colors.white,
     },
     info: {
         fontSize: 18,
         marginBottom: 5,
+        color: colors.white,
     },
 })

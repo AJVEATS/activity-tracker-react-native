@@ -39,12 +39,15 @@ const PastActivityScreen = (data) => {
      */
     const hasNotes = () => {
         if (activity.notes) {
-            // console.log('no notes');
+            // console.log('notes');
             return (
                 <Text style={styles.notes}>{activity.notes}</Text>
             )
         } else {
             // console.log('no notes');
+            return (
+                <Text style={styles.notes}>No notes</Text>
+            )
         }
     }
 

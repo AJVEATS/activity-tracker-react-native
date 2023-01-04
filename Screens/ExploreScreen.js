@@ -8,7 +8,7 @@
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import PastActivityCardComponent from '../Components/PastActivityCardComponent';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
-import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Pressable, Vibration } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React, { useEffect, useState } from 'react';
@@ -18,7 +18,13 @@ import colors from '../colors';
 
 const ExploreScreen = ({ navigation }) => {
     const [activities, setActivities] = useState([]);
-    // const [activityQuery, setActivityQuery] = useState(false);
+    const [title, setTitle] = useState('Your Activity History');
+    const [publicButtonColor, setPublicButtonColor] = useState(colors.black);
+    const [publicIconColor, setPublicIconColor] = useState(colors.white);
+    const [privateButtonColor, setPrivateButtonColor] = useState(colors.black);
+    const [privateIconColor, setPrivateIconColor] = useState(colors.white);
+    const [publicButtonDisabled, setPublicButtonDisabled] = useState(false);
+    const [privateButtonDisabled, setPrivateButtonDisabled] = useState(true);
 
     const app = initializeApp(firebaseConfig);  // Connecting to the firestore collection
     const auth = getAuth(app);
@@ -31,6 +37,10 @@ const ExploreScreen = ({ navigation }) => {
         */
         const getActivitiesRerender = navigation.addListener("focus", () => {
             getActivities('uid', user.uid);
+            setPrivateButtonColor(colors.white);
+            setPrivateIconColor(colors.black);
+            setPublicButtonColor(colors.black);
+            setPublicIconColor(colors.white);
         });
     }, []);
 
@@ -47,6 +57,12 @@ const ExploreScreen = ({ navigation }) => {
         const db = getFirestore(app);  // Connecting to the firestore database
         const q = query(collection(db, "activities"), where(field, '==', fieldValue));   // Creating a query to get the activities with the user's user id
 
+        if (field == 'privacy') {
+            setTitle('Community Activities');
+        } else if (field == 'uid') {
+            setTitle('Your Activity History');
+        }
+
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             setActivities(activities => [...activities, { activityId: doc.id, activityData: doc.data() }]);
@@ -59,7 +75,16 @@ const ExploreScreen = ({ navigation }) => {
     */
     const publicButtonPress = () => {
         // console.log('public button pressed'); // For Testing
+        setPublicButtonColor(colors.white);
+        setPublicIconColor(colors.black);
+        setPrivateButtonColor(colors.black);
+        setPrivateIconColor(colors.white);
+
+        setPublicButtonDisabled(true);
+        setPrivateButtonDisabled(false);
+
         setActivities([]);
+        setTitle('Community Activities');
         getActivities('privacy', 'public');
         // console.log('privacy', 'public'); // For Testing
     }
@@ -69,6 +94,14 @@ const ExploreScreen = ({ navigation }) => {
     */
     const privateButtonPress = () => {
         // console.log('private button pressed'); // For Testing
+        setPrivateButtonColor(colors.white);
+        setPrivateIconColor(colors.black);
+        setPublicButtonColor(colors.black);
+        setPublicIconColor(colors.white);
+
+        setPrivateButtonDisabled(true);
+        setPublicButtonDisabled(false);
+
         setActivities([]);
         getActivities('uid', user.uid);
         // console.log('uid', user.uid); // For Testing
@@ -76,7 +109,7 @@ const ExploreScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.exploreScreen}>
-            <Text style={styles.exploreTitle}>Activity History</Text>
+            <Text style={styles.exploreTitle}>{title}</Text>
             <FlatList
                 data={activities}
                 ItemSeparatorComponent={() => {
@@ -100,20 +133,24 @@ const ExploreScreen = ({ navigation }) => {
             />
             <View style={styles.buttonContainer}>
                 <Pressable
-                    style={styles.button}
+                    style={[styles.button, { backgroundColor: publicButtonColor }]}
                     accessibilityLabel='View public activities'
+                    disabled={publicButtonDisabled}
                     onPress={() => {
+                        // Vibration.vibrate();
                         publicButtonPress();
                     }}>
-                    <Ionicons name="people-outline" size={24} color={colors.white} />
+                    <Ionicons name="people-outline" size={24} color={publicIconColor} />
                 </Pressable>
                 <Pressable
-                    style={styles.button}
+                    style={[styles.button, { backgroundColor: privateButtonColor }]}
                     accessibilityLabel='View your activities'
+                    disabled={privateButtonDisabled}
                     onPress={() => {
+                        // Vibration.vibrate();
                         privateButtonPress();
                     }}>
-                    <Ionicons name="person-outline" size={24} color={colors.white} />
+                    <Ionicons name="person-outline" size={24} color={privateIconColor} />
                 </Pressable>
             </View>
         </SafeAreaView>
@@ -146,12 +183,13 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
     buttonContainer: {
+        paddingHorizontal: 10,
         position: 'absolute',
         bottom: 10,
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-between'
     },
     button: {
         backgroundColor: colors.black,
@@ -159,7 +197,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 10,
         alignItems: 'center',
-        width: '45%',
+        width: '48%',
         textAlignVertical: 'center',
     },
     pressableText: {

@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         width: '90%',
         padding: 20,
         marginBottom: 10,
-        backgroundColor: colors.transparentBlack,
+        backgroundColor: colors.lesserTransparentBlack,
         borderRadius: 4,
     },
     timerNumbers: {

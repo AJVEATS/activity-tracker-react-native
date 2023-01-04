@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import colors from '../colors';
 import 'firebase/firestore';
+import LegacyStatsComponent from '../Components/LegacyStatsComponent';
 
 
 const ProfileScreen = ({ navigation }) => {
@@ -122,6 +123,7 @@ const ProfileScreen = ({ navigation }) => {
     return (
         <SafeAreaView>
             <Text style={styles.title}>Welcome back {userFirstname} 👋</Text>
+            <LegacyStatsComponent />
             <ProfileInfoComponent info={userInfo} />
             <Pressable
                 style={styles.accountButton}

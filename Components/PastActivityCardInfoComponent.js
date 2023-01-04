@@ -82,4 +82,44 @@ const styles = StyleSheet.create({
     activityInfoStatValue: {
         fontSize: 16,
     },
+
+
+
+    weatherContainer: {
+        marginHorizontal: '3%',
+        borderRadius: 4,
+        backgroundColor: colors.lesserTransparentBlack,
+        marginBottom: 10,
+        padding: 5,
+    },
+    weatherInfo: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 5,
+    },
+    weatherConditionContainer: {
+        width: '70%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
+    weatherCondition: {
+        fontSize: 18,
+        color: colors.white,
+    },
+    weatherTempContainer: {
+        width: '30%',
+        display: 'flex',
+        justifyContent: 'center',
+        textAlign: 'center',
+    },
+    weatherTemp: {
+        width: 'auto',
+        textAlign: 'center',
+        fontSize: 18,
+        color: colors.white,
+    },
 })

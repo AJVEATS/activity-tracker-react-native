@@ -53,6 +53,6 @@ export default ActivityAltitudeChartComponent
 const styles = StyleSheet.create({
     chartTitle: {
         paddingHorizontal: 10,
-        fontSize: 20,
+        fontSize: 24,
     }
 })

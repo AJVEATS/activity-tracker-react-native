@@ -10,6 +10,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { firebaseConfig } from './FirebaseAuthComponent';
+import { getAuth, updateEmail } from "firebase/auth";
 import { Picker } from '@react-native-picker/picker';
 import { initializeApp } from 'firebase/app';
 import React, { useState } from 'react';
@@ -20,7 +21,7 @@ const EditInfoComponent = (data) => {
     // console.log(data.info);  // For Testing
     const user = data.info;
 
-    const [updatedEmail, updateEmail] = useState(user.email);
+    // const [updatedEmail, updateEmail] = useState(user.email);
     const [updatedFirstname, updateFirstname] = useState(user.firstname);
     const [updatedLastName, updateLastname] = useState(user.lastname)
     const [updatedActivity, updateActivity] = useState(user.activity);
@@ -35,12 +36,14 @@ const EditInfoComponent = (data) => {
     const updateUserInfo = (uid) => {
         // console.log(`update user info for ${uid}`);  // For Testing
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
         const db = getFirestore(app);
 
         try {
             const collectionRef = doc(db, 'users', user.userID);
             const updatedUser = {
-                email: updatedEmail,
+                // email: updatedEmail,
                 firstname: updatedFirstname,
                 lastname: updatedLastName,
                 activity: updatedActivity,
@@ -57,11 +60,11 @@ const EditInfoComponent = (data) => {
             <Text style={styles.title}>🧑 Update your info</Text>
             <Text style={styles.subtitle}>Update your account's infomation here:</Text>
             <View style={styles.updateInfoForm}>
-                <TextInput
+                {/* <TextInput
                     style={styles.updateUserInput}
                     onChangeText={updateEmail}
                     value={updatedEmail}
-                />
+                /> */}
                 <TextInput
                     style={styles.updateUserInput}
                     onChangeText={updateFirstname}
