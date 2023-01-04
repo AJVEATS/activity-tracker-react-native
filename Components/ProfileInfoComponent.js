@@ -17,8 +17,7 @@ const ProfileInfoComponent = (data) => {
                 <Text style={styles.userInfoTitle}>Your info:</Text>
                 <Text style={styles.info}>
                     <Text style={{ fontWeight: 'bold' }}>Email: </Text>
-                    {user.email}
-                </Text>
+                    {user.email}</Text>
                 <Text style={styles.info}>
                     <Text style={{ fontWeight: 'bold' }}>First name: </Text>
                     {user.firstname}</Text>

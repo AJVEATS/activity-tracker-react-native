@@ -295,7 +295,7 @@ const ActivityScreen = (item) => {
                             textAlignVertical={'top'} />
                     </View>
                     <View style={styles.switchContainer}>
-                        <Text style={styles.switchText}>Make Activity publicStatus</Text>
+                        <Text style={styles.switchText}>Make Activity Public</Text>
                         <Switch
                             trackColor={{ false: "#767577", true: "#81b0ff" }}
                             thumbColor={publicStatus ? colors.black : "#f4f3f4"}
