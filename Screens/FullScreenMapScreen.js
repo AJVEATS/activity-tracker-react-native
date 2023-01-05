@@ -54,7 +54,8 @@ const FullScreenMap = (item) => {
                 style={styles.changeMapButton}
                 onPress={() => {
                     changeMapStyle();
-                }} >
+                }}
+            >
                 <Ionicons name={"color-palette-outline"} size={32} color={colors.black} />
             </TouchableOpacity>
         </SafeAreaView>

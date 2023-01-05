@@ -18,13 +18,13 @@
  * 
  * @param {Object} item - An object containing the activities information and data
  */
+import { Keyboard, ScrollView, StyleSheet, Switch, TextInput, View, Text, Pressable } from 'react-native';
 import ActivityAltitudeChartComponent from '../Components/ActivityAltitudeChartComponent';
-import { Button, Keyboard, ScrollView, StyleSheet, Switch, TextInput, View, Text, Pressable } from 'react-native';
 import ActivityMapPreviewComponent from '../Components/ActivityMapPreviewComponent';
 import ActivityInfoComponent from '../Components/ActivityInfoComponent';
+import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import BackButtonComponent from '../Components/BackButtonComponent';
-import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import OpenWeatherMapAPI from '../API/OpenWeatherMapAPI';
@@ -149,7 +149,6 @@ const ActivityScreen = (item) => {
             }
         }
         // console.log(`altitude gained ${gain}`); // For Testing
-
         newStats.gain = gain.toFixed(2);
         // console.log(newStats.gain); // For Testing
         activity.altitudeGain = `${gain.toFixed(2)}m`;
@@ -244,7 +243,6 @@ const ActivityScreen = (item) => {
     const saveActivity = () => {
         // console.log('Save activity pressed'); // For Testing
 
-
         try {
             activity.uid = userID;
 
@@ -257,6 +255,7 @@ const ActivityScreen = (item) => {
             } else {
                 activity.privacy = 'private';
             }
+
             const collectionRef = doc(db, 'activities', `${userID}:${activity.endTime}`);
 
             // delete activity.endTime;
@@ -265,6 +264,7 @@ const ActivityScreen = (item) => {
             updatingLegacyStats();
 
             navigation.goBack();
+
         } catch (e) {
             console.error("Error adding document: ", e);
         }
@@ -292,7 +292,8 @@ const ActivityScreen = (item) => {
                             placeholder={'Notes'}
                             value={notes}
                             onSubmitEditing={Keyboard.dismiss}
-                            textAlignVertical={'top'} />
+                            textAlignVertical={'top'}
+                        />
                     </View>
                     <View style={styles.switchContainer}>
                         <Text style={styles.switchText}>Make Activity Public</Text>
@@ -305,34 +306,22 @@ const ActivityScreen = (item) => {
                         />
                     </View>
                     <View style={styles.buttonContainer}>
-                        {/* <Button
-                            style={styles.buttons}
-                            color={colors.black}
-                            title='Discard Activity'
-                            onPress={() => {
-                                discardActivity();
-                            }} /> */}
                         <Pressable
                             style={styles.activityButton}
                             accessibilityLabel='Delete Activity'
                             onPress={() => {
                                 discardActivity();
-                            }} >
+                            }}
+                        >
                             <Text style={styles.pressableText}>Delete Activity</Text>
                         </Pressable>
-                        {/* <Button
-                            style={styles.buttons}
-                            color={colors.black}
-                            title='Save Activity'
-                            onPress={() => {
-                                saveActivity();
-                            }} /> */}
                         <Pressable
                             style={styles.activityButton}
                             accessibilityLabel='Save Activity'
                             onPress={() => {
                                 saveActivity();
-                            }} >
+                            }}
+                        >
                             <Text style={styles.pressableText}>Save Activity</Text>
                         </Pressable>
                     </View>

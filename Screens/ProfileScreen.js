@@ -5,8 +5,9 @@
  * 
  * @param navigtaion - For navigation
  */
-import AuthenticationNavigator from '../Navigation/AuthenticationNavigator';
 import { getFirestore, getDoc, doc, deleteDoc, query, collection, where, getDocs } from 'firebase/firestore';
+import AuthenticationNavigator from '../Navigation/AuthenticationNavigator';
+import LegacyStatsComponent from '../Components/LegacyStatsComponent';
 import ProfileInfoComponent from '../Components/ProfileInfoComponent';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,7 +17,6 @@ import React, { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import colors from '../colors';
 import 'firebase/firestore';
-import LegacyStatsComponent from '../Components/LegacyStatsComponent';
 
 
 const ProfileScreen = ({ navigation }) => {

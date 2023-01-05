@@ -109,7 +109,8 @@ const CreateAccountScreen = ({ navigation }) => {
                                 selectedValue={favouriteActivity}
                                 onValueChange={(itemValue, itemIndex) =>
                                     setFavouriteActivity(itemValue)
-                                }>
+                                }
+                            >
                                 <Picker.Item label='Walking' value='Walking' />
                                 <Picker.Item label='Running' value='Running' />
                                 <Picker.Item label='Cycling' value='Cycling' />

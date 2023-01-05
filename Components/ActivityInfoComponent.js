@@ -3,25 +3,20 @@
  * the activities title, overall distance, elevation gained, activity type and activity location.
  * 
  * @param {Object} data - An object which includes all of the activitie's data.
- * 
  */
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, View } from 'react-native';
 import colors from '../colors';
-import React, { useState } from 'react';
+import React from 'react';
+import PastActivityWeatherComponent from './PastActivityWeatherComponent';
 
 const ActivityInfoComponent = (data) => {
-    const [weatherIcon, setWeatherIcon] = useState('');
     const activity = data.activityInfo;
     // console.log(activity); // For Testing
 
     const pastActivityWeather = () => {
         if (activity.privacy) {
             return (
-                <View style={styles.weatherContainer}>
-                    <Text style={styles.temp}>{`${activity.weather[0].temperature}°C - `}</Text>
-                    <Text style={styles.condition}>{activity.weather[0].condition}</Text>
-                </View>
+                <PastActivityWeatherComponent weather={activity.weather[0]} />
             );
         } else {
             // console.log('This is a new activity and it will use the openWeatherAPI instead'); // For Testing
@@ -37,7 +32,7 @@ const ActivityInfoComponent = (data) => {
                         <View style={styles.activityStatLabelContainer}>
                             <Text style={styles.activityStatsLabel}>Distance</Text>
                         </View>
-                        <View style={styles.activityStatValueConatainer}>
+                        <View>
                             <Text style={styles.activityStatsValue}>{activity.distance}</Text>
                         </View>
                     </View>
@@ -45,7 +40,7 @@ const ActivityInfoComponent = (data) => {
                         <View style={styles.activityStatLabelContainer}>
                             <Text style={styles.activityStatsLabel}>Elevation Gained</Text>
                         </View>
-                        <View style={styles.activityStatValueConatainer}>
+                        <View>
                             <Text style={styles.activityStatsValue}>{activity.altitudeGain}</Text>
                         </View>
                     </View>
@@ -55,7 +50,7 @@ const ActivityInfoComponent = (data) => {
                         <View style={styles.activityStatLabelContainer}>
                             <Text style={styles.activityStatsLabel}>Activity Type</Text>
                         </View>
-                        <View style={styles.activityStatValueConatainer}>
+                        <View>
                             <Text style={styles.activityStatsValue}>{activity.type}</Text>
                         </View>
                     </View>
@@ -63,7 +58,7 @@ const ActivityInfoComponent = (data) => {
                         <View style={styles.activityStatLabelContainer}>
                             <Text style={styles.activityStatsLabel}>Time</Text>
                         </View>
-                        <View style={styles.activityStatValueConatainer}>
+                        <View>
                             <Text style={styles.activityStatsValue}>{activity.time}</Text>
                         </View>
                     </View>
@@ -85,9 +80,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '3%',
     },
     activityStatsContainer: {
-        // margin: 5,
         width: '100%',
-
     },
     activityStatsTopRow: {
         width: '100%',
@@ -103,7 +96,6 @@ const styles = StyleSheet.create({
     },
     activityStat: {
         width: '46%',
-        // padding: 10,
         textAlign: 'center',
         marginBottom: 10,
         paddingVertical: 10,
@@ -112,8 +104,6 @@ const styles = StyleSheet.create({
     },
     activityStatLabelContainer: {
         width: '100%',
-    },
-    activityStatValueConatainer: {
     },
     activityStatsLabel: {
         textAlign: 'center',

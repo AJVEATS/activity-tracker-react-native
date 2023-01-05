@@ -60,11 +60,6 @@ const EditInfoComponent = (data) => {
             <Text style={styles.title}>🧑 Update your info</Text>
             <Text style={styles.subtitle}>Update your account's infomation here:</Text>
             <View style={styles.updateInfoForm}>
-                {/* <TextInput
-                    style={styles.updateUserInput}
-                    onChangeText={updateEmail}
-                    value={updatedEmail}
-                /> */}
                 <TextInput
                     style={styles.updateUserInput}
                     onChangeText={updateFirstname}

@@ -21,7 +21,8 @@ const WelcomeScreen = ({ navigation }) => {
                     accessibilityLabel='create account button'
                     onPress={() => {
                         navigation.push('LoginScreen')
-                    }} >
+                    }}
+                >
                     <Text style={styles.pressableText}>Login</Text>
                 </Pressable>
                 <Pressable
@@ -29,7 +30,8 @@ const WelcomeScreen = ({ navigation }) => {
                     accessibilityLabel='create account button'
                     onPress={() => {
                         navigation.push('CreateAccountScreen')
-                    }} >
+                    }}
+                >
                     <Text style={styles.pressableText}>create account</Text>
                 </Pressable>
             </View>

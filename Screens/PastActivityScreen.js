@@ -74,7 +74,8 @@ const PastActivityScreen = (data) => {
                     accessibilityLabel='Delete Activity'
                     onPress={() => {
                         deleteActivity();
-                    }} >
+                    }}
+                >
                     <Text style={styles.pressableText}>Delete Activity</Text>
                 </Pressable>
             </ScrollView>

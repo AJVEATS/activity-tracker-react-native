@@ -159,14 +159,16 @@ export default function TrackingScreen({ navigation }) {
                         value={activityName}
                         placeholderTextColor={colors.white}
                         style={styles.activityName}
-                        onSubmitEditing={Keyboard.dismiss} />
+                        onSubmitEditing={Keyboard.dismiss}
+                    />
                     <Picker
                         style={styles.activityPicker}
                         selectedValue={selectedActivityType}
                         dropdownIconColor={colors.white}
                         onValueChange={(itemValue, itemIndex) =>
                             setSelectedActivityType(itemValue)
-                        }>
+                        }
+                    >
                         <Picker.Item label='Walk' value='Walk' />
                         <Picker.Item label='Run' value='Run' />
                         <Picker.Item label='Cycle' value='Cycle' />
@@ -182,7 +184,8 @@ export default function TrackingScreen({ navigation }) {
                         disabled={showStopActivity}
                         onPress={() => {
                             endActivity();
-                        }} />
+                        }}
+                    />
                     <Button
                         style={styles.buttons}
                         color='#32a852'
@@ -193,7 +196,8 @@ export default function TrackingScreen({ navigation }) {
                             setActivityStartTime(moment().format('YYYY-MM-DD hh:mm:ss'));
                             setActivityStarted(true);
                             Keyboard.dismiss()
-                        }} />
+                        }}
+                    />
                 </View>
             </View>
         </SafeAreaView>
@@ -202,7 +206,6 @@ export default function TrackingScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     TrackingScreen: {
-        // backgroundColor: 'black',
         flex: 1,
     },
     title: {

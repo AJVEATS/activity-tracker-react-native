@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                // console.log(user.email);
+                // console.log(user.email);  // For Testing
                 navigation.navigate(MainBottomTabNavigator);
             })
             .catch((error) => {
@@ -60,7 +60,8 @@ const LoginScreen = ({ navigation }) => {
                         accessibilityLabel='Login button'
                         onPress={() => {
                             login()
-                        }} >
+                        }}
+                    >
                         <Text style={styles.pressableText}>login</Text>
                     </Pressable>
                     <Pressable
@@ -68,7 +69,8 @@ const LoginScreen = ({ navigation }) => {
                         accessibilityLabel='create account button'
                         onPress={() => {
                             navigation.push('CreateAccountScreen')
-                        }} >
+                        }}
+                    >
                         <Text style={styles.pressableText}>create account</Text>
                     </Pressable>
                 </View>

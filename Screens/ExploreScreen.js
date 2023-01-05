@@ -8,7 +8,7 @@
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import PastActivityCardComponent from '../Components/PastActivityCardComponent';
 import { firebaseConfig } from '../Components/FirebaseAuthComponent';
-import { StyleSheet, Text, View, FlatList, Pressable, Vibration } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React, { useEffect, useState } from 'react';
@@ -137,9 +137,9 @@ const ExploreScreen = ({ navigation }) => {
                     accessibilityLabel='View public activities'
                     disabled={publicButtonDisabled}
                     onPress={() => {
-                        // Vibration.vibrate();
                         publicButtonPress();
-                    }}>
+                    }}
+                >
                     <Ionicons name="people-outline" size={24} color={publicIconColor} />
                 </Pressable>
                 <Pressable
@@ -147,9 +147,9 @@ const ExploreScreen = ({ navigation }) => {
                     accessibilityLabel='View your activities'
                     disabled={privateButtonDisabled}
                     onPress={() => {
-                        // Vibration.vibrate();
                         privateButtonPress();
-                    }}>
+                    }}
+                >
                     <Ionicons name="person-outline" size={24} color={privateIconColor} />
                 </Pressable>
             </View>
