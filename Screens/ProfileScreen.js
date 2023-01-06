@@ -117,6 +117,7 @@ const ProfileScreen = ({ navigation }) => {
             // console.log(doc.ref); // For Testing
         });
         deleteDoc(doc(db, 'users', uid));
+        deleteDoc(doc(db, 'legacyStats', uid));
         navigation.navigate(AuthenticationNavigator);
     }
 

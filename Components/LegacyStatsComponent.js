@@ -59,7 +59,7 @@ const LegacyStatsComponent = () => {
 
     return (
         <View style={styles.statsContainer}>
-            <Text style={styles.statsTitle}>All TIme Stats:</Text>
+            <Text style={styles.statsTitle}>All Time Stats:</Text>
             <Text style={styles.stats}>
                 <Text style={styles.label}>Distance: </Text>
                 <Text style={styles.stats}>{formatDistance(distance)}</Text>

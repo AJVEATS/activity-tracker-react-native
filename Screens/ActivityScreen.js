@@ -204,10 +204,10 @@ const ActivityScreen = (item) => {
         const docSnap = await getDoc(getLegacyStatsRef);
 
         if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
+            // console.log("Document data:", docSnap.data()); // For Testing
 
             setLegacyStats(docSnap.data());
-            console.log(docSnap.data().totalDuration.hours);
+            // console.log(docSnap.data().totalDuration.hours); // For Testing
 
             if ((Number(docSnap.data().totalDuration.minutes) + Number(newStats.duration.minutes)) > 60) {
                 newStats.duration.hours = newStats.duration.hours + 1;
@@ -232,6 +232,18 @@ const ActivityScreen = (item) => {
             const legacyCollectionRef = doc(db, 'legacyStats', userID);
             setDoc(legacyCollectionRef, updateLegacyStats, { merge: true });
         } else {
+            const createLegacyStats = {
+                totalDistance: Number(newStats.distance),
+                totalDuration: {
+                    hours: Number(newStats.duration.hours),
+                    minutes: Number(newStats.duration.minutes),
+                    seconds: Number(newStats.duration.seconds),
+                },
+                totalGain: Number(newStats.gain),
+            }
+
+            const legacyCollectionRef = doc(db, 'legacyStats', userID);
+            setDoc(legacyCollectionRef, createLegacyStats, { merge: true });
             console.log("No such document!");
         }
     };
