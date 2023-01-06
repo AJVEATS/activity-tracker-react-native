@@ -37,6 +37,12 @@ const ExploreScreen = ({ navigation }) => {
         */
         const getActivitiesRerender = navigation.addListener("focus", () => {
             getActivities('uid', user.uid);
+
+            setTitle('Your Activity History');
+
+            setPrivateButtonDisabled(true);
+            setPublicButtonDisabled(false);
+
             setPrivateButtonColor(colors.white);
             setPrivateIconColor(colors.black);
             setPublicButtonColor(colors.black);

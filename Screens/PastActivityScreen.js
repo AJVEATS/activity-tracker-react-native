@@ -60,6 +60,11 @@ const PastActivityScreen = (data) => {
         navigation.goBack();
     }
 
+    /**
+     * Check's if the current user's ID is the same as the uid saved in the activities
+     * firestore document. If it is the user's activity it will render a delete 
+     * pressable.
+     */
     const isUsersActivity = () => {
         const auth = getAuth(app);
         const userID = auth.currentUser.uid;
@@ -79,12 +84,10 @@ const PastActivityScreen = (data) => {
                     <Text style={styles.pressableText}>Delete Activity</Text>
                 </Pressable>
             )
-        } else if (userID != activity.uid) {
-            console.log('Not this users activity');
+        } else {
+            // console.log('Not this users activity');  // For Testing
         }
     }
-
-    // isUsersActivity();
 
     return (
         <SafeAreaView>
@@ -97,15 +100,6 @@ const PastActivityScreen = (data) => {
                     altitude={activity.altitude} />
                 {hasNotes()}
                 {isUsersActivity()}
-                {/* <Pressable
-                    style={styles.deleteActivityButton}
-                    accessibilityLabel='Delete Activity'
-                    onPress={() => {
-                        deleteActivity();
-                    }}
-                >
-                    <Text style={styles.pressableText}>Delete Activity</Text>
-                </Pressable> */}
             </ScrollView>
         </SafeAreaView>
     )
