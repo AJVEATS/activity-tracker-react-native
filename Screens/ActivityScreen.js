@@ -339,7 +339,6 @@ const styles = StyleSheet.create({
     },
     activityContainer: {
         width: '100%',
-        // padding: 20,
         backgroundColor: colors.white,
     },
     activityInfo: {
@@ -369,10 +368,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         width: '100%',
         display: 'flex',
-        // flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        // marginBottom: 10,
     },
     activityButton: {
         backgroundColor: colors.black,

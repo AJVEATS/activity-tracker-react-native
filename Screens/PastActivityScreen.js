@@ -22,6 +22,7 @@ import { useNavigation } from '@react-navigation/native';
 import { initializeApp } from 'firebase/app';
 import colors from '../colors';
 import React from 'react';
+import { getAuth } from 'firebase/auth';
 
 const PastActivityScreen = (data) => {
     const activity = data.route.params.data;
@@ -59,6 +60,32 @@ const PastActivityScreen = (data) => {
         navigation.goBack();
     }
 
+    const isUsersActivity = () => {
+        const auth = getAuth(app);
+        const userID = auth.currentUser.uid;
+        // console.log(`current uid is ${userID}`);   // For Tetsing
+        // console.log(`activities uid is ${activity.uid}`);  // For Tetsing
+
+        if (userID === activity.uid) {
+            // console.log('they are the same');   // For Tetsing
+            return (
+                <Pressable
+                    style={styles.deleteActivityButton}
+                    accessibilityLabel='Delete Activity'
+                    onPress={() => {
+                        deleteActivity();
+                    }}
+                >
+                    <Text style={styles.pressableText}>Delete Activity</Text>
+                </Pressable>
+            )
+        } else if (userID != activity.uid) {
+            console.log('Not this users activity');
+        }
+    }
+
+    // isUsersActivity();
+
     return (
         <SafeAreaView>
             <ScrollView>
@@ -69,7 +96,8 @@ const PastActivityScreen = (data) => {
                 <ActivityAltitudeChartComponent
                     altitude={activity.altitude} />
                 {hasNotes()}
-                <Pressable
+                {isUsersActivity()}
+                {/* <Pressable
                     style={styles.deleteActivityButton}
                     accessibilityLabel='Delete Activity'
                     onPress={() => {
@@ -77,7 +105,7 @@ const PastActivityScreen = (data) => {
                     }}
                 >
                     <Text style={styles.pressableText}>Delete Activity</Text>
-                </Pressable>
+                </Pressable> */}
             </ScrollView>
         </SafeAreaView>
     )
