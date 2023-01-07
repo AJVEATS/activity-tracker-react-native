@@ -181,6 +181,7 @@ export default function TrackingScreen({ navigation }) {
                         style={styles.buttons}
                         color='#a83232'
                         title='Stop Activity'
+                        accessibilityLabel='Stop Activity'
                         disabled={showStopActivity}
                         onPress={() => {
                             endActivity();
@@ -190,6 +191,7 @@ export default function TrackingScreen({ navigation }) {
                         style={styles.buttons}
                         color='#32a852'
                         title='Start Activity'
+                        accessibilityLabel='Start Activity'
                         disabled={showStartActivity}
                         onPress={() => {
                             Vibration.vibrate();

@@ -53,14 +53,6 @@ const PastActivityScreen = (data) => {
     }
 
     /**
-     * Deletes the activity if they have pressed the 'Delete Activity' pressable
-     */
-    const deleteActivity = () => {
-        deleteDoc(doc(db, 'activities', `${activity.uid}:${activity.endTime}`));
-        navigation.goBack();
-    }
-
-    /**
      * Check's if the current user's ID is the same as the uid saved in the activities
      * firestore document. If it is the user's activity it will render a delete 
      * pressable.
@@ -87,6 +79,16 @@ const PastActivityScreen = (data) => {
         } else {
             // console.log('Not this users activity');  // For Testing
         }
+    }
+
+
+
+    /**
+     * Deletes the activity if they have pressed the 'Delete Activity' pressable
+     */
+    const deleteActivity = () => {
+        deleteDoc(doc(db, 'activities', `${activity.uid}:${activity.endTime}`));
+        navigation.goBack();
     }
 
     return (

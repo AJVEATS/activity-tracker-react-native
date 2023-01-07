@@ -32,6 +32,7 @@ const PastActivityCardComponent = (data) => {
     return (
         <TouchableOpacity
             style={styles.activityCard}
+            accessibilityLabel={'Activity Pressable Card'}
             onPress={() => cardOnPress()}>
             <View style={styles.activityCardInfoContainer}>
                 {/* <Text style={styles.activityName}>{activity.name}</Text> */}
