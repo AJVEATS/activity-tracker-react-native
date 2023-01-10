@@ -155,7 +155,7 @@ export default function TrackingScreen({ navigation }) {
                 <View style={styles.activityInfoContainer}>
                     <TextInput
                         onChangeText={onChangeActivityName}
-                        placeholder={'Click to name activity name'}
+                        placeholder={'Click to name activity'}
                         value={activityName}
                         placeholderTextColor={colors.white}
                         style={styles.activityName}
