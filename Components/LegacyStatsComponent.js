@@ -70,7 +70,7 @@ const LegacyStatsComponent = () => {
             </Text>
             <Text style={styles.stats}>
                 <Text style={styles.label}>Elevation: </Text>
-                <Text style={styles.stats}>{`+${gain}m`}</Text>
+                <Text style={styles.stats}>{`+${Number(gain).toFixed(2)}m`}</Text>
             </Text>
         </View>
     )

@@ -1,5 +1,5 @@
 /**
- * @fileoverview This file has all of the application's colours
+ * @fileoverview This file has all of the colours used throughout the application
  */
 export default {
     black: '#000000',

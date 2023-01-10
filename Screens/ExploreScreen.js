@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
         height: 10,
     },
     flatListFooter: {
-        height: 50,
+        height: 75,
     },
     noActivities: {
         alignSelf: 'center',
