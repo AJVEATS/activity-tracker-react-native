@@ -11,7 +11,7 @@ import React from 'react';
 import colors from '../colors';
 
 const ActivityAltitudeChartComponent = (data) => {
-    // console.log(data.altitude);
+    // console.log(data.altitude);   // For Testing
     // const test = [
     //     { "x": 0, "y": 76.0999984741211 },
     //     { "x": 3, "y": 76.4000015258789 },

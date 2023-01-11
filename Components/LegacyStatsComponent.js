@@ -23,8 +23,20 @@ const LegacyStatsComponent = () => {
     const auth = getAuth(app);
     // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore(app);
+    // The user currently logged in with firebase authentication
     const user = (auth.currentUser);
 
+
+    /**
+     * This function gets the user's legacy stats document stored in the 'legacyStats' collection
+     * from the firebase firestore.
+     * 
+     * If the user has no set legacy stats a message is output to console informing that 
+     * there is no document.
+     * 
+     * If the user does have a legacy stats document, the use state values are then updated with 
+     * the store legacy stats.
+     */
     async function getLegacyStats() {
 
         const legacyStatRef = doc(db, 'legacyStats', user.uid);
@@ -45,6 +57,12 @@ const LegacyStatsComponent = () => {
 
     getLegacyStats();
 
+    /**
+     * This function formats the user's legacy distance to be in meters if the number is below 1,000m
+     * and if the value is above 1,000 the value is converted to km.
+     * 
+     * @param {distance} The user's legacy distance from firebase firestore 'legacyStats' Collection
+     */
     const formatDistance = (distance) => {
         let formattedDistance = '';
 
