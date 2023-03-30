@@ -10,7 +10,7 @@ import colors from '../colors';
 
 const OpenWeatherMapAPI = ({ lat, lon, setWeather }) => {
 
-    let apiKey = "c615be41df83e8620d84a99ecba2db62";
+    let apiKey = "#############################";
 
     const [temperature, setTemperature] = useState('');
     const [locationName, setLocationName] = useState('');
